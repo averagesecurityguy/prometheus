@@ -59,8 +59,8 @@ report = nil
 # Parse the firewall config
 begin
 	firewall = parse_firewall(options[:config], options[:type])
-rescue
-	print_error("Error parsing firewall configuration.")
+rescue PrometheusErrors::ParseError => e
+	print_error(e.message)
 	exit
 end
 
@@ -69,8 +69,8 @@ if firewall
 	analysis = analyze_firewall(firewall)
 	begin
 		report = report_firewall(firewall, analysis, options[:format])
-	rescue
-		print_error("Error creating report.")
+	rescue PrometheusErrors::ReportError => e
+		print_error(e.message)
 	end
 	
 	if report

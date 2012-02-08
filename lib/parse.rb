@@ -6,8 +6,8 @@ require 'parse/sonic_config'
 def parse_firewall(config, type)
 	parsed = nil
 
-	if not ::File.exits?(config)
-		raise "File #{config} does not exist."
+	if not File.exists?(config)
+		raise PrometheusErrors::ParseError, "File #{config} does not exist."
 	end
 
 	case type.downcase
@@ -20,7 +20,7 @@ def parse_firewall(config, type)
 		when "pix"
 			parsed = Parse::PixConfig.new(config)
 		else
-			raise "Unknown firewall type #{type}"
+			raise PrometheusErrors::ParseError, "Unknown firewall type #{type}"
 	end
 
 	return parsed

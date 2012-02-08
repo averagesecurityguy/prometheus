@@ -12,7 +12,7 @@ def report_firewall(firewall, analysis, output, type)
 		when "pdf"
 			report = Report::PDFReport.new(firewall, analysis)
 		else
-			raise "Unknown report type #{type}"
+			raise PrometheusError::ReportError, "Unknown report type #{type}"
 	end
 end
 
