@@ -1,4 +1,4 @@
-#/usr/bin/ruby
+#!/usr/bin/ruby
 
 # Copyright 2012 Stephen Haywood
 # All rights reserved
@@ -9,8 +9,14 @@ options = {}
 optparse = OptionParser.new do|opts|
 	# Firewall configuration file
 	options[:config] = ""
-	opts.on( '-c', '--config_file FILE', "Firewall configuration to parse." ) do|f|
-		options[:config] = f
+	opts.on( '-c', '--config_file FILE', "Firewall configuration to parse." ) do|c|
+		options[:config] = c
+	end
+
+	# Firewall type
+	options[:type] = ""
+	opts.on( '-t', '--firewall_type TYPE', "Firewall type." ) do |t|
+		options[:type] = t
 	end
 
 	# Report output file
@@ -18,10 +24,11 @@ optparse = OptionParser.new do|opts|
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
-
-	options[:type] = ""
-	opts.on( '-t', '--firewall_type TYPE', "Firewall type." ) do |t|
-		options[:type] = t
+	
+	# Report format
+	options[:format] = ""
+	opts.on( '-f', '--report_format FORMAT', "Report format to use.") do |f|
+		options[:format] = f
 	end
 
 	# This displays the help screen.
@@ -35,67 +42,42 @@ optparse.parse!
 
 
 # Begin main program
+$LOAD_PATH << './lib'
+
 require 'parse'
 require 'analyze'
 require 'report'
+require 'errors'
 require 'ui'
 
-def parse_firewall(config, type)
-	parsed = nil
+include UI
 
-	if not ::File.exits?(config)
-		raise "File #{config} does not exist."
-	end
-
-	case type.downcase
-		when "asa"
-			parsed = Parse::ASAConfig.new(config)
-		when "sonicos"
-			parsed = Parse::SonicConfig.new(config)
-		else
-			raise "Unknown firewall type #{type}"
-	end
-
-	return parsed
-end
-
-def analyze_firewall(firewall)
-	return nil
-end
-
-def report_firewall(firewall, analysis, output, type)
-	case type.downcase
-		when "text"
-			report = Report::TextReport.new(firewall, analysis)
-		when "html"
-			report = Report::HTMLReport.new(firewall, analysis)
-		else
-			raise "Unknown report type #{type}"
-	end
-
-	save_report(output, report)
-end
-
-def save_report(output, report)
-	print_status("Saving report to #{output}.")
-	file = ::File.open(output, "rb")
-	file.write(report)
-	file.close
-	print_status("Report successfully written.")
-end
-
+firewall = nil
+analysis = nil
+report = nil
 
 # Parse the firewall config
 begin
 	firewall = parse_firewall(options[:config], options[:type])
 rescue
-	print_error("Error parsing firewall config")
+	print_error("Error parsing firewall configuration.")
 	exit
 end
 
 # Analyze the firewall config
-analysis = analyze_firewall(firewall)
-
-# Write the firewall report
-report_firewall(firewall, analysis)
-
+if firewall
+	analysis = analyze_firewall(firewall)
+	begin
+		report = report_firewall(firewall, analysis, options[:format])
+	rescue
+		print_error("Error creating report.")
+	end
+	
+	if report
+		save_report(report)
+	end
+		
+else
+	print_error("Firewall configuration is empty.")
+	exit
+end
