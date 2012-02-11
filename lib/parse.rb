@@ -1,7 +1,5 @@
-require 'parse/generic_config'
-require 'parse/cisco_config'
-require 'parse/sonic_config'
-#require 'parse/netscreen_config'
+require 'parse/cisco'
+require 'parse/sonic'
 
 def parse_firewall(config, type)
 	parsed = nil
@@ -12,13 +10,9 @@ def parse_firewall(config, type)
 
 	case type.downcase
 		when "asa"
-			parsed = Parse::ASAConfig.new(config)
+			parsed = Parse::parse_asa_config(config)
 		when "sonicos"
-			parsed = Parse::SonicConfig.new(config)
-		when "netscreen"
-			parsed = Parse::NetscreenConfig.new(config)
-		when "pix"
-			parsed = Parse::PixConfig.new(config)
+			parsed = Parse::parse_sonic_config(config)
 		else
 			raise PrometheusErrors::ParseError, "Unknown firewall type #{type}"
 	end

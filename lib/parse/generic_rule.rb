@@ -1,8 +1,9 @@
 class Rule
 
-  attr_accessor :source, :dest, :action, :service
+  attr_accessor :id, :source, :dest, :action, :service
   
-  def initialize(action, source, dest, service)
+  def initialize(id, action, source, dest, service)
+	@id = id
 	@action = action
 	@source = source
 	@dest = dest
