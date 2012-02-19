@@ -13,22 +13,22 @@ optparse = OptionParser.new do|opts|
 		options[:config] = c
 	end
 
-	# Firewall type
-	options[:type] = ""
-	opts.on( '-t', '--firewall_type TYPE', "Firewall type." ) do |t|
-		options[:type] = t
-	end
-
 	# Report output file
-	options[:report] = ""
+	options[:report] = "#{Time.now.to_s}.html"
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
 	
 	# Report format
-	options[:format] = ""
+	options[:format] = "html"
 	opts.on( '-f', '--report_format FORMAT', "Report format to use.") do |f|
 		options[:format] = f
+	end
+
+	# Verbose output
+	options[:verbose] = false
+	opts.on( '-v', '--verbose', "Print verbose output.") do |v|
+		options[:verbose] = true
 	end
 
 	# This displays the help screen.
@@ -40,44 +40,46 @@ end
 
 optparse.parse!
 
-
 # Begin main program
 $LOAD_PATH << './lib'
 
+require 'errors'
+require 'ui'
+require 'config'
 require 'parse'
 require 'analyze'
 require 'report'
-require 'errors'
-require 'ui'
 
 include UI
+include PrometheusErrors
 
 firewall = nil
 analysis = nil
 report = nil
+verbose(options[:verbose])
 
 # Parse the firewall config
 begin
-	firewall = parse_firewall(options[:config], options[:type])
-rescue PrometheusErrors::ParseError => e
+	firewall = parse_firewall(options[:config])
+rescue ParseError => e
 	print_error(e.message)
 	exit
 end
 
 # Analyze the firewall config
-if firewall
+begin
 	analysis = analyze_firewall(firewall)
-	begin
-		report = report_firewall(firewall, analysis, options[:format])
-	rescue PrometheusErrors::ReportError => e
-		print_error(e.message)
-	end
-	
-	if report
-		save_report(report)
-	end
-		
-else
-	print_error("Firewall configuration is empty.")
+rescue AnalyzeError =>
+	print_error(e.message)
 	exit
+end
+
+#Create report for firewall config and analysis
+begin
+	report_firewall(firewall, analysis, options[:report], options[:format])
+rescue ReportError => e
+	print_error(e.message)
+	exit
+end
+
 end

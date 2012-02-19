@@ -1,24 +1,28 @@
-require 'report/text_report.rb'
-require 'report/html_report.rb'
-require 'report/pdf_report.rb'
+require 'report/html'
+require 'report/pdf'
+require 'report/word'
+
+include Report
+include PrometheusErrors
 
 def report_firewall(firewall, analysis, output, type)
 	report = nil
 	case type.downcase
 		when "text"
-			report = Report::TextReport.new(firewall, analysis)
+			report = TextReport.new(firewall, analysis)
 		when "html"
-			report = Report::HTMLReport.new(firewall, analysis)
+			report = HTMLReport.new(firewall, analysis)
 		when "pdf"
-			report = Report::PDFReport.new(firewall, analysis)
+			report = PDFReport.new(firewall, analysis)
 		else
-			raise PrometheusError::ReportError, "Unknown report type #{type}"
+			raise ReportError, "Unknown report type #{type}"
 	end
+	save_report(output, report)
 end
 
 def save_report(output, report)
 	print_status("Saving report to #{output}.")
-	file = ::File.open(output, "rb")
+	file = ::File.new(output, "rb")
 	file.write(report)
 	file.close
 	print_status("Report successfully written.")
