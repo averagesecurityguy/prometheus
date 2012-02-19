@@ -1,0 +1,416 @@
+ASA Version 8.0(4)
+!
+hostname vpn
+domain-name ugplus.dk
+enable password xx.xxxxxx.xxxxxx encrypted
+passwd xxxxxxxxxx.xxxxx encrypted
+names
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 192.168.50.1 255.255.0.0
+ ospf cost 10
+!
+interface Vlan2
+ description Interface to ISP.
+ nameif outside
+ security-level 0
+ ip address xx.xx.xx.xx 255.255.255.248
+ ospf cost 10
+!
+interface Vlan12
+ nameif MPLS
+ security-level 50
+ ip address 172.17.11.234 255.255.255.252
+!
+interface Ethernet0/0
+ switchport access vlan 2
+!
+interface Ethernet0/1
+!
+interface Ethernet0/2
+ switchport access vlan 12
+!
+interface Ethernet0/3
+!
+interface Ethernet0/4
+!
+interface Ethernet0/5
+!
+interface Ethernet0/6
+!
+interface Ethernet0/7
+!
+ftp mode passive
+clock timezone CEST 1
+clock summer-time CEDT recurring last Sun Mar 2:00 last Sun Oct 3:00
+dns domain-lookup inside
+dns server-group DefaultDNS
+ name-server 192.168.50.2
+ name-server 192.168.47.250
+ domain-name ugplus.dk
+same-security-traffic permit intra-interface
+object-group protocol TCPUDP
+ protocol-object udp
+ protocol-object tcp
+object-group service DM_INLINE_SERVICE_1
+ service-object tcp eq 1701
+ service-object tcp eq pptp
+ service-object udp eq 1701
+object-group network DM_INLINE_NETWORK_1
+ network-object 10.10.0.0 255.255.0.0
+ network-object 10.11.0.0 255.255.0.0
+ network-object 10.12.0.0 255.255.0.0
+ network-object 10.13.0.0 255.255.0.0
+ network-object 10.14.0.0 255.255.0.0
+object-group network DM_INLINE_NETWORK_3
+ network-object 11.0.0.0 255.255.255.0
+ network-object 172.16.0.0 255.255.0.0
+access-list employee_splitTunnelAcl_1 standard permit 192.168.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 10.10.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 10.11.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 10.12.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 10.13.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 10.14.0.0 255.255.0.0
+access-list inside_nat0_outbound remark MPLS til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 192.168.0.0 255.255.0.0
+access-list inside_nat0_outbound remark VPN til MPLS
+access-list inside_nat0_outbound extended permit ip object-group DM_INLINE_NETWORK_1 object-group DM_INLINE_NETWORK_3
+access-list inside_nat0_outbound remark VPN til Odense Internal
+access-list inside_nat0_outbound extended permit ip 192.168.0.0 255.255.0.0 11.0.0.0 255.255.255.0
+access-list inside_nat0_outbound extended permit ip 192.168.32.0 255.255.224.0 172.16.1.0 255.255.255.0
+access-list inside_nat0_outbound extended permit ip 192.168.32.0 255.255.224.0 172.16.0.0 255.255.255.0
+access-list outside_access_in remark ICMP Ping
+access-list outside_access_in extended permit icmp any xx.xx.xxx.xx 255.255.255.248
+access-list outside_access_in remark Rene
+access-list outside_access_in extended permit tcp xx.xxx.xxx.xxx 255.255.255.248 xx.xx.xxx.xx 255.255.255.248 eq 3389
+access-list outside_access_in remark Cirque RDP til UGPLUS
+access-list outside_access_in extended permit tcp xx.xxx.xxx.x 255.255.255.248 xx.xx.xxx.xx 255.255.255.248 eq 3391
+access-list outside_access_in remark Cirque SIP
+access-list outside_access_in extended permit udp xx.xx.xxx.x 255.255.255.128 host xx.xx.xxx.xx range 6000 40000
+access-list outside_access_in remark Cirque SIP
+access-list outside_access_in extended permit udp xx.xx.xxx.x 255.255.255.128 host xx.xx.xxx.xx eq sip
+access-list outside_access_in remark HTTPS
+access-list outside_access_in extended permit tcp any xx.xx.xxx.xx 255.255.255.248 eq https
+access-list outside_access_in remark HTTP
+access-list outside_access_in extended permit tcp any xx.xx.xxx.xx 255.255.255.248 eq www
+access-list outside_access_in remark MYSQL
+access-list outside_access_in extended permit tcp any host xx.xx.xxx.xx eq 8080
+access-list outside_access_in remark HTTP
+access-list outside_access_in extended permit tcp any host xx.xx.xxx.xx eq www
+access-list outside_access_in remark ESET Admin
+access-list outside_access_in extended permit tcp any xx.xx.xxx.xx 255.255.255.248 eq 2222
+access-list outside_access_in remark SMTP til spam.ugplus.dk
+access-list outside_access_in extended permit tcp any xx.xx.xxx.xx 255.255.255.248 eq smtp
+access-list outside_access_in remark Exchange Client/serc Comm. / Exchange Admin
+access-list outside_access_in extended permit tcp any xx.xx.xxx.xx 255.255.255.248 eq 135
+access-list outside_access_in extended permit object-group DM_INLINE_SERVICE_1 any xx.xx.xxx.xx 255.255.255.248 inactive
+access-list employee_splitTunnelAcl standard permit 192.168.32.0 255.255.224.0
+access-list outside_1_cryptomap extended permit ip 192.168.32.0 255.255.224.0 172.16.0.0 255.255.255.0
+access-list inside_access_in remark Allow all local network traffic
+access-list inside_access_in extended permit ip any any log disable
+access-list MPLS_access_in extended permit ip 10.10.0.0 255.255.0.0 any
+access-list MPLS_access_in extended permit ip 10.11.0.0 255.255.0.0 any
+access-list MPLS_access_in remark Kolding
+access-list MPLS_access_in extended permit ip 10.12.0.0 255.255.0.0 any log disable
+access-list MPLS_access_in remark Vejle
+access-list MPLS_access_in extended permit ip 10.13.0.0 255.255.0.0 any log disable
+access-list MPLS_access_in extended permit ip 10.14.0.0 255.255.0.0 any
+access-list outside_2_cryptomap extended permit ip 192.168.32.0 255.255.224.0 172.16.1.0 255.255.255.0
+access-list outside_cryptomap extended permit ip 192.168.32.0 255.255.224.0 172.16.1.0 255.255.255.0
+pager lines 24
+logging enable
+logging asdm warnings
+no logging message 305012
+no logging message 305011
+no logging message 302015
+no logging message 302014
+no logging message 302013
+no logging message 302012
+no logging message 302016
+mtu inside 1500
+mtu outside 1500
+mtu MPLS 1500
+ip local pool VPN 11.0.0.1-11.0.0.200 mask 255.255.255.0
+no failover
+icmp unreachable rate-limit 1 burst-size 1
+asdm image disk0:/asdm-613.bin
+no asdm history enable
+arp timeout 14400
+global (outside) 1 interface
+global (MPLS) 1 interface
+nat (inside) 0 access-list inside_nat0_outbound
+nat (inside) 1 0.0.0.0 0.0.0.0
+nat (outside) 1 192.168.0.0 255.255.0.0
+nat (MPLS) 1 10.10.0.0 255.255.0.0
+nat (MPLS) 1 10.11.0.0 255.255.0.0
+nat (MPLS) 1 10.12.0.0 255.255.0.0
+nat (MPLS) 1 10.13.0.0 255.255.0.0
+nat (MPLS) 1 10.14.0.0 255.255.0.0
+static (inside,outside) tcp 80.72.148.27 3389 192.168.50.6 3389 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.27 www 192.168.50.18 www netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.27 https 192.168.50.18 https netmask 255.255.255.255
+static (inside,outside) udp 80.72.148.27 6000 192.168.52.2 6000 netmask 255.255.255.255
+static (inside,outside) udp 80.72.148.27 sip 192.168.52.2 sip netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 135 192.168.46.3 135 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 imap4 192.168.46.3 imap4 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 pop3 192.168.46.3 pop3 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 993 192.168.46.3 993 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 102 192.168.46.3 102 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 995 192.168.46.3 995 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 nntp 192.168.46.3 nntp netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 563 192.168.46.3 563 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.28 https 192.168.46.3 https netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.29 8080 192.168.47.240 3306 netmask 255.255.255.255
+static (inside,outside) tcp 80.72.148.29 www 192.168.47.240 www netmask 255.255.255.255
+static (inside,outside) tcp interface smtp 192.168.46.1 smtp netmask 255.255.255.255
+static (inside,outside) tcp interface 2222 192.168.50.2 2222 netmask 255.255.255.255
+static (inside,outside) tcp interface 3391 192.168.52.3 3389 netmask 255.255.255.255
+access-group inside_access_in in interface inside
+access-group outside_access_in in interface outside
+access-group MPLS_access_in in interface MPLS
+route outside 0.0.0.0 0.0.0.0 xx.xx.xxx.xx 1
+route MPLS 10.10.0.0 255.255.0.0 172.17.11.233 1
+route MPLS 10.11.0.0 255.255.0.0 172.17.11.233 1
+route MPLS 10.12.0.0 255.255.0.0 172.17.11.233 1
+route MPLS 10.13.0.0 255.255.0.0 172.17.11.233 1
+route MPLS 10.14.0.0 255.255.0.0 172.17.11.233 1
+timeout xlate 3:00:00
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+dynamic-access-policy-record DfltAccessPolicy
+aaa authentication ssh console LOCAL
+aaa authentication telnet console LOCAL
+http server enable
+http 192.168.50.0 255.255.255.0 inside
+no snmp-server location
+no snmp-server contact
+snmp-server enable traps snmp authentication linkup linkdown coldstart
+crypto ipsec transform-set ESP-AES-256-MD5 esp-aes-256 esp-md5-hmac
+crypto ipsec transform-set ESP-AES-256-SHA esp-aes-256 esp-sha-hmac
+crypto ipsec transform-set ESP-AES-128-MD5 esp-aes esp-md5-hmac
+crypto ipsec transform-set ESP-AES-192-MD5 esp-aes-192 esp-md5-hmac
+crypto ipsec transform-set ESP-AES-192-SHA esp-aes-192 esp-sha-hmac
+crypto ipsec transform-set ESP-3DES-MD5 esp-3des esp-md5-hmac
+crypto ipsec transform-set ESP-DES-SHA esp-des esp-sha-hmac
+crypto ipsec transform-set zyxel esp-des esp-sha-hmac
+crypto ipsec transform-set TRANS_ESP_AES128_SHA esp-aes esp-sha-hmac
+crypto ipsec transform-set TRANS_ESP_AES128_SHA mode transport
+crypto ipsec transform-set TRANS_ESP_3DES_SHA esp-3des esp-sha-hmac
+crypto ipsec transform-set TRANS_ESP_3DES_SHA mode transport
+crypto ipsec transform-set ESP-AES-128-SHA esp-aes esp-sha-hmac
+crypto ipsec transform-set ESP-DES-MD5 esp-des esp-md5-hmac
+crypto ipsec transform-set ESP-3DES-SHA esp-3des esp-sha-hmac
+crypto ipsec security-association lifetime seconds 28800
+crypto ipsec security-association lifetime kilobytes 4608000
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set pfs
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set transform-set ESP-3DES-SHA TRANS_ESP_3DES_SHA ESP-3DES-MD5 ESP-AES-256-SHA ESP-AES-128-SHA ESP-AES-192-SHA ESP-AES-192-MD5 ESP-AES-256-MD5 ESP-DES-SHA ESP-DES-MD5 zyxel
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set security-association lifetime seconds 28800
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set security-association lifetime kilobytes 4608000
+crypto dynamic-map London 3 match address outside_cryptomap
+crypto dynamic-map London 3 set pfs
+crypto dynamic-map London 3 set transform-set ESP-AES-128-SHA ESP-AES-128-MD5 ESP-AES-192-SHA ESP-AES-192-MD5 ESP-AES-256-SHA ESP-AES-256-MD5 ESP-3DES-SHA ESP-3DES-MD5 ESP-DES-SHA ESP-DES-MD5
+crypto dynamic-map London 3 set security-association lifetime seconds 28800
+crypto dynamic-map London 3 set security-association lifetime kilobytes 4608000
+crypto map outside_map 1 match address outside_1_cryptomap
+crypto map outside_map 1 set pfs
+crypto map outside_map 1 set peer xx.xxx.xxx.xx
+crypto map outside_map 1 set transform-set ESP-3DES-SHA
+crypto map outside_map 1 set security-association lifetime seconds 28800
+crypto map outside_map 1 set security-association lifetime kilobytes 4608000
+crypto map outside_map 2 match address outside_2_cryptomap
+crypto map outside_map 2 set pfs
+crypto map outside_map 2 set peer xx.xxx.xxx.xxx
+crypto map outside_map 2 set transform-set ESP-3DES-SHA
+crypto map outside_map 2 set security-association lifetime seconds 28800
+crypto map outside_map 2 set security-association lifetime kilobytes 4608000
+crypto map outside_map 3 ipsec-isakmp dynamic London
+crypto map outside_map 65535 ipsec-isakmp dynamic SYSTEM_DEFAULT_CRYPTO_MAP
+crypto map outside_map interface outside
+crypto ca trustpoint ASDM_TrustPoint0
+ enrollment self
+ subject-name CN=firewall
+ crl configure
+crypto ca trustpoint ASDM_TrustPoint1
+ enrollment self
+ fqdn vpn.ugplus.dk
+ subject-name CN=firewall
+ serial-number
+ keypair StrongRSA
+ proxy-ldc-issuer
+ crl configure
+crypto ca certificate chain ASDM_TrustPoint0
+ certificate xxxxxxxxxx
+  quit
+crypto ca certificate chain ASDM_TrustPoint1
+ certificate xxxxxxxxxx
+  quit
+crypto isakmp identity address
+crypto isakmp enable inside
+crypto isakmp enable outside
+crypto isakmp policy 50
+ authentication pre-share
+ encryption aes
+ hash sha
+ group 5
+ lifetime 86400
+crypto isakmp policy 60
+ authentication pre-share
+ encryption des
+hash sha
+ group 1
+ lifetime 86400
+crypto isakmp policy 70
+ authentication pre-share
+ encryption 3des
+ hash sha
+ group 1
+ lifetime 86400
+crypto isakmp policy 80
+ authentication pre-share
+ encryption 3des
+ hash md5
+ group 2
+ lifetime 86400
+crypto isakmp policy 85
+ authentication pre-share
+ encryption aes
+ hash sha
+ group 2
+ lifetime 86400
+crypto isakmp policy 105
+ authentication pre-share
+ encryption des
+ hash md5
+ group 1
+ lifetime 86400
+crypto isakmp policy 125
+ authentication pre-share
+ encryption 3des
+ hash sha
+ group 2
+ lifetime 86400
+crypto isakmp nat-traversal 60
+crypto isakmp disconnect-notify
+no vpn-addr-assign dhcp
+vpn-addr-assign local reuse-delay 5
+telnet 192.168.50.0 255.255.255.0 inside
+telnet timeout 5
+ssh xx.xx.xxx.xxx 255.255.255.255 outside
+ssh timeout 5
+ssh version 2
+console timeout 0
+management-access inside
+
+threat-detection basic-threat
+threat-detection statistics host
+threat-detection statistics port
+threat-detection statistics protocol
+threat-detection statistics access-list
+no threat-detection statistics tcp-intercept
+ntp server 193.162.159.194 source outside prefer
+ssl encryption rc4-sha1 aes128-sha1 aes256-sha1 3des-sha1 des-sha1
+webvpn
+ enable outside
+ svc image disk0:/anyconnect-win-2.3.2016-k9.pkg 1
+ svc image disk0:/anyconnect-macosx-i386-2.5.1025-k9.pkg 2
+ svc enable
+ tunnel-group-list enable
+group-policy DfltGrpPolicy attributes
+ dns-server value 192.168.47.250
+ vpn-simultaneous-logins 100
+ vpn-idle-timeout none
+ vpn-tunnel-protocol IPSec l2tp-ipsec svc webvpn
+ default-domain value ugplus.dk
+ split-dns value ugplus.dk terminal.dk
+ ip-phone-bypass enable
+ leap-bypass enable
+ nem enable
+group-policy zyxel internal
+group-policy employee internal
+group-policy employee attributes
+dns-server value 192.168.47.250
+ vpn-tunnel-protocol IPSec l2tp-ipsec svc webvpn
+ split-tunnel-policy tunnelspecified
+ split-tunnel-network-list none
+ default-domain value ugplus.dk
+ split-dns value ugplus.dk
+tunnel-group DefaultRAGroup general-attributes
+ address-pool VPN
+ authorization-server-group LOCAL
+tunnel-group DefaultRAGroup ipsec-attributes
+ pre-shared-key *
+ peer-id-validate nocheck
+ isakmp keepalive disable
+tunnel-group DefaultRAGroup ppp-attributes
+ authentication pap
+ authentication ms-chap-v2
+ authentication eap-proxy
+tunnel-group DefaultWEBVPNGroup general-attributes
+ address-pool VPN
+ default-group-policy employee
+tunnel-group DefaultWEBVPNGroup ipsec-attributes
+ peer-id-validate nocheck
+tunnel-group DefaultWEBVPNGroup ppp-attributes
+ authentication pap
+ authentication ms-chap-v2
+ authentication eap-proxy
+tunnel-group xx.xxx.xxx.xx type ipsec-l2l
+tunnel-group xx.xxx.xxx.xx ipsec-attributes
+ pre-shared-key *
+ peer-id-validate nocheck
+tunnel-group employee type remote-access
+tunnel-group employee general-attributes
+ address-pool VPN
+ default-group-policy employee
+tunnel-group employee ipsec-attributes
+ pre-shared-key *
+ peer-id-validate nocheck
+tunnel-group employee ppp-attributes
+ authentication pap
+ authentication ms-chap-v2
+ authentication eap-proxy
+tunnel-group xx.xxx.xxx.xxx type ipsec-l2l
+tunnel-group xx.xxx.xxx.xxx ipsec-attributes
+ pre-shared-key *
+ peer-id-validate nocheck
+tunnel-group London type ipsec-l2l
+tunnel-group London ipsec-attributes
+ pre-shared-key *
+ peer-id-validate nocheck
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map
+  inspect ftp
+  inspect h323 h225
+  inspect h323 ras
+  inspect rsh
+  inspect rtsp
+  inspect sqlnet
+  inspect skinny
+  inspect sunrpc
+  inspect xdmcp
+  inspect sip
+  inspect netbios
+  inspect tftp
+!
+service-policy global_policy global
+prompt hostname context
+Cryptochecksum:5a5054c48874fc5a3d0b938c941c2ee7
+: end
