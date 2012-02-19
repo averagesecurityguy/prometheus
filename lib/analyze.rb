@@ -1,9 +1,5 @@
-dir = "./lib/analyze/"
-$LOAD_PATH.unshift(dir)
-Dir[File.join(dir, "*.rb")].each { |file| require File.basename(file) }
-
+require 'analyze/analyze'
 include Analyze
-include PrometheusErrors
 
 def analyze_firewall(firewall)
 	analysis = {}

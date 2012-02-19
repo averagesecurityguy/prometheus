@@ -2,8 +2,9 @@ module Report
 
 class HTMLReport
 
-  def initialize(config)
+  def initialize(config, analysis)
     @config = config
+	@analysis = analysis
   end
 
   def to_html

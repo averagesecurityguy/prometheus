@@ -14,7 +14,7 @@ optparse = OptionParser.new do|opts|
 	end
 
 	# Report output file
-	options[:report] = "#{Time.now.to_s}.html"
+	options[:report] = "#{Time.now.to_f.to_s}.html"
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
@@ -69,7 +69,7 @@ end
 # Analyze the firewall config
 begin
 	analysis = analyze_firewall(firewall)
-rescue AnalyzeError =>
+rescue AnalysisError => e
 	print_error(e.message)
 	exit
 end
@@ -82,4 +82,3 @@ rescue ReportError => e
 	exit
 end
 
-end

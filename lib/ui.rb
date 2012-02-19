@@ -1,7 +1,7 @@
 module UI
 
 def verbose(v)
-	if v then VERBOSE = true else VERBOSE = false end
+	if v then @verbose = true else @verbose = false end
 end
 
 begin
@@ -31,15 +31,15 @@ def print_good(msg)
 end
 
 def vprint_status(msg)
-	if VERBOSE then print_status(msg) end;
+	if @verbose then print_status(msg) end;
 end
 
 def vprint_error(msg)
-	if VERBOSE then print_error(msg) end;
+	if @verbose then print_error(msg) end;
 end
 
 def vprint_good(msg)
-	if VERBOSE then print_good(msg) end;
+	if @verbose then print_good(msg) end;
 end
 
 end

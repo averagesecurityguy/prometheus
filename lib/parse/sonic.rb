@@ -1,5 +1,3 @@
-module Parse
-
 def preprocess_wri(config)
 	# Preprocess the SonicWall wri file to make it easier to run
 	# regexs to capture rules
@@ -63,4 +61,3 @@ def parse_sonic_config(config)
    	end
 end	
 
-end

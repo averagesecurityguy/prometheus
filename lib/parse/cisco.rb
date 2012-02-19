@@ -1,7 +1,3 @@
-module Parse
-
-include Config
-
 def parse_cisco_config(config)
 
 	firewall = FirewallConfig.new
@@ -90,4 +86,3 @@ def parse_rule(id, rule)
   
 end
 
-end

@@ -2,7 +2,7 @@ module Report
 
 class PDFReport
 
-  def initialize(config)
+  def initialize(config, analysis)
     @config = config
   end
 

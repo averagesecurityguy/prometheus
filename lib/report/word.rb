@@ -2,7 +2,7 @@ module Report
 
 class TextReport
 
-  def initialize(config)
+  def initialize(config, analysis)
     @config = config
   end
 

@@ -22,7 +22,7 @@ end
 
 def save_report(output, report)
 	print_status("Saving report to #{output}.")
-	file = ::File.new(output, "rb")
+	file = ::File.open(output, "w")
 	file.write(report)
 	file.close
 	print_status("Report successfully written.")
