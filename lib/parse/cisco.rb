@@ -4,8 +4,6 @@ include Config
 
 def parse_cisco_config(config)
 
-	
-
 	firewall = FirewallConfig.new
 
 	config.each_line do |line|
@@ -27,12 +25,15 @@ def parse_cisco_config(config)
 		#Build Access list
  		if line =~ /access-list (.*) extended (.*)/ then
 			if firewall.access_lists.last == nil
+				id = 1
 				firewall.access_lists << AccessList.new($1)
 				firewall.access_lists.last.ruleset << parse_rule($2)
 			elsif firewall.access_lists.last.name != $1
+				id = 1
 				firewall.access_lists << AccessList.new($1)
 				firewall.access_lists.last.ruleset << parse_rule($2)
 			else
+				id += 1
 				firewall.access_lists.last.ruleset << parse_rule($2)
 			end
 		end
@@ -76,7 +77,7 @@ def parse_rule_service(rule_array)
 end
 
 
-def parse_rule(rule)
+def parse_rule(id, rule)
 
 	rule_array = rule.split(" ")
 	action = rule_array.shift
@@ -85,7 +86,7 @@ def parse_rule(rule)
 	dest, rule_array = parse_rule_host(rule_array)
 	service = parse_rule_service(rule_array)
 
-	return CiscoRule.new(action, protocol, source, dest, service)
+	return Rule.new(id, true, source, dest, action, service)
   
 end
 
