@@ -52,6 +52,9 @@ require 'report'
 
 include UI
 include PrometheusErrors
+include Parse
+include Analyze
+include Report
 
 firewall = nil
 analysis = nil
@@ -81,4 +84,5 @@ rescue ReportError => e
 	print_error(e.message)
 	exit
 end
+
 

@@ -11,7 +11,7 @@ rescue LoadError
 end
  
 def colorize(text, color_code)
-	puts "#{color_code}#{text}\033[0m"
+	"#{color_code}#{text}\033[0m"
 end
 
 def red(text); colorize(text, "\033[31m"); end
@@ -19,15 +19,15 @@ def green(text); colorize(text, "\033[32m"); end
 def blue(text); colorize(text, "\033[34m"); end
 
 def print_status(msg)
-	blue("[*] " + msg)
+	puts blue("[*] ") + msg
 end
 
 def print_error(msg)
-	red("[-] " + msg)
+	puts red("[-] ") + msg
 end
 
 def print_good(msg)
-	green("[+] " + msg)
+	puts green("[+]") + msg
 end
 
 def vprint_status(msg)

@@ -1,7 +1,8 @@
 module Analyze
 
-	dir = "analyze/"
-	$LOAD_PATH.unshift(dir)
-	Dir[File.join(dir, "*.rb")].each { |file| puts file; require File.basename(file) }
+	require 'analyze/version'
+	require 'analyze/rules'
+	require 'analyze/snmp'
+	require 'analyze/remote_admin'
 
 end

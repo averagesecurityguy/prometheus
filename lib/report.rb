@@ -1,11 +1,11 @@
+module Report
+
 require 'report/html'
 require 'report/pdf'
 require 'report/word'
 
-include Report
-include PrometheusErrors
-
 def report_firewall(firewall, analysis, output, type)
+	include Report
 	report = nil
 	case type.downcase
 		when "text"
@@ -26,4 +26,6 @@ def save_report(output, report)
 	file.write(report)
 	file.close
 	print_status("Report successfully written.")
+end
+
 end

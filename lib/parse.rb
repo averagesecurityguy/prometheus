@@ -1,5 +1,6 @@
+module Parse
+
 require 'parse/parse'
-include Parse
 
 def parse_firewall(config_file)
 
@@ -21,14 +22,13 @@ def parse_firewall(config_file)
 
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
-		#parsed = parse_asa_config(config)
+		return parse_asa_config(config)
 	elsif config =~ /Sonic/m
 		print_status("Parsing SonicWALL configuration.")
-		parsed = parse_sonic_config(config)
+		return parse_sonic_config(config)
 	else
 		raise ParseError, "Unknown firewall type."
 	end
 
-	return parsed
 end
-
+end
