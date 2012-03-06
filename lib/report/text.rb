@@ -1,30 +1,44 @@
 module Report
+module TextReport
 
-class HTMLReport
+def generate_text_report(fw, an)
+	
+	rept = ""
+	rept << "ID: #{fw.id}\n"
+	rept << "DATE: #{fw.date}\n"
+	rept << "FIRMWARE: #{fw.firmware}\n"
+	rept << "TYPE: #{fw.type}\n\n"
 
-  def initialize(config, analysis)
-    @config = config
-	@analysis = analysis
-  end
-
-  def to_html
-    html = ""
-    html += "<h3>#{@config.type}(#{@config.id})</h3>\n"
-    html += "<p>The firewall is a [Model] running firmware version [Firmware]. The general configuration of the firewall is as follows:</p>\n"
-    html += "<ul>\n"
-    html +=  "<li class=\"indent\">[Web Content filtering is enabled.]</li>\n"
-    html +=  "<li class=\"indent\">[Gateway Antivirus is enabled.]</li>\n"
-    html +=  "<li class=\"indent\">[Intrusion Detection is enabled.]</li>\n"
-    @config.interfaces.each do |int|
-      html +=  "<li class=\"indent\">The #{int.name} interface is set to #{int.ip} with subnet mask #{int.mask}</li>\n"
+	rept << "INTERFACES\n"
+	tbl = RexTable::Table.new(	'Columns' => ["Interface", "IP Address", "Subnet Mask"])
+    fw.interfaces.each do |i|
+        tbl << [i.name, i.ip, i.mask]
     end
-    html +=  "</ul>\n"
-    html +=  "<p>The firewall is configured with the following access rules:</p>"
-	html +=  @config.access_lists_to_html
+    rept << tbl.to_s
 
-    return html
-  end
+	rept << "\nREMOTE MANAGEMENT\n"
+	tbl = RexTable::Table.new(	'Columns' => ["HTTP", "HTTPS", "SSH", "TELNET"])
+	fw.interfaces.each do |i|
+		tbl << [i.http ? "Y" : "N", i.https ? "Y" : "N",
+				i.ssh ? "Y" : "N", i.telnet ? "Y" : "N"]
+	end
+	rept << tbl.to_s
 
+	rept << "\nACCESS CONTROL LISTS\n"
+
+	fw.access_lists.each do |al|
+		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Source", "Destitnation", "Service"], 
+									'Header' => al.name.capitalize)
+    	al.ruleset.each do |r|
+        	tbl << [r.id, r.enabled, r.action, r.source, r.dest, r.service]
+    	end
+    
+    	rept << tbl.to_s
+		rept << "\n"
+	end
+
+    return rept
 end
 
+end
 end

@@ -1,19 +1,19 @@
 module Report
 
+require 'report/rextable'
 require 'report/html'
-require 'report/pdf'
-require 'report/word'
+require 'report/text'
 
-def report_firewall(firewall, analysis, output, type)
-	include Report
+def report_firewall(firewall, analysis, output, format)
+
+	include Report::TextReport
+
 	report = nil
-	case type.downcase
+	case format.downcase
 		when "text"
-			report = TextReport.new(firewall, analysis)
+			report = generate_text_report(firewall, analysis)
 		when "html"
-			report = HTMLReport.new(firewall, analysis)
-		when "pdf"
-			report = PDFReport.new(firewall, analysis)
+			report = html_report(firewall, analysis)
 		else
 			raise ReportError, "Unknown report type #{type}"
 	end

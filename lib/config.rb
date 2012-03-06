@@ -42,6 +42,7 @@ class FirewallConfig
 		#@names = Hash.new
 		#@groups = Hash.new
 	end
+			
 end
 
 end
