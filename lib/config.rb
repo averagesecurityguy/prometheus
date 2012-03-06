@@ -12,7 +12,7 @@ ManagementInterface = Struct.new( :enabled, :protocol, :interface )
 Interface = Struct.new( :name, :ip, :mask, :http, :https, :ssh, :telnet)
 
 # Track rules in rulesets
-Rule = Struct.new( :id, :enabled, :source, :dest, :action, :service )
+Rule = Struct.new( :id, :enabled, :protocol, :source, :dest, :action, :service )
 
 # Track access lists
 class AccessList
@@ -26,13 +26,12 @@ class AccessList
 end
 
 class FirewallConfig
-	attr_accessor :id, :date, :firmware, :type, :snmp
+	attr_accessor :id, :firmware, :type, :snmp
 	attr_accessor :management, :access_lists, :interfaces
 	#attr_accessor :nat_entries, :names, :groups
   
 	def initialize
 		@id = nil
-		@date = nil
 		@firmware = nil
 		@type = nil
 		@snmp = Snmp.new

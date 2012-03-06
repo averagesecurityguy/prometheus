@@ -5,7 +5,6 @@ def generate_text_report(fw, an)
 	
 	rept = ""
 	rept << "ID: #{fw.id}\n"
-	rept << "DATE: #{fw.date}\n"
 	rept << "FIRMWARE: #{fw.firmware}\n"
 	rept << "TYPE: #{fw.type}\n\n"
 
@@ -27,10 +26,10 @@ def generate_text_report(fw, an)
 	rept << "\nACCESS CONTROL LISTS\n"
 
 	fw.access_lists.each do |al|
-		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Source", "Destitnation", "Service"], 
+		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Protocol", "Source", "Destitnation", "Service"], 
 									'Header' => al.name.capitalize)
     	al.ruleset.each do |r|
-        	tbl << [r.id, r.enabled, r.action, r.source, r.dest, r.service]
+        	tbl << [r.id, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
     	end
     
     	rept << tbl.to_s

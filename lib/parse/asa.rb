@@ -4,15 +4,11 @@ def parse_asa_config(config)
 	fw.type = "ASA"
 
 	config.each_line do |line|
-		if line =~ /hostname (.*)$/ then fw.id = $1  end
+		if line =~ /^hostname (.*)$/ then fw.id = $1  end
 		if line =~ /ASA Version (.*)$/ then fw.firmware = $1 end
-		if line =~ /: Written by .* at (.*)/ then
-			time, zone, weekday, month, day, year = $1.split(" ")
-			fw.date = "#{month}/#{day}/#{year}"
-		end
-
+		
 		# Build interface list
-		if line =~ /interface (.*)/ then fw.interfaces << Interface.new($1) end
+		if line =~ /^interface (.*)/ then fw.interfaces << Interface.new($1) end
 		# Rename interface if nameif is defined
 		if line =~ /nameif ([a-zA-Z0-9\/]+)/ then
 			fw.interfaces.last.name = $1
@@ -25,21 +21,20 @@ def parse_asa_config(config)
   
 		# Build Access list
  		if line =~ /access-list (.*) extended (.*)/ then
-			id = 1
 			if fw.access_lists.last == nil
 				fw.access_lists << AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(id, $2)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			elsif fw.access_lists.last.name != $1
 				fw.access_lists << AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(id, $2)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
-				id += 1
+				id = fw.access_lists.last.ruleset.last.id + 1
 				fw.access_lists.last.ruleset << parse_rule(id, $2)
 			end
 		end
 
 		# Access Groups
-		if line =~ /access-group (.*)/
+		if line =~ /^access-group (.*)/
 			name, dir, int, int_name = $1.split(" ")
 			fw.access_lists.each do |al|
 				if al.name == name then al.interface = int_name end
@@ -77,6 +72,17 @@ def parse_asa_config(config)
 end
 
 
+def parse_rule_protocol(rule_array)
+	prot = rule_array.shift
+	case prot
+		when "object-group"
+			return rule_array.shift, rule_array
+		else
+			return prot, rule_array
+	end
+end
+
+
 def parse_rule_host(rule_array)
 	host = rule_array.shift
 	case host
@@ -101,20 +107,23 @@ def parse_rule_service(rule_array)
 			return rule_array.shift
 		when "range"
 			return rule_array.shift + " - " + rule_array.shift
+		when "object-group"
+			return rule_array.shift
+		else
+			return srv
     end
 end
 
 
 def parse_rule(id, rule)
-
 	rule_array = rule.split(" ")
 	action = rule_array.shift
-	protocol = rule_array.shift
+	protocol, rule_array = parse_rule_protocol(rule_array)
 	source, rule_array = parse_rule_host(rule_array)
 	dest, rule_array = parse_rule_host(rule_array)
 	service = parse_rule_service(rule_array)
 
-	return Rule.new(id, true, source, dest, action, service)
+	return Rule.new(id, true, protocol, source, dest, action, service)
   
 end
 
