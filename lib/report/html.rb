@@ -1,14 +1,17 @@
 module Report
+module HTMLReport
 
-class HTMLReport
-
-  def initialize(config, analysis)
+  def generate_html_report(fw, an)
     @config = config
 	@analysis = analysis
-  end
 
-  def to_html
     html = ""
+	html << html_head
+	html << "<body>\n"
+	html << "<div id=\"title\">\n"
+	html << "<h1>Prometheus Firewall Analyzer</h1>\n"
+	html << "<h2>Report for #{fw.type} firwall #{fw.id}</h2>\n"
+	html << "</div>
     html += "<h3>#{@config.type}(#{@config.id})</h3>\n"
     html += "<p>The firewall is a [Model] running firmware version [Firmware]. The general configuration of the firewall is as follows:</p>\n"
     html += "<ul>\n"
