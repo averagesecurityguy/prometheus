@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Prometheus Firewall Analyzer Report</title>
+
+	<style media="screen" type="text/css">
+		html {
+			margin: 0;
+			padding: 0;
+		}
+
+		body { 
+			font: 75% georgia, sans-serif;
+			line-height: 1.88889;
+			color: #555753; 
+			background: #fff url(blossoms.jpg) no-repeat bottom right; 
+			margin: 0; 
+			padding: 0;
+		}
+
+		p { 
+			margin-top: 0; 
+			text-align: justify;
+		}
+
+		h3 { 
+			font: italic normal 1.4em georgia, sans-serif;
+			letter-spacing: 1px; 
+			margin-bottom: 0; 
+			color: #7D775C;
+		}
+
+		a:link { 
+			font-weight: bold; 
+			text-decoration: none; 
+			color: #B7A5DF;
+		}
+
+		a:visited { 
+			font-weight: bold; 
+			text-decoration: none; 
+			color: #D4CDDC;
+		}
+
+		a:hover, a:active { 
+			text-decoration: underline; 
+			color: #9685BA;
+		}
+	
+		h1#banner {
+		}
+
+		h2#banner {
+		}
+
+		.container {
+
+	</style>
+</head>
+    
+<body>
+	<div id="container">
+		<div id="banner">
+    		<h1>Firewall Configuration Analysis Report</h1>
+			<h1>for {{confg.id}}</h1>
+			<h2>Provided by</h2>
+			<h2>{{vendor.name}}</h2>
+		</div>
+
+    	<div id="body">
+			<h1>Configuration Summary</h1>
+			<p>ID: {{config.id}} <br />
+			FIRMWARE: {{config.firmware}} <br />
+			TYPE: {{config.type}} </p>
+
+			<h2>Interfaces</h2>
+			{{config.interfaces}}
+
+			<h2>Remote Management</h2>
+			{{config.remote_management}}
+
+			<h2>Access Control Lists</h2>
+			{{config.access_control_lists}}
+
+			<h1>Configuration Analysis</h1>
+			<p>Put Analysis Here</p>
+		</div>
+	</div>
+</body>
+</html>

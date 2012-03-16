@@ -1,8 +1,6 @@
 module UI
 
-def verbose(v)
-	if v then @verbose = true else @verbose = false end
-end
+include Options
 
 begin
 	require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32/
@@ -31,15 +29,15 @@ def print_good(msg)
 end
 
 def vprint_status(msg)
-	if @verbose then print_status(msg) end;
+	if options[:verbose] then print_status(msg) end;
 end
 
 def vprint_error(msg)
-	if @verbose then print_error(msg) end;
+	if options[:verbose] then print_error(msg) end;
 end
 
 def vprint_good(msg)
-	if @verbose then print_good(msg) end;
+	if options[:verbose] then print_good(msg) end;
 end
 
 end

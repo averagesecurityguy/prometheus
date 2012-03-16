@@ -1,0 +1,165 @@
+ID: pppfw01
+FIRMWARE: 8.0(2) 
+TYPE: ASA
+
+INTERFACES
+Interface   IP Address    Subnet Mask
+---------   ----------    -----------
+Internal    192.168.83.1  255.255.255.0
+DMZ0        192.168.84.1  255.255.255.0
+wlan0       192.168.85.1  255.255.255.0
+wan0        220.5.222.98  255.255.255.224
+management  192.168.1.1   255.255.255.0
+
+REMOTE MANAGEMENT
+HTTP  HTTPS  SSH  TELNET
+----  -----  ---  ------
+N     N      N    N
+N     N      N    N
+N     N      N    N
+N     N      N    N
+N     N      N    N
+
+ACCESS CONTROL LISTS
+Wan0_access_in
+==============
+
+ID  Enabled  Action  Protocol              Source                        Destitnation                 Service
+--  -------  ------  --------              ------                        ------------                 -------
+1   true     permit  TCPUDP                alan_home/32                  0.0.0.0/0                    All_services
+2   true     permit  DM_INLINE_PROTOCOL_1  wlan0_network/255.255.255.0   0.0.0.0/0                    log
+3   true     permit  TCPUDP                0.0.0.0/0                     wlan0_network/255.255.255.0  any
+4   true     permit  tcp                   0.0.0.0/0                     DM_INLINE_NETWORK_4          www
+5   true     permit  tcp                   0.0.0.0/0                     FTPserver_ext/32             ssh
+6   true     permit  tcp                   DM_INLINE_NETWORK_7           cata_ext/32                  www
+7   true     permit  tcp                   0.0.0.0/0                     DM_INLINE_NETWORK_5          https
+8   true     permit  udp                   0.0.0.0/0                     qphone_ext/32                iax2
+9   true     permit  udp                   0.0.0.0/0                     switchvox1_int/32            iax2
+10  true     permit  tcp                   0.0.0.0/0                     facebook_dev_ext/32          DM_INLINE_TCP_1
+11  true     permit  tcp                   life_testAccessGroup          DM_INLINE_NETWORK_10         DM_INLINE_TCP_3
+12  true     permit  tcp                   andrews_remote                andrews_ext/32               www
+13  true     permit  tcp                   0.0.0.0/0                     DM_INLINE_NETWORK_6          DM_INLINE_TCP_2
+14  true     permit  tcp                   folioMediaOfficeFirewall1/32  folioMedia_ext/32            ftp
+15  true     permit  DM_INLINE_SERVICE_1   0.0.0.0/0                     DM_INLINE_NETWORK_11         log
+16  true     permit  tcp                   0.0.0.0/0                     DM_INLINE_NETWORK_15         2222
+17  true     permit  udp                   voicepulse_SIP                DM_INLINE_NETWORK_14         DM_INLINE_UDP_4
+18  true     permit  DM_INLINE_SERVICE_4   0.0.0.0/0                     qphone_ext/32                log
+19  true     permit  udp                   0.0.0.0/0                     DM_INLINE_NETWORK_19         iax2
+20  true     permit  udp                   DM_INLINE_NETWORK_13          switchvox1_ext/32            DM_INLINE_UDP_1
+21  true     permit  DM_INLINE_SERVICE_6   switchvox_tech_support/32     switchvox1_ext/32            log
+22  true     permit  tcp                   xobot_firewall/32             svnmail_ext/32               smtp
+23  true     permit  icmp                  0.0.0.0/0                     0.0.0.0/0                    any
+24  true     permit  tcp                   change_client_ips             change_ext/32                www
+
+Management_nat0_outbound
+========================
+
+ID  Enabled  Action  Protocol  Source     Destitnation                  Service
+--  -------  ------  --------  ------     ------------                  -------
+1   true     permit  ip        0.0.0.0/0  192.168.86.2/255.255.255.254  any
+
+Nonat
+=====
+
+ID  Enabled  Action  Protocol  Source                      Destitnation                            Service
+--  -------  ------  --------  ------                      ------------                            -------
+1   true     permit  ip        192.168.83.0/255.255.255.0  vpn_network/255.255.255.0               any
+2   true     permit  ip        192.168.83.0/255.255.255.0  192.168.84.0/255.255.255.0              any
+3   true     permit  ip        192.168.83.0/255.255.255.0  Consultants_VPN_IP_Range/255.255.255.0  any
+4   true     permit  ip        svnmail_int/32              vpn/255.255.255.0                       any
+5   true     permit  ip        svnmail_int/32              Consultants_VPN_IP_Range/255.255.255.0  any
+6   true     permit  ip        yovidportal_int/32          Consultants_VPN_IP_Range/255.255.255.0  any
+7   true     permit  ip        192.168.83.0/255.255.255.0  wlan0_network/255.255.255.0             any
+
+Dmz0_nat0_outbound
+==================
+
+ID  Enabled  Action  Protocol  Source                      Destitnation                            Service
+--  -------  ------  --------  ------                      ------------                            -------
+1   true     permit  ip        192.168.84.0/255.255.255.0  vpn_network/255.255.255.0               any
+2   true     permit  ip        192.168.84.0/255.255.255.0  vpn/255.255.255.0                       any
+3   true     permit  ip        192.168.84.0/255.255.255.0  Consultants_VPN_IP_Range/255.255.255.0  any
+
+Internal_access_in
+==================
+
+ID  Enabled  Action  Protocol             Source                      Destitnation                Service
+--  -------  ------  --------             ------                      ------------                -------
+1   true     permit  udp                  0.0.0.0/0                   DM_INLINE_NETWORK_1         domain
+2   true     permit  DM_INLINE_SERVICE_5  0.0.0.0/0                   qphone_int/32               log
+3   true     permit  icmp                 0.0.0.0/0                   192.168.84.0/255.255.255.0  any
+4   true     permit  ip                   0.0.0.0/0                   192.168.84.0/255.255.255.0  log
+5   true     permit  tcp                  DM_INLINE_NETWORK_2         svnmail_int/32              svn
+6   true     permit  tcp                  DM_INLINE_NETWORK_3         svnmail_int/32              smtp
+7   true     permit  tcp                  win2k_server_IE6/32         atoth_macbook_pro/32        www
+8   true     permit  icmp                 192.168.83.0/255.255.255.0  0.0.0.0/0                   any
+9   true     permit  ip                   0.0.0.0/0                   0.0.0.0/0                   log
+10  true     permit  tcp                  PM_staging_DB_server/32     Openfiler/32                ssh
+11  true     permit  tcp                  consultant_vpn              DM_INLINE_NETWORK_9         All_services
+12  true     permit  tcp                  consultant_vpn              svnmail_int/32              svn
+13  true     permit  tcp                  consultant_vpn              192.168.83.0/255.255.255.0  VNC
+14  true     permit  icmp                 consultant_vpn              192.168.83.0/255.255.255.0  inactive
+
+Dmz_in
+======
+
+ID  Enabled  Action  Protocol             Source                      Destitnation                 Service
+--  -------  ------  --------             ------                      ------------                 -------
+1   true     permit  icmp                 0.0.0.0/0                   0.0.0.0/0                    any
+2   true     permit  tcp                  0.0.0.0/0                   0.0.0.0/0                    https
+3   true     permit  tcp                  0.0.0.0/0                   0.0.0.0/0                    www
+4   true     permit  tcp                  rapReport_dev_int/32        68.91.41.160/32              ssh_11411
+5   true     permit  tcp                  rapReport_dev_int/32        0.0.0.0/0                    smtp
+6   true     permit  tcp                  DM_INLINE_NETWORK_12        0.0.0.0/0                    smtp
+7   true     permit  tcp                  collab.xyz.com_int/32       svnmail_int/32               svn
+8   true     permit  tcp                  lfo.xyz.biz_int/32          0.0.0.0/0                    smtp
+9   true     permit  udp                  DM_INLINE_NETWORK_18        voicepulse_SIP               DM_INLINE_UDP_3
+10  true     permit  DM_INLINE_SERVICE_8  DM_INLINE_NETWORK_16        0.0.0.0/0                    log
+11  true     permit  udp                  DM_INLINE_NETWORK_17        0.0.0.0/0                    iax2
+12  true     permit  tcp                  vmdmz01_int/32              xoman/32                     ssh
+13  true     permit  udp                  192.168.84.0/255.255.255.0  DM_INLINE_NETWORK_8          domain
+14  true     permit  udp                  192.168.84.0/255.255.255.0  0.0.0.0/0                    ntp
+15  true     permit  tcp                  0.0.0.0/0                   0.0.0.0/0                    ftp-data
+16  true     permit  tcp                  0.0.0.0/0                   0.0.0.0/0                    ftp
+17  true     permit  remote_desktop       0.0.0.0/0                   0.0.0.0/0                    any
+18  true     permit  TCPUDP               openfiler01_dns_dmz/32      wlan0_network/255.255.255.0  domain
+19  true     permit  tcp                  192.168.84.0/255.255.255.0  xoman/32                     Hyperic_7080
+20  true     permit  tcp                  0.0.0.0/0                   0.0.0.0/0                    Hyperic_2144
+
+Capin
+=====
+
+ID  Enabled  Action  Protocol  Source     Destitnation  Service
+--  -------  ------  --------  ------     ------------  -------
+1   true     permit  icmp      0.0.0.0/0  0.0.0.0/0     any
+
+Wlan0_access_in
+===============
+
+ID  Enabled  Action  Protocol  Source                  Destitnation                 Service
+--  -------  ------  --------  ------                  ------------                 -------
+1   true     permit  TCPUDP    openfiler01_dns_dmz/32  wlan0_network/255.255.255.0  domain
+2   true     permit  TCPUDP    0.0.0.0/0               openfiler01_dns_dmz/32       domain
+
+Dmz0_nat0_outbound_1
+====================
+
+ID  Enabled  Action  Protocol  Source                      Destitnation                 Service
+--  -------  ------  --------  ------                      ------------                 -------
+1   true     permit  ip        192.168.84.0/255.255.255.0  wlan0_network/255.255.255.0  any
+
+Wlan0_nat0_outbound
+===================
+
+ID  Enabled  Action  Protocol  Source                       Destitnation                  Service
+--  -------  ------  --------  ------                       ------------                  -------
+1   true     permit  ip        wlan0_network/255.255.255.0  192.168.84.0/255.255.255.0    any
+2   true     permit  ip        wlan0_network/255.255.255.0  220.5.222.96/255.255.255.224  any
+
+Wan0_nat0_outbound_1
+====================
+
+ID  Enabled  Action  Protocol  Source                        Destitnation                 Service
+--  -------  ------  --------  ------                        ------------                 -------
+1   true     permit  ip        220.5.222.96/255.255.255.224  wlan0_network/255.255.255.0  any
+

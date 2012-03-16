@@ -7,13 +7,14 @@ require 'report/text'
 def report_firewall(firewall, analysis, output, format)
 
 	include Report::TextReport
+	include Report::HTMLReport
 
 	report = nil
 	case format.downcase
 		when "text"
 			report = generate_text_report(firewall, analysis)
 		when "html"
-			report = html_report(firewall, analysis)
+			report = generate_html_report(firewall, analysis)
 		else
 			raise ReportError, "Unknown report type #{type}"
 	end

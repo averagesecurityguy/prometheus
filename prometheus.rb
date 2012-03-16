@@ -3,30 +3,37 @@
 # Copyright 2012 Stephen Haywood
 # All rights reserved
 
+base = __FILE__
+while File.symlink?(base)
+	base = File.expand_path(File.readlink(base), File.dirname(base))
+end
+
+$:.unshift(File.join(File.dirname(base), 'lib'))
+
 require 'optparse'
 
-options = {}
+args = {}
 optparse = OptionParser.new do|opts|
 	# Firewall configuration file
-	options[:config] = ""
+	args[:config] = ""
 	opts.on( '-c', '--config_file FILE', "Firewall configuration to parse." ) do|c|
 		options[:config] = c
 	end
 
 	# Report output file
-	options[:report] = "#{Time.now.to_f.to_s}.html"
+	args[:report] = "#{Time.now.to_f.to_s}.html"
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
 	
 	# Report format
-	options[:format] = "html"
+	args[:format] = "html"
 	opts.on( '-f', '--report_format FORMAT', "Report format to use.") do |f|
 		options[:format] = f
 	end
 
 	# Verbose output
-	options[:verbose] = false
+	args[:verbose] = false
 	opts.on( '-v', '--verbose', "Print verbose output.") do |v|
 		options[:verbose] = true
 	end
@@ -41,25 +48,27 @@ end
 optparse.parse!
 
 # Begin main program
-$LOAD_PATH << './lib'
-
 require 'errors'
 require 'ui'
 require 'config'
 require 'parse'
 require 'analyze'
 require 'report'
+require 'options'
 
 include UI
 include PrometheusErrors
 include Parse
 include Analyze
 include Report
+include Options
 
 firewall = nil
 analysis = nil
 report = nil
-verbose(options[:verbose])
+options[:verbose] = args[:verbose]
+options[:base] = base
+load_options
 
 # Parse the firewall config
 begin
