@@ -1,10 +1,6 @@
-module Parse
-
 require 'parse/parse'
 
 def parse_firewall(config_file)
-
-	parsed = nil
 
 	if not File.exists?(config_file)
 		raise ParseError, "File #{config_file} does not exist."
@@ -22,7 +18,7 @@ def parse_firewall(config_file)
 
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
-		return parse_asa_config(config)
+		parse_asa_config(config)
 	elsif config =~ /Sonic/m
 		print_status("Parsing SonicWALL configuration.")
 		return parse_sonic_config(config)
@@ -30,5 +26,4 @@ def parse_firewall(config_file)
 		raise ParseError, "Unknown firewall type."
 	end
 
-end
 end

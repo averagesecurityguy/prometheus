@@ -1,6 +1,6 @@
 def parse_asa_config(config)
 
-	fw = FirewallConfig.new
+	fw = Config::FirewallConfig.new
 	fw.type = "ASA"
 
 	config.each_line do |line|
@@ -8,7 +8,7 @@ def parse_asa_config(config)
 		if line =~ /ASA Version (.*)$/ then fw.firmware = $1 end
 		
 		# Build interface list
-		if line =~ /^interface (.*)/ then fw.interfaces << Interface.new($1) end
+		if line =~ /^interface (.*)/ then fw.interfaces << Config::Interface.new($1) end
 		# Rename interface if nameif is defined
 		if line =~ /nameif ([a-zA-Z0-9\/]+)/ then
 			fw.interfaces.last.name = $1
@@ -22,10 +22,10 @@ def parse_asa_config(config)
 		# Build Access list
  		if line =~ /access-list (.*) extended (.*)/ then
 			if fw.access_lists.last == nil
-				fw.access_lists << AccessList.new($1)
+				fw.access_lists << Config::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			elsif fw.access_lists.last.name != $1
-				fw.access_lists << AccessList.new($1)
+				fw.access_lists << Config::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
 				id = fw.access_lists.last.ruleset.last.id + 1
@@ -123,7 +123,7 @@ def parse_rule(id, rule)
 	dest, rule_array = parse_rule_host(rule_array)
 	service = parse_rule_service(rule_array)
 
-	return Rule.new(id, true, protocol, source, dest, action, service)
+	return Config::Rule.new(id, true, protocol, source, dest, action, service)
   
 end
 

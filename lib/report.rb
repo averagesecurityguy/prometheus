@@ -1,10 +1,8 @@
-module Report
-
 require 'report/rextable'
 require 'report/html'
 require 'report/text'
 
-def report_firewall(firewall, analysis, output, format)
+def report_firewall(firewall, analysis, output, format, template)
 
 	include Report::TextReport
 	include Report::HTMLReport
@@ -14,7 +12,7 @@ def report_firewall(firewall, analysis, output, format)
 		when "text"
 			report = generate_text_report(firewall, analysis)
 		when "html"
-			report = generate_html_report(firewall, analysis)
+			report = generate_html_report(firewall, analysis, template)
 		else
 			raise ReportError, "Unknown report type #{type}"
 	end
@@ -27,6 +25,4 @@ def save_report(output, report)
 	file.write(report)
 	file.close
 	print_status("Report successfully written.")
-end
-
 end

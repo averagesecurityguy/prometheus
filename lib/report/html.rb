@@ -1,10 +1,10 @@
 module Report
 module HTMLReport
 
-	def generate_html_report(fw, an)
+	def generate_html_report(firewall, analysis, template)
 
 	# Open template file
-	html = 
+	html = ""
 	# Replace id, firmware, and type
 
 	# Insert Interfaces

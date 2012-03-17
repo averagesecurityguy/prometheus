@@ -1,5 +1,3 @@
-module Analyze
-
 require 'analyze/analyze'
 
 def analyze_firewall(firewall)
@@ -20,6 +18,4 @@ def analyze_firewall(firewall)
 	analysis["snmp"] = check_snmp(firewall)
 
 	return analysis
-end
-
 end

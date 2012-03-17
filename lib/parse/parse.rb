@@ -1,6 +1,6 @@
 module Parse
 
-	include Config
+	require 'config'
 	require 'parse/sonic'
 	require 'parse/asa'
 

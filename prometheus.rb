@@ -11,29 +11,33 @@ end
 $:.unshift(File.join(File.dirname(base), 'lib'))
 
 require 'optparse'
+require 'datastore'
 
-args = {}
+# Configure the Datastore
+ds = Prometheus::DataStore.new
+ds.options[:base] = base
+
 optparse = OptionParser.new do|opts|
 	# Firewall configuration file
-	args[:config] = ""
+	ds.options[:config] = ""
 	opts.on( '-c', '--config_file FILE', "Firewall configuration to parse." ) do|c|
 		options[:config] = c
 	end
 
 	# Report output file
-	args[:report] = "#{Time.now.to_f.to_s}.html"
+	ds.options[:report] = "#{Time.now.to_f.to_s}.html"
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
 	
 	# Report format
-	args[:format] = "html"
+	ds.options[:format] = "html"
 	opts.on( '-f', '--report_format FORMAT', "Report format to use.") do |f|
 		options[:format] = f
 	end
 
 	# Verbose output
-	args[:verbose] = false
+	ds.options[:verbose] = false
 	opts.on( '-v', '--verbose', "Print verbose output.") do |v|
 		options[:verbose] = true
 	end
@@ -56,40 +60,26 @@ require 'analyze'
 require 'report'
 require 'options'
 
-include UI
-include PrometheusErrors
-include Parse
-include Analyze
-include Report
-include Options
-
-firewall = nil
-analysis = nil
-report = nil
-options[:verbose] = args[:verbose]
-options[:base] = base
-load_options
-
 # Parse the firewall config
 begin
-	firewall = parse_firewall(options[:config])
-rescue ParseError => e
+	ds.firewall = Parse::parse_firewall(ds.options)
+rescue Prometheus::ParseError => e
 	print_error(e.message)
 	exit
 end
 
 # Analyze the firewall config
 begin
-	analysis = analyze_firewall(firewall)
-rescue AnalysisError => e
+	analysis = Analyze::analyze_firewall(firewall)
+rescue Prometheus::AnalysisError => e
 	print_error(e.message)
 	exit
 end
 
 #Create report for firewall config and analysis
 begin
-	report_firewall(firewall, analysis, options[:report], options[:format])
-rescue ReportError => e
+	Report::report_firewall(firewall, analysis, ds.options)
+rescue Prometheus::ReportError => e
 	print_error(e.message)
 	exit
 end
