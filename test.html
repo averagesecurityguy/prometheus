@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Prometheus Firewall Analyzer Report</title>
+
+	<style media="screen" type="text/css">
+		html {
+			margin: 0;
+			padding: 0;
+		}
+
+		body { 
+			font: 75% georgia, sans-serif;
+			line-height: 1.88889;
+			color: #555753; 
+			background: #fff url(blossoms.jpg) no-repeat bottom right; 
+			margin: 0; 
+			padding: 0;
+		}
+
+		p { 
+			margin-top: 0; 
+			text-align: justify;
+		}
+
+		h3 { 
+			font: italic normal 1.4em georgia, sans-serif;
+			letter-spacing: 1px; 
+			margin-bottom: 0; 
+			color: #7D775C;
+		}
+
+		a:link { 
+			font-weight: bold; 
+			text-decoration: none; 
+			color: #B7A5DF;
+		}
+
+		a:visited { 
+			font-weight: bold; 
+			text-decoration: none; 
+			color: #D4CDDC;
+		}
+
+		a:hover, a:active { 
+			text-decoration: underline; 
+			color: #9685BA;
+		}
+	
+		h1#banner {
+		}
+
+		h2#banner {
+		}
+
+		.container {
+
+	</style>
+</head>
+    
+<body>
+	<div id="container">
+		<div id="banner">
+    		<h1>Firewall Configuration Analysis Report</h1>
+			<h1>for pppfw01 </h1>
+			<h2>Provided by</h2>
+			<h2>Prometheus Firewall Analyzer</h2>
+		</div>
+
+    	<div id="body">
+			<h1>Configuration Summary</h1>
+			<p>ID: pppfw01 <br />
+			FIRMWARE: 8.0(2)  <br />
+			TYPE: ASA </p>
+
+			<h2>Interfaces</h2>
+			<table><tr><th>Name</th><th>IP Address</th><th>Subnet Mask</th></tr><tr><td>Internal</td><td>192.168.83.1</td><td>255.255.255.0</td><td>&#160;</td><td>&#160;</td><td>&#160;</td><td>&#160;</td></tr><tr><td>DMZ0</td><td>192.168.84.1</td><td>255.255.255.0</td><td>&#160;</td><td>&#160;</td><td>&#160;</td><td>&#160;</td></tr><tr><td>wlan0</td><td>192.168.85.1</td><td>255.255.255.0</td><td>&#160;</td><td>&#160;</td><td>&#160;</td><td>&#160;</td></tr><tr><td>wan0</td><td>220.5.222.98</td><td>255.255.255.224</td><td>&#160;</td><td>&#160;</td><td>&#160;</td><td>&#160;</td></tr><tr><td>management</td><td>192.168.1.1</td><td>255.255.255.0</td><td>&#160;</td><td>&#160;</td><td>&#160;</td><td>&#160;</td></tr></table>
+
+			<h2>Remote Management</h2>
+			<table><tr><th>Interfaces</th><th>HTTP</th><th>HTTPS</th><th>SSH</th><th>Telnet</th></tr></table>
+
+			<h2>Access Control Lists</h2>
+			<p class="acl_name">wan0_access_in (wan0)</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>TCPUDP</td><td>alan_home/32</td><td>0.0.0.0/0</td><td>permit</td><td>All_services</td></tr><tr><td>2</td><td>true</td><td>DM_INLINE_PROTOCOL_1</td><td>wlan0_network/255.255.255.0</td><td>0.0.0.0/0</td><td>permit</td><td>log</td></tr><tr><td>3</td><td>true</td><td>TCPUDP</td><td>0.0.0.0/0</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>4</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_4</td><td>permit</td><td>www</td></tr><tr><td>5</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>FTPserver_ext/32</td><td>permit</td><td>ssh</td></tr><tr><td>6</td><td>true</td><td>tcp</td><td>DM_INLINE_NETWORK_7</td><td>cata_ext/32</td><td>permit</td><td>www</td></tr><tr><td>7</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_5</td><td>permit</td><td>https</td></tr><tr><td>8</td><td>true</td><td>udp</td><td>0.0.0.0/0</td><td>qphone_ext/32</td><td>permit</td><td>iax2</td></tr><tr><td>9</td><td>true</td><td>udp</td><td>0.0.0.0/0</td><td>switchvox1_int/32</td><td>permit</td><td>iax2</td></tr><tr><td>10</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>facebook_dev_ext/32</td><td>permit</td><td>DM_INLINE_TCP_1</td></tr><tr><td>11</td><td>true</td><td>tcp</td><td>life_testAccessGroup</td><td>DM_INLINE_NETWORK_10</td><td>permit</td><td>DM_INLINE_TCP_3</td></tr><tr><td>12</td><td>true</td><td>tcp</td><td>andrews_remote</td><td>andrews_ext/32</td><td>permit</td><td>www</td></tr><tr><td>13</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_6</td><td>permit</td><td>DM_INLINE_TCP_2</td></tr><tr><td>14</td><td>true</td><td>tcp</td><td>folioMediaOfficeFirewall1/32</td><td>folioMedia_ext/32</td><td>permit</td><td>ftp</td></tr><tr><td>15</td><td>true</td><td>DM_INLINE_SERVICE_1</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_11</td><td>permit</td><td>log</td></tr><tr><td>16</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_15</td><td>permit</td><td>2222</td></tr><tr><td>17</td><td>true</td><td>udp</td><td>voicepulse_SIP</td><td>DM_INLINE_NETWORK_14</td><td>permit</td><td>DM_INLINE_UDP_4</td></tr><tr><td>18</td><td>true</td><td>DM_INLINE_SERVICE_4</td><td>0.0.0.0/0</td><td>qphone_ext/32</td><td>permit</td><td>log</td></tr><tr><td>19</td><td>true</td><td>udp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_19</td><td>permit</td><td>iax2</td></tr><tr><td>20</td><td>true</td><td>udp</td><td>DM_INLINE_NETWORK_13</td><td>switchvox1_ext/32</td><td>permit</td><td>DM_INLINE_UDP_1</td></tr><tr><td>21</td><td>true</td><td>DM_INLINE_SERVICE_6</td><td>switchvox_tech_support/32</td><td>switchvox1_ext/32</td><td>permit</td><td>log</td></tr><tr><td>22</td><td>true</td><td>tcp</td><td>xobot_firewall/32</td><td>svnmail_ext/32</td><td>permit</td><td>smtp</td></tr><tr><td>23</td><td>true</td><td>icmp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>any</td></tr><tr><td>24</td><td>true</td><td>tcp</td><td>change_client_ips</td><td>change_ext/32</td><td>permit</td><td>www</td></tr></table><p class="acl_name">management_nat0_outbound</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>0.0.0.0/0</td><td>192.168.86.2/255.255.255.254</td><td>permit</td><td>any</td></tr></table><p class="acl_name">nonat</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>192.168.83.0/255.255.255.0</td><td>vpn_network/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>2</td><td>true</td><td>ip</td><td>192.168.83.0/255.255.255.0</td><td>192.168.84.0/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>3</td><td>true</td><td>ip</td><td>192.168.83.0/255.255.255.0</td><td>Consultants_VPN_IP_Range/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>4</td><td>true</td><td>ip</td><td>svnmail_int/32</td><td>vpn/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>5</td><td>true</td><td>ip</td><td>svnmail_int/32</td><td>Consultants_VPN_IP_Range/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>6</td><td>true</td><td>ip</td><td>yovidportal_int/32</td><td>Consultants_VPN_IP_Range/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>7</td><td>true</td><td>ip</td><td>192.168.83.0/255.255.255.0</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>any</td></tr></table><p class="acl_name">DMZ0_nat0_outbound</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>192.168.84.0/255.255.255.0</td><td>vpn_network/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>2</td><td>true</td><td>ip</td><td>192.168.84.0/255.255.255.0</td><td>vpn/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>3</td><td>true</td><td>ip</td><td>192.168.84.0/255.255.255.0</td><td>Consultants_VPN_IP_Range/255.255.255.0</td><td>permit</td><td>any</td></tr></table><p class="acl_name">Internal_access_in (Internal)</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>udp</td><td>0.0.0.0/0</td><td>DM_INLINE_NETWORK_1</td><td>permit</td><td>domain</td></tr><tr><td>2</td><td>true</td><td>DM_INLINE_SERVICE_5</td><td>0.0.0.0/0</td><td>qphone_int/32</td><td>permit</td><td>log</td></tr><tr><td>3</td><td>true</td><td>icmp</td><td>0.0.0.0/0</td><td>192.168.84.0/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>4</td><td>true</td><td>ip</td><td>0.0.0.0/0</td><td>192.168.84.0/255.255.255.0</td><td>permit</td><td>log</td></tr><tr><td>5</td><td>true</td><td>tcp</td><td>DM_INLINE_NETWORK_2</td><td>svnmail_int/32</td><td>permit</td><td>svn</td></tr><tr><td>6</td><td>true</td><td>tcp</td><td>DM_INLINE_NETWORK_3</td><td>svnmail_int/32</td><td>permit</td><td>smtp</td></tr><tr><td>7</td><td>true</td><td>tcp</td><td>win2k_server_IE6/32</td><td>atoth_macbook_pro/32</td><td>permit</td><td>www</td></tr><tr><td>8</td><td>true</td><td>icmp</td><td>192.168.83.0/255.255.255.0</td><td>0.0.0.0/0</td><td>permit</td><td>any</td></tr><tr><td>9</td><td>true</td><td>ip</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>log</td></tr><tr><td>10</td><td>true</td><td>tcp</td><td>PM_staging_DB_server/32</td><td>Openfiler/32</td><td>permit</td><td>ssh</td></tr><tr><td>11</td><td>true</td><td>tcp</td><td>consultant_vpn</td><td>DM_INLINE_NETWORK_9</td><td>permit</td><td>All_services</td></tr><tr><td>12</td><td>true</td><td>tcp</td><td>consultant_vpn</td><td>svnmail_int/32</td><td>permit</td><td>svn</td></tr><tr><td>13</td><td>true</td><td>tcp</td><td>consultant_vpn</td><td>192.168.83.0/255.255.255.0</td><td>permit</td><td>VNC</td></tr><tr><td>14</td><td>true</td><td>icmp</td><td>consultant_vpn</td><td>192.168.83.0/255.255.255.0</td><td>permit</td><td>inactive</td></tr></table><p class="acl_name">DMZ_in (DMZ0)</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>icmp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>any</td></tr><tr><td>2</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>https</td></tr><tr><td>3</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>www</td></tr><tr><td>4</td><td>true</td><td>tcp</td><td>rapReport_dev_int/32</td><td>68.91.41.160/32</td><td>permit</td><td>ssh_11411</td></tr><tr><td>5</td><td>true</td><td>tcp</td><td>rapReport_dev_int/32</td><td>0.0.0.0/0</td><td>permit</td><td>smtp</td></tr><tr><td>6</td><td>true</td><td>tcp</td><td>DM_INLINE_NETWORK_12</td><td>0.0.0.0/0</td><td>permit</td><td>smtp</td></tr><tr><td>7</td><td>true</td><td>tcp</td><td>collab.xyz.com_int/32</td><td>svnmail_int/32</td><td>permit</td><td>svn</td></tr><tr><td>8</td><td>true</td><td>tcp</td><td>lfo.xyz.biz_int/32</td><td>0.0.0.0/0</td><td>permit</td><td>smtp</td></tr><tr><td>9</td><td>true</td><td>udp</td><td>DM_INLINE_NETWORK_18</td><td>voicepulse_SIP</td><td>permit</td><td>DM_INLINE_UDP_3</td></tr><tr><td>10</td><td>true</td><td>DM_INLINE_SERVICE_8</td><td>DM_INLINE_NETWORK_16</td><td>0.0.0.0/0</td><td>permit</td><td>log</td></tr><tr><td>11</td><td>true</td><td>udp</td><td>DM_INLINE_NETWORK_17</td><td>0.0.0.0/0</td><td>permit</td><td>iax2</td></tr><tr><td>12</td><td>true</td><td>tcp</td><td>vmdmz01_int/32</td><td>xoman/32</td><td>permit</td><td>ssh</td></tr><tr><td>13</td><td>true</td><td>udp</td><td>192.168.84.0/255.255.255.0</td><td>DM_INLINE_NETWORK_8</td><td>permit</td><td>domain</td></tr><tr><td>14</td><td>true</td><td>udp</td><td>192.168.84.0/255.255.255.0</td><td>0.0.0.0/0</td><td>permit</td><td>ntp</td></tr><tr><td>15</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>ftp-data</td></tr><tr><td>16</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>ftp</td></tr><tr><td>17</td><td>true</td><td>remote_desktop</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>any</td></tr><tr><td>18</td><td>true</td><td>TCPUDP</td><td>openfiler01_dns_dmz/32</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>domain</td></tr><tr><td>19</td><td>true</td><td>tcp</td><td>192.168.84.0/255.255.255.0</td><td>xoman/32</td><td>permit</td><td>Hyperic_7080</td></tr><tr><td>20</td><td>true</td><td>tcp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>Hyperic_2144</td></tr></table><p class="acl_name">capin</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>icmp</td><td>0.0.0.0/0</td><td>0.0.0.0/0</td><td>permit</td><td>any</td></tr></table><p class="acl_name">wlan0_access_in (wlan0)</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>TCPUDP</td><td>openfiler01_dns_dmz/32</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>domain</td></tr><tr><td>2</td><td>true</td><td>TCPUDP</td><td>0.0.0.0/0</td><td>openfiler01_dns_dmz/32</td><td>permit</td><td>domain</td></tr></table><p class="acl_name">DMZ0_nat0_outbound_1</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>192.168.84.0/255.255.255.0</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>any</td></tr></table><p class="acl_name">wlan0_nat0_outbound</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>wlan0_network/255.255.255.0</td><td>192.168.84.0/255.255.255.0</td><td>permit</td><td>any</td></tr><tr><td>2</td><td>true</td><td>ip</td><td>wlan0_network/255.255.255.0</td><td>220.5.222.96/255.255.255.224</td><td>permit</td><td>any</td></tr></table><p class="acl_name">wan0_nat0_outbound_1</p><table><tr><th>ID</th><th>Enabled</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Service</th></tr><tr><td>1</td><td>true</td><td>ip</td><td>220.5.222.96/255.255.255.224</td><td>wlan0_network/255.255.255.0</td><td>permit</td><td>any</td></tr></table>
+
+			<h1>Configuration Analysis</h1>
+			<p>Put Analysis Here</p>
+		</div>
+	</div>
+</body>
+</html>

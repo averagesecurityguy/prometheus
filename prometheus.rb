@@ -21,15 +21,21 @@ optparse = OptionParser.new do|opts|
 	end
 
 	# Report output file
-	options[:report] = "#{Time.now.to_f.to_s}.html"
+	options[:report] = "#{Time.now.to_i.to_s}.html"
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
 	
 	# Report format
 	options[:format] = "html"
-	opts.on( '-f', '--report_format FORMAT', "Report format to use.") do |f|
+	opts.on( '-f', '--report_format FORMAT', "Report format to use." ) do |f|
 		options[:format] = f
+	end
+
+	# HTML report template
+	options[:template] = 'config/template.html'
+	opts.on( '-t', '--html_template FILE', "HTML file to use as template." ) do |t|
+		options[:template] = t
 	end
 
 	# Verbose output
