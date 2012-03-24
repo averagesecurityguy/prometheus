@@ -1,0 +1,279 @@
+ID: 0017-C5A0-DE8C
+FIRMWARE: SonicOS Enhanced 5.6.0.10-52o
+TYPE: SonicOS
+
+INTERFACES
+Interface  IP Address       Subnet Mask    Status
+---------  ----------       -----------    ------
+X0         192.168.168.168  255.255.255.0  UP
+X1                                         DOWN
+X3                                         DOWN
+X4                                         DOWN
+
+REMOTE MANAGEMENT
+Interface  HTTP  HTTPS  SSH  TELNET
+---------  ----  -----  ---  ------
+X0         Yes   Yes    Yes  No
+X1         No    No     No   No
+X3         No    No     No   No
+X4         No    No     No   No
+
+ACCESS CONTROL LISTS
+Lan to lan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation          Service
+--  -------  ------  --------  ------  ------------          -------
+1   Yes      Allow             Any     All X0 Management IP  Ping
+2   Yes      Allow             Any     All X0 Management IP  SSH Management
+3   Yes      Allow             Any     All X0 Management IP  HTTPS Management
+4   Yes      Allow             Any     All X0 Management IP  HTTP Management
+5   Yes      Allow             Any     Any                   Any
+
+Lan to wan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Lan to dmz
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Lan to vpn
+==========
+
+ID  Enabled  Action  Protocol  Source                      Destitnation  Service
+--  -------  ------  --------  ------                      ------------  -------
+1   No       Allow             WAN RemoteAccess Networks   Any           Any
+2   No       Allow             WLAN RemoteAccess Networks  Any           Any
+
+Lan to multicast
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Lan to wlan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Wan to lan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Wan to dmz
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Wan to multicast
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Wan to wlan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Dmz to lan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Dmz to wan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Dmz to dmz
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Dmz to vpn
+==========
+
+ID  Enabled  Action  Protocol  Source                      Destitnation  Service
+--  -------  ------  --------  ------                      ------------  -------
+1   No       Allow             WAN RemoteAccess Networks   Any           Any
+2   No       Allow             WLAN RemoteAccess Networks  Any           Any
+
+Dmz to multicast
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Dmz to wlan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Vpn to lan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   Yes      Allow             Any     All X0 Management IP        SNMP
+2   Yes      Allow             Any     All X0 Management IP        Ping
+3   No       Allow             Any     WAN RemoteAccess Networks   Any
+4   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Vpn to wan
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   No       Allow             Any     WAN RemoteAccess Networks   Any
+2   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Vpn to dmz
+==========
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   No       Allow             Any     WAN RemoteAccess Networks   Any
+2   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Vpn to vpn
+==========
+
+ID  Enabled  Action  Protocol  Source                      Destitnation                Service
+--  -------  ------  --------  ------                      ------------                -------
+1   No       Allow             Any                         WAN RemoteAccess Networks   Any
+2   No       Allow             WAN RemoteAccess Networks   Any                         Any
+3   No       Allow             Any                         WLAN RemoteAccess Networks  Any
+4   No       Allow             WLAN RemoteAccess Networks  Any                         Any
+
+Vpn to sslvpn
+=============
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   No       Allow             Any     WAN RemoteAccess Networks   Any
+2   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Vpn to multicast
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   No       Allow             Any     WAN RemoteAccess Networks   Any
+2   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Vpn to wlan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation                Service
+--  -------  ------  --------  ------  ------------                -------
+1   No       Allow             Any     WAN RemoteAccess Networks   Any
+2   No       Allow             Any     WLAN RemoteAccess Networks  Any
+
+Sslvpn to vpn
+=============
+
+ID  Enabled  Action  Protocol  Source                      Destitnation  Service
+--  -------  ------  --------  ------                      ------------  -------
+1   No       Allow             WAN RemoteAccess Networks   Any           Any
+2   No       Allow             WLAN RemoteAccess Networks  Any           Any
+
+Multicast to lan
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Multicast to wan
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Multicast to dmz
+================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Multicast to vpn
+================
+
+ID  Enabled  Action  Protocol  Source                      Destitnation  Service
+--  -------  ------  --------  ------                      ------------  -------
+1   No       Allow             WAN RemoteAccess Networks   Any           Any
+2   No       Allow             WLAN RemoteAccess Networks  Any           Any
+
+Multicast to wlan
+=================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Wlan to lan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+
+Wlan to wan
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Wlan to dmz
+===========
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Allow             Any     Any           Any
+
+Wlan to vpn
+===========
+
+ID  Enabled  Action  Protocol  Source                      Destitnation  Service
+--  -------  ------  --------  ------                      ------------  -------
+1   No       Allow             WAN RemoteAccess Networks   Any           Any
+2   No       Allow             WLAN RemoteAccess Networks  Any           Any
+
+Wlan to multicast
+=================
+
+ID  Enabled  Action  Protocol  Source  Destitnation  Service
+--  -------  ------  --------  ------  ------------  -------
+1   Yes      Deny              Any     Any           Any
+

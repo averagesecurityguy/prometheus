@@ -4,19 +4,25 @@ def parse_asa_config(config)
 	fw.type = "ASA"
 
 	config.each_line do |line|
-		if line =~ /^hostname (.*)$/ then fw.id = $1  end
+		if line =~ /^hostname (.*)$/ then fw.name = $1  end
 		if line =~ /ASA Version (.*)$/ then fw.firmware = $1 end
 		
 		# Build interface list
 		if line =~ /^interface (.*)/ then fw.interfaces << Config::Interface.new($1) end
+		interface = fw.interfaces.last
+
 		# Rename interface if nameif is defined
 		if line =~ /nameif ([a-zA-Z0-9\/]+)/ then
-			fw.interfaces.last.name = $1
+			interface.name = $1
 		end
 		if line =~ /^ ip address (.*)/
 			ip, mask = $1.split(" ")
-			fw.interfaces.last.ip = ip
-			fw.interfaces.last.mask = mask
+			interface.ip = ip
+			interface.mask = mask
+		end
+
+		if line =~ /^ shutdown/
+			interface.status = "Down"
 		end
   
 		# Build Access list
@@ -41,28 +47,25 @@ def parse_asa_config(config)
 			end
 		end
 
-		# SNMP Configuration
-
-
 		# Management Interfaces
 		if line =~ /http .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.http = true end
+				if int.name == $1 then int.http = 'Yes' end
 			end
 		end
 
 		if line =~ /ssh .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.ssh = true end
+				if int.name == $1 then int.ssh = 'Yes' end
 			end
 		end
 
 		if line =~ /telnet .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.telnet = true end
+				if int.name == $1 then int.telnet = 'Yes' end
 			end
 		end
 			
@@ -115,15 +118,17 @@ def parse_rule_service(rule_array)
 end
 
 
-def parse_rule(id, rule)
-	rule_array = rule.split(" ")
-	action = rule_array.shift
-	protocol, rule_array = parse_rule_protocol(rule_array)
-	source, rule_array = parse_rule_host(rule_array)
-	dest, rule_array = parse_rule_host(rule_array)
-	service = parse_rule_service(rule_array)
+def parse_rule(id, string)
+	rule = Config::Rule.new(id)
+	rule.enabled = "Yes"
+	rule_array = string.split(" ")
+	rule.action = rule_array.shift
+	rule.protocol, rule_array = parse_rule_protocol(rule_array)
+	rule.source, rule_array = parse_rule_host(rule_array)
+	rule.dest, rule_array = parse_rule_host(rule_array)
+	rule.service = parse_rule_service(rule_array)
 
-	return Config::Rule.new(id, true, protocol, source, dest, action, service)
+	return rule
   
 end
 
