@@ -13,8 +13,8 @@ require 'ipaddr'
 
 		def initialize(name)
 			@name = name
-			@ip = ''
-			@mask = ''
+			@ip = ' '
+			@mask = ' '
 			@status = 'UP'
 			@http = 'No'
 			@https = 'No'

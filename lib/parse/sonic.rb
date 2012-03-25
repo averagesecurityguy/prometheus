@@ -4,6 +4,7 @@ def parse_sonic_config(config)
 	fw.type = "SonicOS"
 
 	config.each_line do |line|
+		line.chomp!
 		if line =~ /^Serial number (.*)/ then fw.name = $1 end
 		if line =~ /^Firmware version: (.*)/ then fw.firmware = $1 end
 

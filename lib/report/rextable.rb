@@ -199,7 +199,6 @@ class Table
 				colprops[idx]['MaxWidth'] = field.to_s.length
 			end
 		}
-
 		rows << fields	
 	end
 
@@ -293,7 +292,6 @@ protected
 			last_cell = cell
 			last_idx = idx
 		}
-
 		return line + "\n"
 	end
 

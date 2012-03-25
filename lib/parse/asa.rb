@@ -4,17 +4,22 @@ def parse_asa_config(config)
 	fw.type = "ASA"
 
 	config.each_line do |line|
+		line.chomp!
 		if line =~ /^hostname (.*)$/ then fw.name = $1  end
 		if line =~ /ASA Version (.*)$/ then fw.firmware = $1 end
 		
 		# Build interface list
-		if line =~ /^interface (.*)/ then fw.interfaces << Config::Interface.new($1) end
+		if line =~ /^interface (.*)/ then
+			vprint_status("Processing interface #{$1}")
+			fw.interfaces << Config::Interface.new($1)
+		end
 		interface = fw.interfaces.last
 
 		# Rename interface if nameif is defined
-		if line =~ /nameif ([a-zA-Z0-9\/]+)/ then
+		if line =~ /^ nameif ([a-zA-Z0-9\/]+)/ then
 			interface.name = $1
 		end
+
 		if line =~ /^ ip address (.*)/
 			ip, mask = $1.split(" ")
 			interface.ip = ip

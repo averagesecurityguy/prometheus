@@ -26,7 +26,7 @@ def generate_text_report(fw, an)
 
 	fw.access_lists.each do |al|
 		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Protocol", "Source", "Destitnation", "Service"], 
-									'Header' => al.name.capitalize)
+									'Header' => al.name.upcase)
     	al.ruleset.each do |r|
         	tbl << [r.id, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
     	end
