@@ -1,8 +1,7 @@
 module Analyze
 
-	require 'analyze/version'
+	require 'vulnerability'
 	require 'analyze/rules'
-	require 'analyze/snmp'
 	require 'analyze/remote_admin'
 
 end

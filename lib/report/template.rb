@@ -1,3 +1,8 @@
+module Report
+module Template
+
+	def html_template
+		template = <<<EOT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -77,8 +82,11 @@
 			<h2>Provided by Prometheus Firewall Analyzer</h2>
 		</div>
 
-    	<div id="body">
+    	<div id="main">
+			<p>Put Introductory text here.</p>
+
 			<h1>Configuration Summary</h1>
+			<p>Put configuration intro here.</p>
 			<p>ID: --id-- <br />
 			FIRMWARE: --firmware-- <br />
 			TYPE: --type-- </p>
@@ -93,8 +101,16 @@
 			--access_lists--
 
 			<h1>Configuration Analysis</h1>
-			<p>Put Analysis Here</p>
+			<p>Put Analysis Intro Here</p>
+			--analysis--
+		</div>
+		
+		<div id="footer">
+			<p>&copy; 2012 Stephen Haywood</p>
 		</div>
 	</div>
 </body>
 </html>
+EOT	
+		return template
+	end

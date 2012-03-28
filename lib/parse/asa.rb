@@ -56,21 +56,21 @@ def parse_asa_config(config)
 		if line =~ /http .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.http = 'Yes' end
+				if int.name == $1 then int.http = true end
 			end
 		end
 
 		if line =~ /ssh .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.ssh = 'Yes' end
+				if int.name == $1 then int.ssh = true end
 			end
 		end
 
 		if line =~ /telnet .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
-				if int.name == $1 then int.telnet = 'Yes' end
+				if int.name == $1 then int.telnet = true end
 			end
 		end
 			
@@ -125,7 +125,7 @@ end
 
 def parse_rule(id, string)
 	rule = Config::Rule.new(id)
-	rule.enabled = "Yes"
+	rule.enabled = true
 	rule_array = string.split(" ")
 	rule.action = rule_array.shift
 	rule.protocol, rule_array = parse_rule_protocol(rule_array)

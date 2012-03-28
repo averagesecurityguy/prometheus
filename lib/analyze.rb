@@ -2,20 +2,15 @@ require 'analyze/analyze'
 
 def analyze_firewall(firewall)
 	print_status("Analyzing firewall configuration.")
-	analysis = {}
+	analysis = []
 
-	# Run checks on firewall configuration
-	vprint_status("Checking firewall version.")
-	analysis["version"] = check_version(firewall)
-	
-	vprint_status("Checking firewall rules.")
-	analysis["rules"] = check_rules(firewall)
+	# Run checks on firewall rules
+	print_status("Checking firewall rules.")
+	analysis.concat(analyze_firewall_rules(firewall))
 
-	vprint_status("Checking remote administration.")
-	analysis["remote_admin"] = check_remote_admin(firewall)
-	
-	vprint_status("Checking SNMP configuration.")
-	analysis["snmp"] = check_snmp(firewall)
+	# Run checks on remote administration
+	print_status("Checking remote administration.")
+	analysis.concat(analyze_remote_administration(firewall))
 
 	return analysis
 end
