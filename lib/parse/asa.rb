@@ -39,8 +39,8 @@ def parse_asa_config(config)
 				fw.access_lists << Config::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
-				id = fw.access_lists.last.ruleset.last.id + 1
-				fw.access_lists.last.ruleset << parse_rule(id, $2)
+				num = fw.access_lists.last.ruleset.last.num + 1
+				fw.access_lists.last.ruleset << parse_rule(num, $2)
 			end
 		end
 

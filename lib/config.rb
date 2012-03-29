@@ -141,11 +141,11 @@ module Config
 
 	# Track rules in rulesets
 	class Rule
-		attr_accessor :id, :enabled, :protocol, :source
+		attr_accessor :num, :enabled, :protocol, :source
 		attr_accessor :dest, :action, :service
 
-		def initialize(id)
-			@id = id
+		def initialize(num)
+			@num = num
 			@enabled = false
 			@protocol = ''
 			@source = ''

@@ -28,7 +28,7 @@ def generate_text_report(fw, an)
 		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Protocol", "Source", "Destination", "Service"], 
 									'Header' => al.name.upcase)
     	al.ruleset.each do |r|
-        	tbl << [r.id, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
+        	tbl << [r.num, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
     	end
     
     	report << tbl.to_s + "\n"

@@ -14,8 +14,8 @@ def check_cleartext_administration(fw)
 	telnet = []
 
 	fw.interfaces.each do |i|
-		if i.http? then http << "Interface #{i.name}" end
-		if i.telnet? then telnet << "Interface #{i.name}" end
+		if i.http? then http << [i.name] end
+		if i.telnet? then telnet << [i.name] end
 	end
 
 	vuln = rm_cleartext_vulnerability('HTTP', http)
@@ -43,7 +43,7 @@ def check_external_administration(fw)
 			if i.ssh? then vuln = true end
 			if i.telnet? then vuln = true end
 		end
-		if vuln then external << "Interface #{i.name}" end
+		if vuln then external << [i.name] end
 	end
 
 	vuln = rm_external_vulnerability(external)
@@ -59,6 +59,8 @@ def rm_cleartext_vulnerability(proto, affected)
 
 	if not affected.empty?
 		vuln = Vulnerability.new("Remote Management with #{proto}")
+
+		vuln.type = 'management'
 
 		vuln.desc =  "The following interfaces are using #{proto} for remote "
 		vuln.desc << "administration. #{proto} is considered insecure because all "
@@ -81,6 +83,8 @@ def rm_external_vulnerability(affected)
 
 	if not affected.empty?
 		vuln = Vulnerability.new("Remote Management on External Interface")
+
+		vuln.type = 'management'
 
 		vuln.desc =  "The firewall can be remotely managed on the following "
 		vuln.desc << "external interfaces. This gives an external attacker "
