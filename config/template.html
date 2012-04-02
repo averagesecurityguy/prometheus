@@ -7,12 +7,22 @@
 
 		body { 
 			color: #000000; 
-			background-color: #ffffff; 
+			background-color: #d0d0d0; 
 			margin: 0; 
 			padding: 0;
 			text-align: center;
 			font-size: 14px;
-			font-family: Georgia, serif;
+			font-family: sans-serif;
+		}
+
+		div#prometheus {
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 16px;
+			margin-bottom: 0px;
+			width: 800px;
+			background-color: #d0d0d0;
+			color: #e40000;
 		}
 
 		div#container {
@@ -20,59 +30,69 @@
 			margin-right: auto;
 			margin-top: 16px;
 			margin-bottom: 16px;
-			width: 800px;
+			width: 80%;
 			text-align: left;
-			background-color: #f8f8f8;
+			background-color: #ffffff;
 			border: 2px solid #000000;
 			padding: 8px;
 		}
 
-		div#banner {
-			border: 4px double #000000;
-			padding: 4px;
-			margin: 4px 4px 12px 4px;
+		div {
+			margin-bottom: 16px;
 		}
 
-		h1, h2, h3, h4, th {
-			font-family: helvetica, sans-serif;
-			margin-bottom: 0px;
-			padding-bottom: 0px;
+		h1, h2, h3, h4 {
+			font-family: serif;
 		}
-
-		h1, h2 { text-align: center;}
 
 		h1 {
-			margin-top: 8px;
-			padding-top: 8px;
-		}
-		
-		h2, h3 {
-			margin-top: 4px;
-			padding-top: 4px;
+			text-align: center;
+			margin: 16px 0px;
+			font-size: 250%;
 		}
 
-		p {
+		h2 {
+			color: #e40000;
+			margin: 24px 0px 0px 0px;
+		}
+
+		h3, h4 {
+			color: #616161;
 			margin: 0px;
 			padding: 0px;
 		}
 
-		table {
-			margin-bottom: 8px;
+		p {
+			margin: 0px;
+			padding: 0px 0px 8px 0px;
+			text-align: justify;
 		}
-		
-		td, tr {
-			padding: 0px 4px;
+
+		table {
+			border-collapse: collapse;
+		}
+
+		table, td, th {
+			border: 1px solid #000;
+		}
+	
+		td, th { padding: 2px 8px; }
+
+		th { 
+			background-color: #d0d0d0;
+			color: #e40000;
+			font-family: serif;
 		}
 
 	</style>
 </head>
     
 <body>
+
+	<div id="prometheus"><img src="config/prometheus.png" /></div>
+
 	<div id="container">
-		<div id="banner">
-    		<h1>Firewall Analysis Report For --name-- </h1>
-			<h2>Provided by Prometheus Firewall Analyzer</h2>
-		</div>
+    	<h1>Firewall Analysis Report For --name-- </h1>
 
     	<div id="body">
 			<h2>Configuration Analysis Summary</h2>

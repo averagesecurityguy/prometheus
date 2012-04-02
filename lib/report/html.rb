@@ -54,6 +54,7 @@ module HTMLReport
 
 	def interfaces_to_html(interfaces)
 
+		h = ''
 		head = ['Name', 'IP Address', 'Subnet Mask', 'Status']
 		ints = []
 
@@ -61,11 +62,16 @@ module HTMLReport
 			ints << [i.name, i.ip, i.mask, i.status]
 		end
 
-		return html_table(head, ints)
+		h << "<div>"
+		h << html_table(head, ints)
+		h << "</div>"
+
+		return h
 	end
 
 	def management_to_html(interfaces)
 
+		h = ''
 		head = ['Interface', 'HTTP', 'HTTPS', 'SSH', 'Telnet']
 		mgmt = []
 
@@ -73,7 +79,11 @@ module HTMLReport
 			mgmt << [i.name, i.http, i.https, i.ssh, i.telnet]
 		end
 
-		return html_table(head, mgmt)
+		h << "<div>"
+		h << html_table(head, mgmt)
+		h << "</div>"
+
+		return h
 	end
 
 	def analysis_to_html(analysis)
@@ -90,16 +100,15 @@ module HTMLReport
 		case a.type
 		when 'rule'
 			head = ['Access List', 'Rule #', 'Source', 'Destination', 'Service']
-			title = 'Affected Rules'
 		when 'management'
-			head = nil
-			title = 'Affected Interfaces'
+			head = ['Interface']
 		end
 
+		h << "<div>"
 		h << "<h3>#{a.name}</h3>"
 		h << "<p>#{a.desc} #{a.solution}</p>"
-		h << "<h4>#{title}</h4>"
 		h << html_table(head, a.affected)
+		h << "</div>"
 
 		return h
 	end
@@ -107,10 +116,12 @@ module HTMLReport
 	def access_lists_to_html(acls)
 		h = ''
 		acls.each do |a|
+			h << "<div>"
 			h << "<h4>#{a.name}"
 			h << " (#{a.interface})" if a.interface
-			h << '</h4>'
+			h << "</h4>"
 			h << rules_to_html(a.ruleset)
+			h << "</div>"
 		end
 
 		return h
