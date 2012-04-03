@@ -1,4 +1,10 @@
-require 'parse/parse'
+require 'parse/sonic'
+require 'parse/asa'
+
+##
+# Takes a firewall configuration file and returns a Config::Firewall object.
+# Ensures the configuration file is an existing, non-empty file then calls the
+# appropriate parsing function based on the configuration type identified.
 
 def parse_firewall(config_file)
 

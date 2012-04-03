@@ -54,8 +54,7 @@ end
 optparse.parse!
 
 # Begin main program
-require 'errors'
-require 'ui'
+require 'common'
 require 'parse'
 require 'analyze'
 require 'report'

@@ -1,4 +1,11 @@
-require 'analyze/analyze'
+require 'analyze/rules'
+require 'analyze/remote_admin'
+
+##
+# Takes in a Config::Firewall object and returns a list of
+# Analyze::Vulnerability objects. Calls each firewall check and concats the
+# list of vulnerabilities identified by the check to the master list of
+# vulnerabilities.
 
 def analyze_firewall(firewall)
 	print_status("Analyzing firewall configuration.")
