@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 # Copyright 2012 Stephen Haywood
-# All rights reserved
+# All rights reserved see LICENSE file.
 
 base = __FILE__
 while File.symlink?(base)
