@@ -1,0 +1,26 @@
+******************************************************************************
+**********                        PROMETHEUS                        **********
+******************************************************************************
+
+CONFIGURATION ANALYSIS SUMMARY
+==============================
+--summary_statement--
+
+VULNERABILITIES
+===============
+--analysis--
+
+CONFIGURATION
+=============
+
+Interfaces
+----------
+--interfaces--
+
+Remote Management
+-----------------
+--management--
+
+Access Control Lists
+--------------------
+--access_lists--
