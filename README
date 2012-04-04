@@ -18,14 +18,14 @@ To use a custom template, first, create an HTML file and place tags in the
 file to tell Prometheus where to insert the configuration and vulnerability 
 elements. Currently, Prometheus supports the following tags:
 
-	--name--				Firewall name.
-	--type--				Firewall type.
-	--firmware--			Firmware version.
-	--summary_statement--	Summary statement.
-	--analysis--			Identified vulnerabilities.
-	--interfaces--			Firewall interfaces.
-	--management--			Management interfaces.
-	--access_lists--		Access control lists.
+    --name--                Firewall name.
+    --type--                Firewall type.
+    --firmware--            Firmware version.
+    --summary_statement--   Summary statement.
+    --analysis--            Identified vulnerabilities.
+    --interfaces--          Firewall interfaces.
+    --management--          Management interfaces.
+    --access_lists--        Access control lists.
 
 Next, specify the custom template to use with the -t option. To see an example 
 of how to build a custom template, look at the default HTML template, 
