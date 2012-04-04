@@ -28,13 +28,13 @@ optparse = OptionParser.new do|opts|
 	
 	# Report format
 	options[:format] = "html"
-	opts.on( '-f', '--report_format FORMAT', "Report format to use." ) do |f|
+	opts.on( '-f', '--format FORMAT', "Report format to use." ) do |f|
 		options[:format] = f
 	end
 
-	# HTML report template
+	# Report template
 	options[:template] = nil
-	opts.on( '-t', '--html_template FILE', "HTML file to use as template." ) do |t|
+	opts.on( '-t', '--template FILE', "File to use as template." ) do |t|
 		options[:template] = t
 	end
 

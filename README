@@ -7,8 +7,8 @@ the default HTML template. To specify a custom template, use the -t option.
 Usage: prometheus [options]
     -c, --config_file FILE           Firewall configuration to parse.
     -r, --report_file FILE           Report file to write.
-    -f, --report_format FORMAT       Report format to use.
-    -t, --html_template FILE         HTML file to use as template.
+    -f, --format FORMAT              Report format to use.
+    -t, --template FILE              File to use as template.
     -v, --verbose                    Print verbose output.
     -h, --help                       Display this screen
 
@@ -18,12 +18,14 @@ To use a custom template, first, create an HTML file and place tags in the
 file to tell Prometheus where to insert the configuration and vulnerability 
 elements. Currently, Prometheus supports the following tags:
 
---name--               Firewall name.
---summary_statement--  Summary statement.
---analysis--           Identified vulnerabilities.
---interfaces--         Firewall interfaces.
---management--         Management interfaces.
---access_lists--       Access control lists.
+	--name--				Firewall name.
+	--type--				Firewall type.
+	--firmware--			Firmware version.
+	--summary_statement--	Summary statement.
+	--analysis--			Identified vulnerabilities.
+	--interfaces--			Firewall interfaces.
+	--management--			Management interfaces.
+	--access_lists--		Access control lists.
 
 Next, specify the custom template to use with the -t option. To see an example 
 of how to build a custom template, look at the default HTML template, 
