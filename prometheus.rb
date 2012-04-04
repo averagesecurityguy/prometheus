@@ -21,7 +21,7 @@ optparse = OptionParser.new do|opts|
 	end
 
 	# Report output file
-	options[:report] = "#{Time.now.to_i.to_s}.html"
+	options[:report] = nil
 	opts.on( '-r', '--report_file FILE', "Report file to write." ) do |r|
 		options[:report] = r
 	end
@@ -33,7 +33,7 @@ optparse = OptionParser.new do|opts|
 	end
 
 	# HTML report template
-	options[:template] = 'config/template.html'
+	options[:template] = nil
 	opts.on( '-t', '--html_template FILE', "HTML file to use as template." ) do |t|
 		options[:template] = t
 	end

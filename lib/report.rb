@@ -14,16 +14,19 @@ include Report::HTMLReport
 def report_firewall(firewall, analysis, filename, format, template)
 
 	report = nil
+	outfile = set_outfile_name(filename, format)
+	templatefile = set_template_name(template, format)
+
 	case format.downcase
 		when "text"
-			report = generate_text_report(firewall, analysis)
+			report = generate_text_report(firewall, analysis, templatefile)
 		when "html"
-			report = generate_html_report(firewall, analysis, template)
+			report = generate_html_report(firewall, analysis, templatefile)
 		else
 			raise ReportError, "Unknown report format #{format}"
 	end
 
-	save_report(filename, report)
+	save_report(outfile, report)
 
 end
 
@@ -38,4 +41,36 @@ def save_report(filename, report)
 	file.write(report)
 	file.close
 	print_status("Report successfully written.")
+end
+
+##
+# Takes a file name and report format and creates an appropriate default output 
+# file name. The file name could be nil or it could be specified by the -f  
+# command line option. If it is nil a default name will be given based on the 
+# date, time and format. 
+
+def set_outfile_name(filename, format)
+
+	if filename then 
+		return filename
+	else
+		return "#{Time.now.to_i.to_s}.#{format.downcase}"
+	end
+end
+
+
+##
+# Takes a template name and a report format and creates the appropriate 
+# template file name. The template name could be nil or it could be specified 
+# with the -t command line option. It it is nil a default template name will 
+# be returned based on the format. Otherwise the specified template name will 
+# be returned.
+
+def set_template_name(template, format)
+
+	if template then 
+		return template
+	else
+		return "config/template.#{format.downcase}"
+	end
 end

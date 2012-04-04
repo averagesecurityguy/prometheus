@@ -1,56 +1,147 @@
 module Report
 module TextReport
 
-def generate_text_report(fw, an)
+	def generate_text_report(firewall, analysis, template)
 	
-	report = ""
-	report << "ID: #{fw.name}\n"
-	report << "FIRMWARE: #{fw.firmware}\n"
-	report << "TYPE: #{fw.type}\n\n"
-
-	report << "INTERFACES\n"
-	tbl = RexTable::Table.new('Columns' => ["Interface", "IP Address", "Subnet Mask", "Status"])
-    fw.interfaces.each do |i|
-        tbl << [i.name, i.ip, i.mask, i.status]
-    end
-    report << tbl.to_s
-
-	report << "\nREMOTE MANAGEMENT\n"
-	tbl = RexTable::Table.new(	'Columns' => ["Interface", "HTTP", "HTTPS", "SSH", "TELNET"])
-	fw.interfaces.each do |i|
-		tbl << [i.name, i.http, i.https, i.ssh, i.telnet]
-	end
-	report << tbl.to_s
-
-	report << "\nACCESS CONTROL LISTS\n"
-
-	fw.access_lists.each do |al|
-		tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Protocol", "Source", "Destination", "Service"], 
-									'Header' => al.name.upcase)
-    	al.ruleset.each do |r|
-        	tbl << [r.num, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
-    	end
-    
-    	report << tbl.to_s + "\n"
-	end
-
-	report << "\nVULNERABILITIES\n"
-	an.each do |a|
-		report << a.name + "\n"
-		report << a.desc + "\n\n"
-		report << "Recommendation\n"
-		report << a.solution + "\n\n"
-
-		tbl = RexTable::Table.new(	'Columns' => ["AFFECTED"])
-		a.affected.each do |i|
-			tbl << [i]
+		# Open template file
+		if not File.exists?(template)
+			raise ReportError, "File #{template} does not exist."
 		end
 
-		report << tbl.to_s + "\n"
+		if not File.file?(template)
+			raise ReportError, "#{template} is not a file."
+		end
+
+		if File.zero?(template)
+			raise ReportError, "The file #{template} is empty."
+		end
+
+		text = File.open(template) {|f| f.read}
+
+		# Replace id, firmware, and type
+		text.gsub!(/--name--/, firewall.name)
+		text.gsub!(/--type--/, firewall.type)
+		text.gsub!(/--firmware--/, firewall.firmware)
+
+		# Insert configuration summary statement
+		text.gsub!(/--summary_statement--/, summary_to_text(firewall))
+
+		# Insert Analysis Results
+		text.gsub!(/--analysis--/, analysis_to_text(analysis))
+
+		# Insert Interfaces
+		text.gsub!(/--interfaces--/, interfaces_to_text(firewall))
+
+		# Insert Remote Management
+		text.gsub!(/--managment--/, management_to_text(firewall))
+
+		# Insert Access Control Lists
+		text.gsub!(/--access_lists--/, access_lists_to_text(firewall))
+
+	    return text
 	end
 
-    return report
-end
+
+	##
+	# Takes a Config::Firewall object and returns a text summary of the firewall 
+	# type, name, and firmware version.
+
+	def summary_to_text(fw)
+
+		t =  "The #{fw.type} firewall with hostname #{fw.name} and running "
+		t << "firmware version #{fw.firmware} was analyzed with Prometheus "
+		t << "on #{Date.today.to_s}.\n"
+
+		return t
+	end
+
+
+	##
+	# Takes a Config::Firewall object and returns a table of interfaces formatted 
+	# using RexTable.
+
+	def interfaces_to_text(fw)
+
+		tbl = RexTable::Table.new('Columns' => ["Interface", "IP Address", "Subnet Mask", "Status"])
+    	fw.interfaces.each do |i|
+        	tbl << [i.name, i.ip, i.mask, i.status]
+    	end
+
+    	return tbl.to_s
+
+	end
+	
+
+	##
+	# Takes a Config::Firewall object and returns a table of management interfaces 
+	# formatted using RexTable.
+
+	def management_to_text(fw)
+
+		tbl = RexTable::Table.new(	'Columns' => ["Interface", "HTTP", "HTTPS", "SSH", "TELNET"])
+		fw.interfaces.each do |i|
+			tbl << [i.name, i.http, i.https, i.ssh, i.telnet]
+		end
+
+		return tbl.to_s
+
+	end
+
+
+	##
+	# Takes a Config::Firewall object and returns a list of tables of access 
+	# control lists formatted using RexTable.
+
+	def access_lists_to_text(fw)
+
+		t = ''
+		fw.access_lists.each do |al|
+			tbl = RexTable::Table.new(	'Columns' => ["ID", "Enabled", "Action", "Protocol", "Source", "Destination", "Service"], 
+										'Header' => al.name.upcase)
+    		al.ruleset.each do |r|
+    	    	tbl << [r.num, r.enabled, r.action, r.protocol, r.source, r.dest, r.service]
+    		end
+    
+    		t << tbl.to_s + "\n"
+		end
+
+		return t
+
+	end
+
+
+	##
+	# Takes a list of Vulnerability objects and returns a list of text 
+	# formatted vulnerabilities.
+
+	def analysis_to_text(an)
+		
+		t = ''
+		an.each do |a|
+			t << a.name + "\n"
+			t << a.desc + "\n\n"
+			t << "Recommendation\n"
+			t << a.solution + "\n\n"
+
+			case a.type
+			when 'rule'
+				columns = ['Access List', 'Rule #', 'Source', 'Destination', 'Service']
+			when 'management'
+				columns = ['Interface']
+			end
+
+			tbl = RexTable::Table.new(	'Columns' => columns)
+			a.affected.each do |i|
+				tbl << i
+			end
+
+			t << tbl.to_s + "\n"
+		end
+
+		return t
+
+	end
+
 
 end
 end
