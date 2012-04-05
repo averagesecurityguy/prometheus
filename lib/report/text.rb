@@ -33,7 +33,7 @@ module TextReport
 		text.gsub!(/--interfaces--/, interfaces_to_text(firewall))
 
 		# Insert Remote Management
-		text.gsub!(/--managment--/, management_to_text(firewall))
+		text.gsub!(/--management--/, management_to_text(firewall))
 
 		# Insert Access Control Lists
 		text.gsub!(/--access_lists--/, access_lists_to_text(firewall))

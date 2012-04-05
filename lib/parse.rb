@@ -24,7 +24,10 @@ def parse_firewall(config_file)
 
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
-		parse_asa_config(config)
+		return parse_cisco_config(config)
+	elsif config =~ /PIX Version/m
+		print_status("Parsing PIX configuration file.")
+		return parse_cisco_config(config)
 	elsif config =~ /Sonic/m
 		print_status("Parsing SonicWALL configuration.")
 		return parse_sonic_config(config)

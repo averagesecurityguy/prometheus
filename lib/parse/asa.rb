@@ -1,12 +1,21 @@
-def parse_asa_config(config)
+def parse_cisco_config(config)
 
 	fw = Config::FirewallConfig.new
-	fw.type = "ASA"
 
 	config.each_line do |line|
 		line.chomp!
 		if line =~ /^hostname (.*)$/ then fw.name = $1  end
-		if line =~ /ASA Version (.*)$/ then fw.firmware = $1 end
+
+		# Is this an ASA or PIX
+		if line =~ /ASA Version (.*)$/
+			fw.firmware = $1
+			fw.type = 'ASA'
+		end
+
+		if line =~ /PIX Version (.*)$/
+			fw.firmware = $1
+			fw.type = 'PIX'
+		end
 		
 		# Build interface list
 		if line =~ /^interface (.*)/ then
