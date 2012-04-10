@@ -2,6 +2,11 @@ def parse_cisco_config(config)
 
 	fw = Config::FirewallConfig.new
 
+	# Both network objects and service objects can contain group objects. This
+	# variable is used to determine if we are processing a network object or 
+	# not.
+	process_network = false
+
 	config.each_line do |line|
 		line.chomp!
 		if line =~ /^hostname (.*)$/ then fw.name = $1  end
@@ -15,6 +20,11 @@ def parse_cisco_config(config)
 		if line =~ /PIX Version (.*)$/
 			fw.firmware = $1
 			fw.type = 'PIX'
+		end
+
+		# Build named ip address list
+		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
+			fw.ip_names[parse_ip_name($2)] = $1
 		end
 		
 		# Build interface list
@@ -38,7 +48,59 @@ def parse_cisco_config(config)
 		if line =~ /^ shutdown/
 			interface.status = "Down"
 		end
-  
+
+		if line =~ /^ security-level (\d+)/
+			if $1 == 0 then interface.external = true end
+		end
+
+		# Build Network Objects
+		if line =~ /object-group network (.*)/
+			fw.network_objects << Config::NetworkObject.new($1)
+			process_network = true
+		end
+
+		if line =~ /^ network-object (.*)/
+			fw.network_objects.last.hosts << $1
+		end
+		
+		# if we are processing a network object and we have a group object
+		# we add it to the hosts.
+		if ((line =~ /^ group-object (.*)/) && (process_network))
+			fw.network_objects.last.hosts << 'group ' + $1
+		end
+
+		if line =~ /object-group service (.*)/
+			name, protocol = parse_service_object($1)
+			fw.service_objects << Config::ServiceObject.new(name)
+			fw.service_objects.last.protocol = protocol
+			process_network = false
+		end
+
+		# if we are not processing a network object and we have a group object
+		# we add it to the services
+		if ((line =~ /^ group-object (.*)/) && (not process_network))
+			fw.service_objects.last.ports << 'group ' + $1
+		end
+
+		if line =~ /^ port-object eq (.*)/
+			fw.service_objects.last.ports << $1
+		end
+		
+		if line =~ /^ port-object range (.*)/
+			fw.service_objects.last.ports << 'range ' + $1
+		end
+
+		if line =~ /^ service-object (.*) ([range|eq]) (.*)/
+			protocol = $1
+			ports = $3
+		
+			if $2 == 'range'
+				fw.service_objects.last.ports << "#{protocol} range #{ports}"
+			else
+				fw.service_objects.last.ports << "#{protocol} #{ports}"
+			end
+		end
+
 		# Build Access list
  		if line =~ /access-list (.*) extended (.*)/ then
 			if fw.access_lists.last == nil
@@ -144,5 +206,29 @@ def parse_rule(id, string)
 
 	return rule
   
+end
+
+
+def parse_ip_name(str)
+	ip_name = str
+	if str =~ /(.*) description (.*)/
+		ip_name = $1
+	end
+
+	return ip_name
+end
+
+def parse_service_object(str)
+	name = protocol = ''
+	if str =~ /(.*) (tcp|udp|tcp-udp)$/
+		name = $1
+		protocol = $2
+	else
+		name = str
+		protocol = 'tcp'
+	end
+
+	return name, protocol
+
 end
 

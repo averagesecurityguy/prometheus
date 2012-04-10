@@ -38,6 +38,15 @@ module TextReport
 		# Insert Access Control Lists
 		text.gsub!(/--access_lists--/, access_lists_to_text(firewall))
 
+		# Insert Host Names
+		text.gsub!(/--ip_names--/, ip_names_to_text(firewall))
+
+		# Insert Network Objects
+		text.gsub!(/--network_objects--/, network_objects_to_text(firewall))
+
+		# Insert Service Objects
+		text.gsub!(/--service_objects--/, service_objects_to_text(firewall))
+
 	    return text
 	end
 
@@ -140,6 +149,46 @@ module TextReport
 
 		return t
 
+	end
+
+	def ip_names_to_text(fw)
+
+		tbl = RexTable::Table.new( 'Columns' => ['Name', 'IP Address'] )
+		fw.ip_names.each do |k, v|
+			tbl << [k, v]
+		end
+
+		return tbl.to_s + "\n"
+	end
+
+	def network_objects_to_text(fw)
+
+		t = ''
+		fw.network_objects.each do |no|
+			tbl = RexTable::Table.new('Columns' => [no.name])
+    		no.hosts.each do |h|
+    	    	tbl << [h]
+    		end
+    
+    		t << tbl.to_s + "\n"
+		end
+
+		return t
+	end
+
+	def service_objects_to_text(fw)
+
+		t = ''
+		fw.service_objects.each do |so|
+			tbl = RexTable::Table.new('Columns' => ["#{so.name}(#{so.protocol})"])
+    		so.ports.each do |p|
+    	    	tbl << [p]
+    		end
+    
+    		t << tbl.to_s + "\n"
+		end
+
+		return t
 	end
 
 

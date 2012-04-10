@@ -1,8 +1,63 @@
 module Config
 
+	##
+	# Class to hold a firewall configuration. 
+
+	class FirewallConfig
+		attr_accessor :name, :firmware, :type, :access_lists, :interfaces
+		attr_accessor :service_objects, :network_objects, :ip_names
+  
+		def initialize
+			@name = nil
+			@firmware = nil
+			@type = nil
+			@access_lists = Array.new
+			@interfaces = Array.new
+			@ip_names = Hash.new
+			@service_objects = Array.new
+			@network_objects = Array.new
+		end
+			
+	end
+
+	# Track access lists
+	class AccessList
+		attr_accessor :name, :interface, :ruleset
+
+		def initialize(name)
+			@name = name
+			@interface = nil
+			@ruleset = Array.new
+		end
+	end
+
+
+	# Track service objects
+	class ServiceObject
+		attr_accessor :name, :protocol, :ports
+
+		def initialize(name)
+			@name = name
+			@protocol = protocol
+			@ports = Array.new
+		end
+
+	end
+
+	# Track network objects
+	class NetworkObject
+		attr_accessor :name, :hosts
+
+		def initialize(name)
+			@name = name
+			@hosts = Array.new
+		end
+
+	end
+
 	# Track interfaces in use
 	class Interface
-		attr_accessor :name, :ip, :mask, :status 
+		attr_accessor :name, :ip, :mask, :status, :external 
 		attr_accessor :http, :https, :ssh, :telnet
 
 		def initialize(name)
@@ -10,6 +65,7 @@ module Config
 			@ip = ' '
 			@mask = ' '
 			@status = 'Up'
+			@external = false
 			@http = false
 			@https = false
 			@ssh = false
@@ -33,9 +89,9 @@ module Config
 		end
 
 		def status=(input)
-			if up?(input)
+			if is_up?(input)
 				@status = 'Up'
-			elsif down?(input)
+			elsif is_down?(input)
 				@status = 'Down'
 			else
 				raise ParseError.new("Invalid input for Config::Interface.status: #{input}")
@@ -110,31 +166,65 @@ module Config
 			end
 		end
 
+		# Is this an external interface?
 		def external?
-			external = false
+			return @external
+		end
 
-			if @name.downcase == 'outside' then external = true end
-			if @name. == 'X0' then external = true end
-
-			return external
+		def external=(input)
+			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
+				@external = input
+			else
+				@external = is_external?(input)
+			end
 		end
 
 	protected
-		def up?(str)
+		def is_up?(str)
 			return ['up'].include?(str.downcase)
 		end
 
-		def down?(str)
+		def is_down?(str)
 			return ['down'].include?(str.downcase)
 		end
 
-# UPDATE THESE
 		def is_ip?(str)
-			return true
+			is_ip = true
+
+			o1, o2, o3, o4 = str_to_octet(str)
+			if (o1 < 0 || o1 > 255) then is_ip = false end
+			if (o2 < 0 || o2 > 255) then is_ip = false end
+			if (o3 < 0 || o3 > 255) then is_ip = false end
+			if (o4 < 0 || o4 > 255) then is_ip = false end
+
+			return is_ip
 		end
 
 		def is_mask?(str)
-			return true
+			is_mask = false
+			mask = [128, 192, 224, 240, 248, 252, 255]
+			
+			o1, o2, o3, o4 = str_to_octet(str)
+			if (mask.include?(o1) && o2 == 0 && o3 == 0 && o4 == 0) then is_mask = true end
+			if (o1 == 255 && mask.include?(o2) && o3 == 0 && o4 == 0) then is_mask = true end
+			if (o1 == 255 && o2 == 255 && mask.include?(o3) && o4 == 0) then is_mask = true end
+			if (o1 == 255 && o2 == 255 && o3 == 255 && mask.include?(o4)) then is_mask = true end
+
+			return is_mask
+		end
+
+		def is_external?(str)
+			is_external = false
+
+			if str.downcase == 'outside' then is_external = true end
+			if str == 'X0' then is_external = true end
+
+			return is_external
+		end
+
+		def str_to_octet(str)
+			o1, o2, o3, o4 = str.split(".")
+			return o1.to_i, o2.to_i, o3.to_i, o4.to_i
 		end
 	
 	end
@@ -176,6 +266,7 @@ module Config
 			return @action == 'Allow' ? true : false
 		end
 
+		# Accessor methods for @action
 		def action=(input)
 			if allow?(input)
 				@action = 'Allow'
@@ -229,29 +320,6 @@ module Config
 
 	end
 
-	# Track access lists
-	class AccessList
-		attr_accessor :name, :interface, :ruleset
 
-		def initialize(name)
-			@name = name
-			@interface = nil
-			@ruleset = Array.new
-		end
-	end
-
-	class FirewallConfig
-		attr_accessor :name, :firmware, :type
-		attr_accessor :access_lists, :interfaces
-  
-		def initialize
-			@name = nil
-			@firmware = nil
-			@type = nil
-			@access_lists = Array.new
-			@interfaces = Array.new
-		end
-			
-	end
 
 end
