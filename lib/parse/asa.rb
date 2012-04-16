@@ -13,7 +13,7 @@ def parse_cisco_config(config)
 
 		# Is this an ASA or PIX
 		if line =~ /ASA Version (.*)$/
-			fw.firmware = $1
+			fw.firmware = $1.rstrip()
 			fw.type = 'ASA'
 		end
 
@@ -24,7 +24,7 @@ def parse_cisco_config(config)
 
 		# Build named ip address list
 		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
-			fw.ip_names[parse_ip_name($2)] = $1
+			fw.host_names[parse_ip_name($2)] = $1
 		end
 		
 		# Build interface list
@@ -55,39 +55,39 @@ def parse_cisco_config(config)
 
 		# Build Network Objects
 		if line =~ /object-group network (.*)/
-			fw.network_objects << Config::NetworkObject.new($1)
+			fw.network_names << Config::NetworkName.new($1)
 			process_network = true
 		end
 
 		if line =~ /^ network-object (.*)/
-			fw.network_objects.last.hosts << $1
+			fw.network_names.last.hosts << $1
 		end
 		
 		# if we are processing a network object and we have a group object
 		# we add it to the hosts.
 		if ((line =~ /^ group-object (.*)/) && (process_network))
-			fw.network_objects.last.hosts << 'group ' + $1
+			fw.network_names.last.hosts << 'group ' + $1
 		end
 
 		if line =~ /object-group service (.*)/
 			name, protocol = parse_service_object($1)
-			fw.service_objects << Config::ServiceObject.new(name)
-			fw.service_objects.last.protocol = protocol
+			fw.service_names << Config::ServiceName.new(name)
+			fw.service_names.last.protocol = protocol
 			process_network = false
 		end
 
 		# if we are not processing a network object and we have a group object
 		# we add it to the services
 		if ((line =~ /^ group-object (.*)/) && (not process_network))
-			fw.service_objects.last.ports << 'group ' + $1
+			fw.service_names.last.ports << 'group ' + $1
 		end
 
 		if line =~ /^ port-object eq (.*)/
-			fw.service_objects.last.ports << $1
+			fw.service_names.last.ports << $1
 		end
 		
 		if line =~ /^ port-object range (.*)/
-			fw.service_objects.last.ports << 'range ' + $1
+			fw.service_names.last.ports << 'range ' + $1
 		end
 
 		if line =~ /^ service-object (.*) ([range|eq]) (.*)/
@@ -95,9 +95,9 @@ def parse_cisco_config(config)
 			ports = $3
 		
 			if $2 == 'range'
-				fw.service_objects.last.ports << "#{protocol} range #{ports}"
+				fw.service_names.last.ports << "#{protocol} range #{ports}"
 			else
-				fw.service_objects.last.ports << "#{protocol} #{ports}"
+				fw.service_names.last.ports << "#{protocol} #{ports}"
 			end
 		end
 

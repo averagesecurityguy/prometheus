@@ -39,7 +39,7 @@ module TextReport
 		text.gsub!(/--access_lists--/, access_lists_to_text(firewall))
 
 		# Insert Host Names
-		text.gsub!(/--ip_names--/, ip_names_to_text(firewall))
+		text.gsub!(/--host_names--/, host_names_to_text(firewall))
 
 		# Insert Network Objects
 		text.gsub!(/--network_objects--/, network_objects_to_text(firewall))
@@ -151,10 +151,10 @@ module TextReport
 
 	end
 
-	def ip_names_to_text(fw)
+	def host_names_to_text(fw)
 
 		tbl = RexTable::Table.new( 'Columns' => ['Name', 'IP Address'] )
-		fw.ip_names.each do |k, v|
+		fw.host_names.each do |k, v|
 			tbl << [k, v]
 		end
 

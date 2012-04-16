@@ -27,13 +27,14 @@ Access Control Lists
 
 IP Names
 --------
---ip_names--
+--host_names--
 
 Network Objects
 ---------------
 --network_objects--
 
 Service Objects
+---------------
 --service_objects--
 
 

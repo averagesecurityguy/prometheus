@@ -5,7 +5,7 @@ module Config
 
 	class FirewallConfig
 		attr_accessor :name, :firmware, :type, :access_lists, :interfaces
-		attr_accessor :service_objects, :network_objects, :ip_names
+		attr_accessor :service_names, :network_names, :host_names
   
 		def initialize
 			@name = nil
@@ -13,9 +13,9 @@ module Config
 			@type = nil
 			@access_lists = Array.new
 			@interfaces = Array.new
-			@ip_names = Hash.new
-			@service_objects = Array.new
-			@network_objects = Array.new
+			@host_names = Hash.new
+			@service_names = Array.new
+			@network_names = Array.new
 		end
 			
 	end
@@ -32,8 +32,8 @@ module Config
 	end
 
 
-	# Track service objects
-	class ServiceObject
+	# Track service names
+	class ServiceName
 		attr_accessor :name, :protocol, :ports
 
 		def initialize(name)
@@ -44,8 +44,8 @@ module Config
 
 	end
 
-	# Track network objects
-	class NetworkObject
+	# Track network names
+	class NetworkName
 		attr_accessor :name, :hosts
 
 		def initialize(name)

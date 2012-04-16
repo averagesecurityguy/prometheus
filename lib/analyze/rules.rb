@@ -40,7 +40,7 @@ def rule_vulnerability(sev, affected)
 	if not affected.empty?
 		vuln = Vulnerability.new("Rules with #{sev}-severity vulnerabilities")
 
-		vuln.type = 'rule'
+		vuln.severity = sev
 
 		vuln.desc =  "The following rules have #{sev}-severity vulnerabilities, "
 		vuln.desc << "which means traffic is "
@@ -61,8 +61,9 @@ def rule_vulnerability(sev, affected)
 		vuln.solution << "destination, or service are typically not sufficiently "
 		vuln.solution << "restrictive and should be reviewed to ensure they are "
 		vuln.solution << "only as permissive as necessary."
-
-		vuln.affected = affected
+	
+		cols = ['Access List', 'Rule #', 'Source', 'Destination', 'Service']
+		vuln.affected = [cols].concat(affected)
 	end
 
 	return vuln

@@ -10,6 +10,7 @@ def check_cleartext_administration(fw)
 	vprint_status("Checking for cleartext administration.")
 
 	analysis = []
+	
 	http = []
 	telnet = []
 
@@ -59,8 +60,7 @@ def rm_cleartext_vulnerability(proto, affected)
 
 	if not affected.empty?
 		vuln = Vulnerability.new("Remote Management with #{proto}")
-
-		vuln.type = 'management'
+		vuln.severity = 'high'
 
 		vuln.desc =  "The following interfaces are using #{proto} for remote "
 		vuln.desc << "administration. #{proto} is considered insecure because all "
@@ -71,7 +71,8 @@ def rm_cleartext_vulnerability(proto, affected)
 		vuln.solution << "If it is not possible, limit access to the management "
 		vuln.solution << "interface to only those IP addresses necessary."
 
-		vuln.affected = affected
+		# Add column names to the list of affected interfaces.
+		vuln.affected = [['Interface']].concat(affected)
 	end
 
 	return vuln
@@ -83,8 +84,7 @@ def rm_external_vulnerability(affected)
 
 	if not affected.empty?
 		vuln = Vulnerability.new("Remote Management on External Interface")
-
-		vuln.type = 'management'
+		vuln.severity = 'high'
 
 		vuln.desc =  "The firewall can be remotely managed on the following "
 		vuln.desc << "external interfaces. This gives an external attacker "
@@ -99,7 +99,8 @@ def rm_external_vulnerability(affected)
 		vuln.solution << "management interface to only those IP addresses "
 		vuln.solution << "necessary."
 
-		vuln.affected = affected
+		# Add header to list of affected interfaces
+		vuln.affected = [['Interface']].concat(affected)
 	end
 
 	return vuln

@@ -1,4 +1,5 @@
 require 'report/rextable'
+require 'report/htmltable'
 require 'report/html'
 require 'report/text'
 
