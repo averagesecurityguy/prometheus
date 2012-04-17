@@ -74,7 +74,7 @@ end
 
 # Analyze the firewall config
 begin
-	analysis = analyze_firewall(firewall)
+	vulns = analyze_firewall(firewall)
 rescue AnalysisError => e
 	print_error(e.message)
 	exit
@@ -82,7 +82,7 @@ end
 
 #Create report for firewall config and analysis
 begin
-	report_firewall(firewall, analysis, options[:report], options[:format], options[:template] )
+	report_firewall(firewall, vulns, options[:report], options[:format], options[:template] )
 rescue ReportError => e
 	print_error(e.message)
 	exit

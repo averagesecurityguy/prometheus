@@ -53,23 +53,28 @@ def parse_cisco_config(config)
 			if $1 == 0 then interface.external = true end
 		end
 
-		# Build Network Objects
+		# Build Network Names
 		if line =~ /object-group network (.*)/
+			vprint_status("Processing network group: " + $1)
 			fw.network_names << Config::NetworkName.new($1)
 			process_network = true
 		end
 
 		if line =~ /^ network-object (.*)/
+			vprint_status("Processing network object: " + $1)
 			fw.network_names.last.hosts << $1
 		end
 		
 		# if we are processing a network object and we have a group object
 		# we add it to the hosts.
 		if ((line =~ /^ group-object (.*)/) && (process_network))
+			vprint_status("Processing network group-object: " + $1)
 			fw.network_names.last.hosts << 'group ' + $1
 		end
 
+		# Build Service Names
 		if line =~ /object-group service (.*)/
+			vprint_status("Processing service group: " + $1)
 			name, protocol = parse_service_object($1)
 			fw.service_names << Config::ServiceName.new(name)
 			fw.service_names.last.protocol = protocol
@@ -79,21 +84,25 @@ def parse_cisco_config(config)
 		# if we are not processing a network object and we have a group object
 		# we add it to the services
 		if ((line =~ /^ group-object (.*)/) && (not process_network))
+			vprint_status("Processing service group-object: " + $1)
 			fw.service_names.last.ports << 'group ' + $1
 		end
 
 		if line =~ /^ port-object eq (.*)/
-			fw.service_names.last.ports << $1
+			vprint_status("Processing port: " + $1)
+			fw.service_names.last.ports << 'port ' + $1
 		end
 		
 		if line =~ /^ port-object range (.*)/
+			vprint_status("Processing port range: " + $1)
 			fw.service_names.last.ports << 'range ' + $1
 		end
 
-		if line =~ /^ service-object (.*) ([range|eq]) (.*)/
+		if line =~ /^ service-object (.*) (range|eq) (.*)/
+			vprint_status("Processing service object")
 			protocol = $1
 			ports = $3
-		
+			
 			if $2 == 'range'
 				fw.service_names.last.ports << "#{protocol} range #{ports}"
 			else
@@ -104,9 +113,11 @@ def parse_cisco_config(config)
 		# Build Access list
  		if line =~ /access-list (.*) extended (.*)/ then
 			if fw.access_lists.last == nil
+				vprint_status("Processing access list: " + $1)
 				fw.access_lists << Config::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			elsif fw.access_lists.last.name != $1
+				vprint_status("Processing access list: " + $1)
 				fw.access_lists << Config::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
@@ -118,27 +129,28 @@ def parse_cisco_config(config)
 		# Access Groups
 		if line =~ /^access-group (.*)/
 			name, dir, int, int_name = $1.split(" ")
+			vprint_status("Processing access-group: " + name)
 			fw.access_lists.each do |al|
 				if al.name == name then al.interface = int_name end
 			end
 		end
 
 		# Management Interfaces
-		if line =~ /http .*\s.*\s(.*)/ then
+		if line =~ /^http .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
 				if int.name == $1 then int.http = true end
 			end
 		end
 
-		if line =~ /ssh .*\s.*\s(.*)/ then
+		if line =~ /^ssh .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
 				if int.name == $1 then int.ssh = true end
 			end
 		end
 
-		if line =~ /telnet .*\s.*\s(.*)/ then
+		if line =~ /^telnet .*\s.*\s(.*)/ then
 			vprint_status line
 			fw.interfaces.each do |int|
 				if int.name == $1 then int.telnet = true end

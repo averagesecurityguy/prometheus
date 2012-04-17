@@ -1,16 +1,17 @@
 def analyze_remote_administration(fw)
-	analysis = []
-	analysis.concat(check_cleartext_administration(fw))
-	analysis.concat(check_external_administration(fw))
-	return analysis
+	vulns =  []
+
+	vulns.concat(check_cleartext_administration(fw))
+	vulns.concat(check_external_administration(fw))
+
+	return vulns
 end
 
 def check_cleartext_administration(fw)
 
 	vprint_status("Checking for cleartext administration.")
 
-	analysis = []
-	
+	vulns = []
 	http = []
 	telnet = []
 
@@ -20,37 +21,37 @@ def check_cleartext_administration(fw)
 	end
 
 	vuln = rm_cleartext_vulnerability('HTTP', http)
-	if vuln then analysis << vuln end
+	if vuln then vulns << vuln end
 
 	vuln = rm_cleartext_vulnerability('Telnet', telnet)
-	if vuln then analysis << vuln end
+	if vuln then vulns << vuln end
 
-	return analysis
+	return vulns
 
 end
 
 def check_external_administration(fw)
 	vprint_status("Checking for external administration.")
 
-	analysis = []
+	vulns = []
 	external = []
 
 	fw.interfaces.each do |i|
-		vuln = false
+		eadmin = false
 		if i.external?
 			vprint_status("External Check: #{i.name}")
-			if i.http? then vuln = true end
-			if i.https? then vuln = true end
-			if i.ssh? then vuln = true end
-			if i.telnet? then vuln = true end
+			if i.http? then eadmin = true end
+			if i.https? then eadmin = true end
+			if i.ssh? then eadmin = true end
+			if i.telnet? then eadmin = true end
 		end
-		if vuln then external << [i.name] end
+		if eadmin then external << [i.name] end
 	end
 
 	vuln = rm_external_vulnerability(external)
-	if vuln then analysis << vuln end
+	if vuln then vulns << vuln end
 
-	return analysis
+	return vulns
 
 end
 
@@ -59,7 +60,7 @@ def rm_cleartext_vulnerability(proto, affected)
 	vuln = nil
 
 	if not affected.empty?
-		vuln = Vulnerability.new("Remote Management with #{proto}")
+		vuln = Analysis::Vulnerability.new("Remote Management with #{proto}")
 		vuln.severity = 'high'
 
 		vuln.desc =  "The following interfaces are using #{proto} for remote "
@@ -83,7 +84,7 @@ def rm_external_vulnerability(affected)
 	vuln = nil
 
 	if not affected.empty?
-		vuln = Vulnerability.new("Remote Management on External Interface")
+		vuln = Analysis::Vulnerability.new("Remote Management on External Interface")
 		vuln.severity = 'high'
 
 		vuln.desc =  "The firewall can be remotely managed on the following "

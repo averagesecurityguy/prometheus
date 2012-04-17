@@ -1,8 +1,10 @@
 module Config
 
 	##
-	# Class to hold a firewall configuration. 
-
+	# Class to hold a firewall configuration. access_lists is an array of 
+	# Access list objects, interfaces is a list of Interface objects,
+	# host_names is a hash of name/IP pairs, service_names is a list of 
+	# ServiceName objects, and network_names is a list of NetworkName objects.
 	class FirewallConfig
 		attr_accessor :name, :firmware, :type, :access_lists, :interfaces
 		attr_accessor :service_names, :network_names, :host_names
@@ -20,7 +22,7 @@ module Config
 			
 	end
 
-	# Track access lists
+	# Track access lists. ruleset is a list of Rule objects.
 	class AccessList
 		attr_accessor :name, :interface, :ruleset
 
@@ -32,7 +34,8 @@ module Config
 	end
 
 
-	# Track service names
+	# Track service names. ports is a list of strings representing ports and
+	# port ranges.
 	class ServiceName
 		attr_accessor :name, :protocol, :ports
 
@@ -44,7 +47,7 @@ module Config
 
 	end
 
-	# Track network names
+	# Track network names. hosts is a list of strings representing hosts.
 	class NetworkName
 		attr_accessor :name, :hosts
 
@@ -232,7 +235,7 @@ module Config
 	# Track rules in rulesets
 	class Rule
 		attr_accessor :num, :enabled, :protocol, :source
-		attr_accessor :dest, :action, :service
+		attr_accessor :dest, :action, :service, :comment
 
 		def initialize(num)
 			@num = num
@@ -242,6 +245,7 @@ module Config
 			@dest = ''
 			@action = ''
 			@service = ''
+			@comment = nil
 		end
 
 		# Accessor methods for @enabled

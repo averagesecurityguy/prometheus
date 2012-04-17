@@ -1,9 +1,9 @@
 def analyze_firewall_rules(fw)
 
-	analysis = []
-	critical = []
+	vulns = []
 	high = []
 	medium = []
+	low = []
 
 	fw.access_lists.each do |al|
 		al.ruleset.each do |r|
@@ -13,32 +13,29 @@ def analyze_firewall_rules(fw)
 				if r.dest == 'Any' then score += 1 end
 				if r.service == 'Any' then score += 1 end
 			end
-			if score == 3 then critical << [al.name, r.num, r.source, r.dest, r.service] end
-			if score == 2 then high << [al.name, r.num, r.source, r.dest, r.service] end
-			if score == 1 then medium << [al.name, r.num, r.source, r.dest, r.service] end
+			if score == 3 then high << [al.name, r.num, r.source, r.dest, r.service] end
+			if score == 2 then medium << [al.name, r.num, r.source, r.dest, r.service] end
+			if score == 1 then low << [al.name, r.num, r.source, r.dest, r.service] end
 		end
 	end
 
-	vprint_status("Analyzing rules for critical-severity vulnerabilities.")
-	vuln = rule_vulnerability('critical', critical)
-	if vuln then analysis << vuln end
-
 	vprint_status("Analyzing rules for high-severity vulnerabilities.")
-	vuln = rule_vulnerability('high', high)
-	if vuln then analysis << vuln end
+	vulns << rule_vulnerability('high', high)
 
 	vprint_status("Analyzing rules for medium-severity vulnerabilities.")
-	vuln = rule_vulnerability('medium', medium)
-	if vuln then analysis << vuln end
+	vulns << rule_vulnerability('medium', medium)
 
-	return analysis
+	vprint_status("Analyzing rules for low-severity vulnerabilities.")
+	vulns << rule_vulnerability('low', low)
+
+	return vulns
 end
 
 def rule_vulnerability(sev, affected)
 
 	vuln = nil
 	if not affected.empty?
-		vuln = Vulnerability.new("Rules with #{sev}-severity vulnerabilities")
+		vuln = Analysis::Vulnerability.new("Overly Permissive Rules")
 
 		vuln.severity = sev
 
@@ -46,13 +43,13 @@ def rule_vulnerability(sev, affected)
 		vuln.desc << "which means traffic is "
 
 		case sev
-		when "critical"
+		when "high"
 			vuln.desc << "completely unrestricted because the source, destination, "
 			vuln.desc << "and service are set to 'Any'."
-		when "high"
+		when "medium"
 			vuln.desc << "mostly unrestricted because at least two of either the "
 			vuln.desc << "source, destination, or service is set to 'Any'."
-		when "medium"
+		when "low"
 			vuln.desc << "only somewhat restricted because one of either the "
 			vuln.desc << "source, destination, or service is set to 'Any'."
 		end

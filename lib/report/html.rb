@@ -25,7 +25,7 @@ module HTMLReport
 		html.gsub!(/--firmware--/, firewall.firmware)
 
 		# Insert Summary Statement
-		html.gsub!(/--summary_statement--/, summary_to_html(firewall))
+		html.gsub!(/--summary_statement--/, summary_to_html(firewall, analysis))
 
 		# Insert Interfaces
 		html.gsub!(/--interfaces--/, interfaces_to_html(firewall.interfaces))
@@ -52,12 +52,16 @@ module HTMLReport
 
 	end
 
-	def summary_to_html(fw)
-
-		summary =  "The #{fw.type} firewall with hostname <em>#{fw.name}</em> "
+	def summary_to_html(fw, an)
+	
+		summary =  "<div id=\"summary_statement\">\n"
+		summary << "<p>The #{fw.type} firewall with hostname <em>#{fw.name}</em> "
 		summary << "and running firmware version <em>#{fw.firmware}</em> was "
 		summary << "analyzed with Prometheus Firewall Analyzer (Prometheus) on "
-		summary << "#{Date.today.to_s}."
+		summary << "#{Date.today.to_s}. Prometheus identified (#{an.count['high']}) "
+		summary << "high-severity, (#{an.count['medium']}) medium-severity, and "
+		summary << "(#{an.count['low']}) low-severity vulnerabilities.</p>"
+		summary << "</div>\n"
 
 		return summary
 	end
@@ -70,7 +74,8 @@ module HTMLReport
 		h = ''
 		if interfaces
 
-			h = '<h3>Interfaces</h3>'
+			h << "<div id=\"interfaces\">\n"
+			h << "<h3>Interfaces</h3>\n"
 
 			t = HTMLTable::Table.new( 
 				'Columns' => ['Name', 'IP Address', 'Subnet Mask', 'Status']
@@ -81,6 +86,7 @@ module HTMLReport
 			end
 
 			h << t.to_html
+			h << "<div>\n"
 		end
 
 		return h
@@ -93,8 +99,9 @@ module HTMLReport
 		vprint_status("Writing remote management to HTML.")
 		h = ''
 
-		if interfaces	
-			h = '<h3>Remote Management</h3>'
+		if interfaces
+			h << "<div id=\"remote_management\">\n"
+			h << "<h3>Remote Management</h3>\n"
 
 			t = HTMLTable::Table.new(
 				'Columns' => ['Interface', 'HTTP', 'HTTPS', 'SSH', 'Telnet']
@@ -105,6 +112,7 @@ module HTMLReport
 			end
 
 			h << t.to_html
+			h << "</div>\n"
 		end
 
 		return h
@@ -112,16 +120,41 @@ module HTMLReport
 
 	##
 	# Convert the vulnerabilities to HTML 
-	def vulnerabilities_to_html(vulns)
+	def vulnerabilities_to_html(analysis)
 		vprint_status("Writing vulnerabilities to HTML.")
+		h = "<div id=\"vulnerabilities\">\n"
+
+		h << "<h3>High-severity Vulnerabilities</h3>\n"
+		unless analysis.highs.empty?
+			h << vuln_list_to_html(analysis.highs)
+		else
+			h << "<p>No high-severity vulnerabilities to report.</p>\n"
+		end
+
+		h << "<h3>Medium-severity Vulnerabilities</h3>\n"
+		unless analysis.mediums.empty?
+			h << vuln_list_to_html(analysis.mediums)
+		else
+			h << "<p>No medium-severity vulnerabilities to report.</p>\n"
+		end
+
+		h << "<h3>Low-severity Vulnerabilities</h3>\n"
+		unless analysis.lows.empty?
+			h << vuln_list_to_html(analysis.lows)
+		else
+			h << "<p>No low-severity vulnerabilities to report.</p>\n"
+		end
+
+		h << "</div>\n"
+		return h
+	end
+
+	def vuln_list_to_html(vulns)
+
 		h = ''
 
-		if vulns
-			h << '<h2>Vulnerabilities</h2>'
-
-			vulns.each do |v|
-				h << vulnerability_to_html(v)
-			end
+		vulns.each do |v|
+			h << vulnerability_to_html(v)
 		end
 
 		return h
@@ -130,28 +163,21 @@ module HTMLReport
 	##
 	# Convert an individual vulnerability to HTML
 	def vulnerability_to_html(v)
-		vprint_status("Writing #{v.name} to HTML.")
+		vprint_status("Writing #{v.name} (#{v.severity.upcase}) to HTML.")
 		h = ''
 
-		# Build table of affected items
-		#case a.type
-		#when 'rule'
-		#	columns = ['Access List', 'Rule #', 'Source', 'Destination', 'Service']
-		#when 'management'
-		#	columns = ['Interface']
-		#end
+		t = HTMLTable::Table.new( 'Columns' => v.affected[0])
 
-		t = HTMLTable::Table.new( 
-			'Columns' => v.affected[0],
-			'Rows' => v.affected[1, v.affected.length]
-		)
+		v.affected[1, v.affected.length].each do |a|
+			t.rows << a
+		end
 
-		h << "<div>"
-		h << "<h3>#{v.name}(#{v.severity.upcase})</h3>"
-		h << "<p><strong>Description:</strong> #{v.desc}</p>"
-		h << "<p><strong>Solution:</strong> #{v.solution}</p>"
+		h << "<div>\n"
+		h << "<h4>#{v.name} (#{v.severity.upcase})</h4>\n"
+		h << "<p><strong>Description:</strong> #{v.desc}</p>\n"
+		h << "<p><strong>Solution:</strong> #{v.solution}</p>\n"
 		h << t.to_html
-		h << "</div>"
+		h << "</div>\n"
 
 		return h
 	end
@@ -159,8 +185,10 @@ module HTMLReport
 	def access_lists_to_html(acls)
 		vprint_status("Writing access control lists to HTML.")
 		h = ''
+
 		if acls
-			h << '<h3>Access Control Lists</h3>'
+			h << "<div id=\"access_lists\">\n"
+			h << "<h3>Access Control Lists</h3>\n"
 			acls.each do |a|
 				interface = a.interface ? " (#{a.interface})" : ''
 				t = HTMLTable::Table.new(
@@ -173,6 +201,8 @@ module HTMLReport
 
 				h << t.to_html
 			end
+
+			h << "</div>\n"
 		end
 
 		return h
@@ -182,8 +212,9 @@ module HTMLReport
 		vprint_status("Writing host names to HTML.")
 		h = ''
 
-		if host_names	
-			h = '<h3>Host Names</h3>'
+		unless host_names.empty?
+			h << "<div id=\"host_names\">\n"	
+			h << "<h3>Host Names</h3>\n"
 
 			t = HTMLTable::Table.new(
 				'Columns' => ['Host Name', 'IP Address']
@@ -194,6 +225,7 @@ module HTMLReport
 			end
 
 			h << t.to_html
+			h << "</div>\n"
 		end
 
 		return h
@@ -203,19 +235,22 @@ module HTMLReport
 		vprint_status("Writing network names to HTML.")
 		h = ''
 
-		if network_names
-			h = '<h3>Network Names</h3>'
+		unless network_names.empty?
+			h << "<div id=\"network_names\">\n"
+			h << "<h3>Network Names</h3>\n"
 
 			network_names.each do |n|
 				t = HTMLTable::Table.new(
 					'Header' => n.name, 
 					'Columns' => ['Hosts']
 				)
-				n.hosts.each do |h|
-					t.rows << [h]
+				n.hosts.each do |host|
+					t.rows << [host]
 				end
 				h << t.to_html
 			end
+
+			h << "</div>\n"
 
 		end
 
@@ -226,22 +261,23 @@ module HTMLReport
 		vprint_status("Writing service names to HTML.")
 		h = ''
 
-		if service_names
-			h = '<h3>Service Names</h3>'
+		unless service_names.empty?
+			h << "<div id=\"service_names\">\n"
+			h << "<h3>Service Names</h3>\n"
 
 			service_names.each do |s|
-				puts s.name
 				t = HTMLTable::Table.new(
 					'Header' => "#{s.name} (#{s.protocol})",
 					'Columns' => ['Ports']
 				)
 
 				s.ports.each do |p|
-					puts p
 					t.rows << [p]
 				end
 				h << t.to_html
 			end
+
+			h << "</div>\n"
 		end
 
 		return h
