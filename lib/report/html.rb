@@ -266,6 +266,7 @@ module HTMLReport
 			h << "<h3>Service Names</h3>\n"
 
 			service_names.each do |s|
+				p s
 				t = HTMLTable::Table.new(
 					'Header' => "#{s.name} (#{s.protocol})",
 					'Columns' => ['Ports']

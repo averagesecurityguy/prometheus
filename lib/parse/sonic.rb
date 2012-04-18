@@ -2,6 +2,14 @@ def parse_sonic_config(config)
 
 	fw = Config::FirewallConfig.new
 	fw.type = "SonicOS"
+	service_object = false
+	address_object = false
+	
+	# Sonicwall only uses names in the service object groups. We preprocess
+	# the port names by reading the config through once and capturing the port 
+	# names. After that we can use the port names when setting up the service 
+	# object groups.
+	port_names = preprocess_port_names(config)
 
 	config.each_line do |line|
 		line.chomp!
@@ -69,8 +77,77 @@ def parse_sonic_config(config)
 			end
 		end
 
+		# Parse Address Object Table
+		if line =~ /^(.*): Handle:\d+ ZoneHandle:/
+			address_object = true
+			service_object = false
+		end
+
+		# Parse Service Object Table
+		if line =~ /^(.*): Handle:\d+ Size:.* GROUP:/
+			name = $1
+			address_object = false
+			service_object = true
+			fw.service_names << Config::ServiceName.new(name)
+		end
+
+		if line =~ /^   member: Name:(.*) Handle:\d+/
+			if service_object
+				fw.service_names.last.ports << port_names[$1]
+			end
+			if address_object
+			end
+		end
+
 	end
 
 	return fw
 end	
+
+def preprocess_port_names(config)
+
+	port_names = {}
+
+	config.each_line do |line|
+		line.chomp!
+		if line =~ /^(.*): Handle:\d+ .* IpType:.*/
+			name = $1
+			puts line
+			protocol, port_begin, port_end = parse_port_object(line)
+			#puts "#{protocol} #{port_begin} #{port_end}"
+			if port_begin == port_end
+				port_names[name] = "#{protocol} #{port_begin}"
+			else
+				port_names[name] = "#{protocol} range #{port_begin} #{port_end}"
+			end
+		end
+
+	end
+
+	return port_names
+end
+
+def parse_port_object(line)
+	#port_begin = 'pb'
+	#port_end = 'pe'
+	#protocol = 'pr'
+	line =~ /Port Begin: (\d+)/
+	port_begin = $1
+	line =~ /Port End: (\d+)/
+	port_end = $1
+	line =~ /IpType: (\d+)/
+	if $1 == '6'
+		protocol = 'tcp'
+	elsif $1 == '17'
+		protocol = 'udp'
+	else
+		protocol = 'ip_type ' + $1
+	end
+
+	puts "protocol: " + protocol
+	puts "port_begin: " + port_begin
+	puts "port_end: " + port_end
+	
+	return protocol, port_begin, port_end
+end
 

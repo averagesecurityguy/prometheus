@@ -41,7 +41,7 @@ module Config
 
 		def initialize(name)
 			@name = name
-			@protocol = protocol
+			@protocol = nil
 			@ports = Array.new
 		end
 

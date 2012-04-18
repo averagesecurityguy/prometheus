@@ -90,12 +90,14 @@ def parse_cisco_config(config)
 
 		if line =~ /^ port-object eq (.*)/
 			vprint_status("Processing port: " + $1)
-			fw.service_names.last.ports << 'port ' + $1
+			protocol = fw.service_names.last.protocol
+			fw.service_names.last.ports << "#{protocol} #{$1}"
 		end
 		
 		if line =~ /^ port-object range (.*)/
 			vprint_status("Processing port range: " + $1)
-			fw.service_names.last.ports << 'range ' + $1
+			protocol = fw.service_names.last.protocol
+			fw.service_names.last.ports << "#{protocol} range #{$1}"
 		end
 
 		if line =~ /^ service-object (.*) (range|eq) (.*)/
