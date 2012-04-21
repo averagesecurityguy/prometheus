@@ -1,13 +1,23 @@
-def analyze_remote_administration(fw)
+##
+# Wrapper function to call each of the remote administration checks. Keeps the 
+# analyze.rb code cleaner to do multiple calls in a wrapper function.
+def analyze_remote_administration(interfaces)
 	vulns =  []
 
-	vulns.concat(check_cleartext_administration(fw))
-	vulns.concat(check_external_administration(fw))
+	vulns.concat(check_cleartext_administration(interfaces))
+	vulns.concat(check_external_administration(interfaces))
 
 	return vulns
 end
 
-def check_cleartext_administration(fw)
+##
+# Input: A list of Config::Interface objects
+#
+# Output: A list of Analyze::Vulnerability objects
+#
+# Action: Loop through each interface and see if either HTTP or Telnet is used 
+# for remote administration. If either is in use then create a vulnerability.
+def check_cleartext_administration(ints)
 
 	vprint_status("Checking for cleartext administration.")
 
@@ -15,9 +25,9 @@ def check_cleartext_administration(fw)
 	http = []
 	telnet = []
 
-	fw.interfaces.each do |i|
-		if i.http? then http << [i.name] end
-		if i.telnet? then telnet << [i.name] end
+	ints.each do |int|
+		if int.http? then http << [int.name] end
+		if int.telnet? then telnet << [int.name] end
 	end
 
 	vuln = rm_cleartext_vulnerability('HTTP', http)
@@ -30,22 +40,30 @@ def check_cleartext_administration(fw)
 
 end
 
-def check_external_administration(fw)
+##
+# Input: A list of Config::Interface objects
+#
+# Output: A list of Analyze::Vulnerability objects
+#
+# Action: Loop through each interface. If the interface is labled as an 
+# external interface and either of the remote administration protocols are in
+# use on the interface then create a vulnerability.
+def check_external_administration(ints)
 	vprint_status("Checking for external administration.")
 
 	vulns = []
 	external = []
 
-	fw.interfaces.each do |i|
+	ints.each do |int|
 		eadmin = false
-		if i.external?
-			vprint_status("External Check: #{i.name}")
-			if i.http? then eadmin = true end
-			if i.https? then eadmin = true end
-			if i.ssh? then eadmin = true end
-			if i.telnet? then eadmin = true end
+		if int.external?
+			vprint_status("External Check: #{int.name}")
+			if int.http? then eadmin = true end
+			if int.https? then eadmin = true end
+			if int.ssh? then eadmin = true end
+			if int.telnet? then eadmin = true end
 		end
-		if eadmin then external << [i.name] end
+		if eadmin then external << [int.name] end
 	end
 
 	vuln = rm_external_vulnerability(external)
@@ -55,6 +73,13 @@ def check_external_administration(fw)
 
 end
 
+##
+# Input: A protocol name and a list of affected interface names.
+#
+# Output: An Analyze::Vulnerability object.
+#
+# Action: Create an Analyze::Vulnerability object and vary the description and 
+# solution based on the protocol
 def rm_cleartext_vulnerability(proto, affected)
 	
 	vuln = nil
@@ -79,6 +104,13 @@ def rm_cleartext_vulnerability(proto, affected)
 	return vuln
 end
 
+##
+# Input: A list of affected interface names.
+#
+# Output: An Analyze::Vulnerability object.
+#
+# Action: Create an Analyze::Vulnerabilty object for remote management on 
+# external interfaces.
 def rm_external_vulnerability(affected)
 	
 	vuln = nil

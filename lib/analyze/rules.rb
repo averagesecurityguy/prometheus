@@ -1,40 +1,61 @@
-def analyze_firewall_rules(fw)
+##
+# Input: A list of Config::AccessList objects
+#
+# Output: A list of vulnerabilty objects.
+#
+# Action: The rules in each Config::AccessList object is analyzed for excessive  
+# permissions. The source, destination, and service are checked for the 'Any'  
+# permission. The more 'Any' permissions, the higher the severity of the 
+# vulnerability.
+#
+def analyze_firewall_rules(acls)
 
 	vulns = []
 	high = []
 	medium = []
 	low = []
 
-	fw.access_lists.each do |al|
-		al.ruleset.each do |r|
+	acls.each do |acl|
+		acl.ruleset.each do |rule|
 			score = 0
-			if (r.enabled? && r.action == 'Allow')
-				if r.source == 'Any' then score += 1 end
-				if r.dest == 'Any' then score += 1 end
-				if r.service == 'Any' then score += 1 end
+			if (rule.enabled? && rule.action == 'Allow')
+				if rule.source == 'Any' then score += 1 end
+				if rule.dest == 'Any' then score += 1 end
+				if rule.service == 'Any' then score += 1 end
 			end
-			if score == 3 then high << [al.name, r.num, r.source, r.dest, r.service] end
-			if score == 2 then medium << [al.name, r.num, r.source, r.dest, r.service] end
-			if score == 1 then low << [al.name, r.num, r.source, r.dest, r.service] end
+			if score == 3 then high << [acl.name, rule.num, rule.source, 
+												rule.dest, rule.service] end
+			if score == 2 then medium << [acl.name, rule.num, rule.source, 
+												rule.dest, rule.service] end
+			if score == 1 then low << [acl.name, rule.num, rule.source, 
+												rule.dest, rule.service] end
 		end
 	end
 
 	vprint_status("Analyzing rules for high-severity vulnerabilities.")
-	vulns << rule_vulnerability('high', high)
+	vulns << create_vulnerability('high', high)
 
 	vprint_status("Analyzing rules for medium-severity vulnerabilities.")
-	vulns << rule_vulnerability('medium', medium)
+	vulns << create_vulnerability('medium', medium)
 
 	vprint_status("Analyzing rules for low-severity vulnerabilities.")
-	vulns << rule_vulnerability('low', low)
+	vulns << create_vulnerability('low', low)
 
 	return vulns
 end
 
-def rule_vulnerability(sev, affected)
+
+##
+# Input: A severity rating and a list of affected rules.
+#
+# Output: An Analysis::Vulnerability object.
+#
+# Action: Create an Analysis::Vulnerability object with a description based on 
+# the severity rating.
+def create_vulnerability(sev, affected)
 
 	vuln = nil
-	if not affected.empty?
+	unless affected.empty?
 		vuln = Analysis::Vulnerability.new("Overly Permissive Rules")
 
 		vuln.severity = sev

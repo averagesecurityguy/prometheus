@@ -1,17 +1,35 @@
+##
+# Input: A plain-text Cisco ASA configuration file
+#
+# Output: A Config::Firewall object
+#
+# Action: Parse the config line by line and update the appropriat parts of the 
+# Config::Firewall object
 def parse_cisco_config(config)
 
 	fw = Config::FirewallConfig.new
 
-	# Both network objects and service objects can contain group objects. This
-	# variable is used to determine if we are processing a network object or 
-	# not.
+	##
+	# Both network objects and service objects can contain group objects, 
+	# which is confusing when parsing line by line because the group object 
+	# may get associated with a network object when it should have been
+	# associated with a service object, or vice versa. This variable is used 
+	# to determine if we are processing a network object or a service object. 
 	process_network = false
 
+	##
+	# Read through each line of the configuration file, use regex to identify 
+	# the relevant parts of the config file, and update the Config::Firewall 
+	# object as necessary.
 	config.each_line do |line|
+
 		line.chomp!
+
+		# Identify the host name
 		if line =~ /^hostname (.*)$/ then fw.name = $1  end
 
-		# Is this an ASA or PIX
+		# The same code is used to parse both ASA and PIX files. Need to 
+		# determine if this is an ASA or a PIX.
 		if line =~ /ASA Version (.*)$/
 			fw.firmware = $1.rstrip()
 			fw.type = 'ASA'
@@ -22,7 +40,7 @@ def parse_cisco_config(config)
 			fw.type = 'PIX'
 		end
 
-		# Build named ip address list
+		# Find host names in use
 		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
 			fw.host_names[parse_ip_name($2)] = $1
 		end
@@ -165,6 +183,10 @@ def parse_cisco_config(config)
 end
 
 
+#-----------------------------------------------------------------------------
+# Additional methods needed for parsing the config file.
+#-----------------------------------------------------------------------------
+
 def parse_rule_protocol(rule_array)
 	prot = rule_array.shift
 	case prot
@@ -207,12 +229,17 @@ def parse_rule_service(rule_array)
     end
 end
 
-
+def parse_action(str)
+	action = 'Deny'
+	if str == 'permit' then action = 'Allow' end
+	return action
+end
+		
 def parse_rule(id, string)
 	rule = Config::Rule.new(id)
 	rule.enabled = true
 	rule_array = string.split(" ")
-	rule.action = rule_array.shift
+	rule.action = parse_action(rule_array.shift)
 	rule.protocol, rule_array = parse_rule_protocol(rule_array)
 	rule.source, rule_array = parse_rule_host(rule_array)
 	rule.dest, rule_array = parse_rule_host(rule_array)
@@ -223,6 +250,10 @@ def parse_rule(id, string)
 end
 
 
+##
+# Input: A string
+#
+# Output: 
 def parse_ip_name(str)
 	ip_name = str
 	if str =~ /(.*) description (.*)/

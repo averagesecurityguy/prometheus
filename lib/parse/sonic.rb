@@ -59,6 +59,10 @@ def parse_sonic_config(config)
 			fw.interfaces.last.status = $1
 		end
 
+		if line =~ /^Zone:\s+WAN\s+Handle:.*$/
+			fw.interfaces.last.external = true
+		end
+
 		if line =~ /^Interface http Management:\s+(.*)/
 			if $1 == 'Yes'
 				fw.interfaces.last.http = true
