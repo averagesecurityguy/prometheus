@@ -1,3 +1,10 @@
+##
+# Input: A plain-text SonicWALL Technical Support Report (.wri) file
+#
+# Output: A Config::Firewall object
+#
+# Action: Parse the config line by line and update the appropriate parts of 
+# the Config::Firewall object
 def parse_sonic_config(config)
 
 	fw = Config::FirewallConfig.new
@@ -5,10 +12,7 @@ def parse_sonic_config(config)
 	service_object = false
 	address_object = false
 	
-	# Sonicwall only uses names in the service object groups. We preprocess
-	# the port names by reading the config through once and capturing the port 
-	# names. After that we can use the port names when setting up the service 
-	# object groups.
+	# Preprocess the port names so we can load them into Service objects later.
 	port_names = preprocess_port_names(config)
 
 	config.each_line do |line|
@@ -56,7 +60,11 @@ def parse_sonic_config(config)
 		end
 
 		if line =~ /^Port Status:\s+(.*)/
-			fw.interfaces.last.status = $1
+			if $1 == "UP"
+				fw.interfaces.last.status = 'Up'
+			else
+				fw.interfaces.last.status = 'Down'
+			end
 		end
 
 		if line =~ /^Zone:\s+WAN\s+Handle:.*$/
@@ -81,6 +89,10 @@ def parse_sonic_config(config)
 			end
 		end
 
+	#-------------------------------------------------------------------------
+	# Professional Only Functionality
+	#-------------------------------------------------------------------------
+
 		# Parse Address Object Table
 		if line =~ /^(.*): Handle:\d+ ZoneHandle:/
 			address_object = true
@@ -89,21 +101,33 @@ def parse_sonic_config(config)
 
 		# Parse Service Object Table
 		if line =~ /^(.*): Handle:\d+ Size:.* GROUP:/
+			vprint_status("Processing service name #{$1}.")
 			name = $1
 			address_object = false
 			service_object = true
 			fw.service_names << Config::ServiceName.new(name)
 		end
 
-		if line =~ /^   member: Name:(.*) Handle:\d+/
-			if service_object
+		if ((line =~ /^   member: Name:(.*) Handle:\d+/) && (service_object))
+			print_debug("Processing service object #{$1}")
+			if port_names[$1]
 				fw.service_names.last.ports << port_names[$1]
-			end
-			if address_object
+			else
+				fw.service_names.last.ports << $1
 			end
 		end
 
+		if ((line =~ /^   member: Name:(.*) Handle:\d+/) && (address_object))
+			print_debug("Processing address object #{$1}")
+		end
+
+
 	end
+
+	# A Service object can include port names or other service object names. 
+	# We have already filled in the port_names. Now, we need to replace the 
+	# service object names with ports.
+	fix_service_object_table()
 
 	return fw
 end	
@@ -114,11 +138,12 @@ def preprocess_port_names(config)
 
 	config.each_line do |line|
 		line.chomp!
+		# Parse Ports from the Service Object Table. Load them into port_names 
+		# for later processing.
 		if line =~ /^(.*): Handle:\d+ .* IpType:.*/
 			name = $1
 			puts line
 			protocol, port_begin, port_end = parse_port_object(line)
-			#puts "#{protocol} #{port_begin} #{port_end}"
 			if port_begin == port_end
 				port_names[name] = "#{protocol} #{port_begin}"
 			else
@@ -132,13 +157,13 @@ def preprocess_port_names(config)
 end
 
 def parse_port_object(line)
-	#port_begin = 'pb'
-	#port_end = 'pe'
-	#protocol = 'pr'
+	vprint_status("Processing port object.")
 	line =~ /Port Begin: (\d+)/
 	port_begin = $1
+
 	line =~ /Port End: (\d+)/
 	port_end = $1
+
 	line =~ /IpType: (\d+)/
 	if $1 == '6'
 		protocol = 'tcp'
@@ -148,10 +173,12 @@ def parse_port_object(line)
 		protocol = 'ip_type ' + $1
 	end
 
-	puts "protocol: " + protocol
-	puts "port_begin: " + port_begin
-	puts "port_end: " + port_end
+	print_debug("Protocol: " + protocol)
+	print_debug("port_begin: " + port_begin)
+	print_debug("port_end: " + port_end)
 	
 	return protocol, port_begin, port_end
 end
 
+def fix_service_object_table
+end

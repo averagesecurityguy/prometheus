@@ -44,6 +44,12 @@ optparse = OptionParser.new do|opts|
 		options[:verbose] = true
 	end
 
+	# Debug output
+	options[:debug] = false
+	opts.on( '-d', '--debug', "Print debug output (very verbose).") do |d|
+		options[:debug] = true
+	end
+
 	# This displays the help screen.
 	opts.on( '-h', '--help', 'Display this screen' ) do
 		puts opts
@@ -63,6 +69,7 @@ include PrometheusErrors
 include PrometheusUI
 
 $verbose = options[:verbose]
+$debug = options[:debug]
 
 # Parse the firewall config
 begin

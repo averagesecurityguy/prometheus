@@ -1,6 +1,6 @@
 module PrometheusUI
 
-	color = true
+	$color = true
 
 	##
 	# The UI uses color-coded status messages, which work fine on *nix boxes 
@@ -13,7 +13,7 @@ module PrometheusUI
 	rescue LoadError
 		puts "[-] You must install the win32console gem to use color on "
 		puts "Windows. Proceeding without color support."
-		color = false
+		$color = false
 	end
  
 	##
@@ -29,7 +29,7 @@ module PrometheusUI
 	##
 	# Print status messages.
 	def print_status(msg)
-		if color
+		if $color
 			puts blue("[*] ") + msg
 		else
 			puts "[*] " + msg
@@ -39,7 +39,7 @@ module PrometheusUI
 	##
 	# Print error messages.
 	def print_error(msg)
-		if color
+		if $color
 			puts red("[-] ") + msg
 		else
 			puts "[-] " + msg
@@ -49,7 +49,7 @@ module PrometheusUI
 	##
 	# Print success messages.
 	def print_good(msg)
-		if color
+		if $color
 			puts green("[+]") + msg
 		else
 			puts "[+] " + msg
@@ -59,19 +59,27 @@ module PrometheusUI
 	##
 	# Print status messages if verbose is true
 	def vprint_status(msg)
-		if $verbose then print_status(msg) end;
+		if $verbose || $debug then print_status(msg) end;
 	end
 
 	##
 	# Print error messages if verbose is true
 	def vprint_error(msg)
-		if $verbose then print_error(msg) end;
+		if $verbose || $debug then print_error(msg) end;
 	end
 
 	##
 	# Print success messages if verbose is true
 	def vprint_good(msg)
-		if $verbose then print_good(msg) end;
+		if $verbose || $debug then print_good(msg) end;
+	end
+
+	##
+	# Print debug messages if debug is true
+	def print_debug(msg)
+		if $debug
+			puts '[debug] ' + msg
+		end
 	end
 
 end

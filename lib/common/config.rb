@@ -3,14 +3,21 @@ module Config
 	##
 	# Class to hold a firewall configuration.
 	# 
+	# @name          - firewall name
+	# @firmware      - firmware version
+	# @type          - firewall type, ASA, PIX, SonicWALL, etc
 	# @access_lists  - an array of AccessList objects 
 	# @interfaces    - a list of Interface objects 
 	# @host_names    - a Hash of name/IP pairs 
 	# @service_names - a list of ServiceName objects 
 	# @network_names - a list of NetworkName objects
+	# rule_count     - number of rules found
+	# acl_count      - number of acl entries found
+	# int_count      - number of interfaces found
+	# ints_up        - number of interfaces that are up
 	class FirewallConfig
 		attr_accessor :name, :firmware, :type, :access_lists, :interfaces
-		attr_accessor :service_names, :network_names, :host_names
+		attr_accessor :host_names, :service_names, :network_names
   
 		def initialize
 			@name = nil
@@ -22,7 +29,40 @@ module Config
 			@service_names = Array.new
 			@network_names = Array.new
 		end
-			
+
+		##
+		# Count the number of rules identified and return the count
+		def rule_count
+			rc = 0
+			@access_lists.each do |acl|
+				rc += acl.ruleset.length
+			end
+		
+			return rc
+		end
+
+		##
+		# Count the number of ACLs identified and return the count
+		def acl_count
+			return @access_lists.length
+		end
+
+		##
+		# Count the number of interfaces and return the count
+		def int_count
+			return @interfaces.length
+		end
+
+		##
+		# Count the number of interfaces that are up and return the count
+		def ints_up
+			up = 0
+			@interfaces.each do |i|
+				if i.status == 'Up' then up += 1 end
+			end
+
+			return up
+		end
 	end
 
 
