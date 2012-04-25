@@ -13,7 +13,7 @@ def parse_sonic_config(config)
 	address_object = false
 	
 	# Preprocess the port names so we can load them into Service objects later.
-	port_names = preprocess_port_names(config)
+	port_names, host_names = preprocess_names(config)
 
 	config.each_line do |line|
 		line.chomp!
@@ -95,49 +95,59 @@ def parse_sonic_config(config)
 
 		# Parse Address Object Table
 		if line =~ /^(.*): Handle:\d+ ZoneHandle:/
+			name = $1.gsub(/\(.*\)/, '')
+			vprint_status("Processing network name #{name}.")
 			address_object = true
 			service_object = false
+			fw.network_names << Config::NetworkName.new(name)
 		end
 
 		# Parse Service Object Table
 		if line =~ /^(.*): Handle:\d+ Size:.* GROUP:/
 			vprint_status("Processing service name #{$1}.")
-			name = $1
 			address_object = false
 			service_object = true
-			fw.service_names << Config::ServiceName.new(name)
+			fw.service_names << Config::ServiceName.new($1)
 		end
 
+		# Parse service object member
 		if ((line =~ /^   member: Name:(.*) Handle:\d+/) && (service_object))
 			print_debug("Processing service object #{$1}")
 			if port_names[$1]
 				fw.service_names.last.ports << port_names[$1]
 			else
-				fw.service_names.last.ports << $1
+				fw.service_names.last.ports << 'service ' + $1
 			end
 		end
 
+		# Parse address object member
 		if ((line =~ /^   member: Name:(.*) Handle:\d+/) && (address_object))
-			print_debug("Processing address object #{$1}")
+			name = $1
+			print_debug("Processing address object #{name}")
+			if host_names[name]
+				fw.network_names.last.hosts << host_names[name].gsub(/\(.*\)/, '')
+			else
+				fw.network_names.last.hosts << 'network ' + name
+			end
 		end
-
-
 	end
-
-	# A Service object can include port names or other service object names. 
-	# We have already filled in the port_names. Now, we need to replace the 
-	# service object names with ports.
-	fix_service_object_table()
+	
+	# Put host_names into fw.host_names
+	host_names.each do |name, ip|
+		fw.host_names[name] = ip
+	end
 
 	return fw
 end	
 
-def preprocess_port_names(config)
+def preprocess_names(config)
 
 	port_names = {}
+	host_names = {}
 
 	config.each_line do |line|
 		line.chomp!
+
 		# Parse Ports from the Service Object Table. Load them into port_names 
 		# for later processing.
 		if line =~ /^(.*): Handle:\d+ .* IpType:.*/
@@ -151,26 +161,57 @@ def preprocess_port_names(config)
 			end
 		end
 
+		# Parse IP addresses from Address Object Table. Load them into 
+		# host_names for later processing.
+		if line =~ /(.*): Handle:\d+ .* HOST: (.*)/
+			name = $1
+			ip = $2
+			name.gsub!(/\(.*\)/, '')
+			print_debug("Host Name: #{name}")
+			host_names[name] = ip + '/32'
+		end
+
+		# Parse Networks from Address Object Table. Load them into host_names 
+		# for later processing.
+		if line =~ /(.*): Handle:\d+ .* NETWORK: (.*) - (.*)/
+			name = $1
+			ip = $2
+			mask = $3
+			name.gsub!(/\(.*\)/, '')
+			print_debug("Network Name: #{name}")
+			host_names[name] = ip + '/' + mask
+		end
+
 	end
 
-	return port_names
+	return port_names, host_names
 end
 
 def parse_port_object(line)
 	vprint_status("Processing port object.")
-	line =~ /Port Begin: (\d+)/
-	port_begin = $1
 
-	line =~ /Port End: (\d+)/
-	port_end = $1
+	protocol = ''
+	if line =~ /Port Begin: (\d+)/
+		port_begin = $1
+	end
 
-	line =~ /IpType: (\d+)/
-	if $1 == '6'
-		protocol = 'tcp'
-	elsif $1 == '17'
-		protocol = 'udp'
-	else
-		protocol = 'ip_type ' + $1
+	if line =~ /Port End: (\d+)/
+		port_end = $1
+	end
+
+	if line =~ /IpType: (\d+)/
+		case $1
+			when '1'
+				protocol = 'icmp'
+			when '2'
+				protocol = 'igmp'
+			when '6'
+				protocol = 'tcp'
+			when '17'
+				protocol = 'udp'
+			else
+				protocol = 'ip_type ' + $1
+		end
 	end
 
 	print_debug("Protocol: " + protocol)
@@ -180,5 +221,3 @@ def parse_port_object(line)
 	return protocol, port_begin, port_end
 end
 
-def fix_service_object_table
-end

@@ -54,23 +54,24 @@ module HTMLReport
 
 	def summary_to_html(fw, an)
 	
-		summary =  "<div id=\"summary_statement\">\n"
-		summary << "<p>The #{fw.type} firewall with hostname <em>#{fw.name}</em> "
-		summary << "and running firmware version <em>#{fw.firmware}</em> was "
-		summary << "analyzed with Prometheus Firewall Analyzer (Prometheus) on "
-		summary << "#{Date.today.to_s}. Prometheus identified (#{an.high_count}) "
-		summary << "high-severity, (#{an.medium_count}) medium-severity, and "
-		summary << "(#{an.low_count}) low-severity vulnerabilities.</p>"
-		summary << "Prometheus identified #{fw.int_count} interfaces on the "
-		summary << "firewall, #{fw.ints_up} of which were active.</p>"
-		summary << "Prometheus processed #{fw.acl_count} access control lists "
-		summary << "with a total of #{fw.rule_count} rules. Of the #{fw.rule_count} "
-		summary << "rules identified, #{an.high_rule_count} were high-severity "
-		summary << "rules, #{an.medium_rule_count} were medium-severity rules, and "
-		summary << "#{an.low_rule_count} were low_severity rules.</p>"
-		summary << "</div>\n"
+		s =  "<div id=\"summary_statement\">\n"
+		s << "<p>The #{fw.type} firewall with hostname <em>#{fw.name}</em> "
+		s << "and running firmware version <em>#{fw.firmware}</em> was "
+		s << "analyzed with Prometheus Firewall Analyzer (Prometheus) on "
+		s << "#{Date.today.to_s}. Prometheus identified (#{an.high_count}) "
+		s << "high-severity, (#{an.medium_count}) medium-severity, and "
+		s << "(#{an.low_count}) low-severity vulnerabilities.</p>"
+		s << "Prometheus processed #{fw.acl_count} access control lists "
+		s << "with a total of #{fw.rule_count} rules. Of the #{fw.rule_count} "
+		s << "rules identified, #{an.high_rule_count} had high-severity "
+		s << "vulnerabilities, #{an.medium_rule_count} had medium-severity "
+		s << "vulnerabilities, and #{an.low_rule_count} had low_severity "
+		s << "vulnerabilities.</p>"
+		s << "<p>Prometheus identified #{fw.int_count} interfaces on the "
+		s << "firewall, #{fw.ints_up} of which were active.</p>"
+		s << "</div>\n"
 
-		return summary
+		return s
 	end
 
 	##
@@ -247,6 +248,7 @@ module HTMLReport
 			h << "<h3>Network Names</h3>\n"
 
 			network_names.each do |n|
+				if n.hosts.empty? then next end
 				t = HTMLTable::Table.new(
 					'Header' => n.name, 
 					'Columns' => ['Hosts']
@@ -273,13 +275,14 @@ module HTMLReport
 			h << "<h3>Service Names</h3>\n"
 
 			service_names.each do |s|
-				p s
+				if s.ports.empty? then next end
 				t = HTMLTable::Table.new(
-					'Header' => "#{s.name} (#{s.protocol})",
+					'Header' => "#{s.name}",
 					'Columns' => ['Ports']
 				)
-
+				print_debug("Service Name: #{s.name}")
 				s.ports.each do |p|
+					print_debug("Port: #{p}")
 					t.rows << [p]
 				end
 				h << t.to_html
