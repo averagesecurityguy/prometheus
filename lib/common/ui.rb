@@ -1,5 +1,6 @@
 module PrometheusUI
 
+	# Do we have color support?
 	$color = true
 
 	##

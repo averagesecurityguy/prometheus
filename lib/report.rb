@@ -1,3 +1,14 @@
+#-----------------------------------------------------------------------------
+# This module is used to call the appropriate report writer based on the -f 
+# command line option. Supported report types are HTML and XML. The code for 
+# each report should be in a separate ruby file within lib/report folder and
+# should be 'required' below. An appropriate format check and a call to the 
+# associated reporting method should be added to the report_firewall method
+# below. Each report method is expected to take a Config::Firewall object, a 
+# Analysis::Summary object, and an optional template and is expected to return
+# a string containing the report. The report is then written to a file using
+# the save_report method.
+#-----------------------------------------------------------------------------
 require 'report/htmltable'
 require 'report/html'
 require 'report/xml'

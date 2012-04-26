@@ -2,21 +2,33 @@ module Report
 module HTMLReport
 	require 'date'
 
+	##
+	# Input: Config::Firewall object, Analysis::Summary object, and a file name 
+	# containing a template for the HTML report. 
+	#
+	# Output: A string containing an HTML file with the report.
+	#
+	# Action: Make sure the template file exists, is a file and is not empty. 
+	# Open the file and insert the appropriate parts of the report. A custom 
+	# template file can be specified using the -t command line option.
 	def generate_html_report(firewall, analysis, template)
 
-		# Open template file
+		# Does the tempate file exist?
 		if not File.exists?(template)
 			raise ReportError, "File #{template} does not exist."
 		end
 
+		# Is the file a file and not a directory?
 		if not File.file?(template)
 			raise ReportError, "#{template} is not a file."
 		end
 
+		# Is the file empty?
 		if File.zero?(template)
 			raise ReportError, "The file #{template} is empty."
 		end
 
+		# Open the template file
 		html = File.open(template) {|f| f.read}
 
 		# Replace id, firmware, and type
@@ -52,6 +64,10 @@ module HTMLReport
 
 	end
 
+	##
+	# Input: A Config::Firewall object and an Analysis::Summary object
+	#
+	# Output: A string containing a summary of the configuration and analysis. 
 	def summary_to_html(fw, an)
 	
 		s =  "<div id=\"summary_statement\">\n"
@@ -75,7 +91,10 @@ module HTMLReport
 	end
 
 	##
-	# Convert the interface list to HTML
+	# Input: A list of Config::Interface objects
+	# 
+	# Output: A string containig the list of Config::Interface objects as HTML. 
+	# Only includes the name, ip address, subnet mask and status.
 	def interfaces_to_html(interfaces)
 		vprint_status("Writing interfaces to HTML.")
 
@@ -102,7 +121,10 @@ module HTMLReport
 	end
 
 	##
-	# Convert the management interfaces to HTML
+	# Input: A list of Config::Interface objects.
+	# 
+	# Output: A string containg an HTML table of management protocols in use 
+	# on each interface.
 	def management_to_html(interfaces)
 		vprint_status("Writing remote management to HTML.")
 		h = ''
@@ -127,7 +149,10 @@ module HTMLReport
 	end
 
 	##
-	# Convert the vulnerabilities to HTML 
+	# Input: An Analysis::Summary object.
+	#
+	# Output: A string containing an HTML representation of the vulnerabilities. 
+	# Vulnerabilities are listed in order of severity. 
 	def vulnerabilities_to_html(analysis)
 		vprint_status("Writing vulnerabilities to HTML.")
 		h = "<div id=\"vulnerabilities\">\n"
@@ -157,6 +182,11 @@ module HTMLReport
 		return h
 	end
 
+	##
+	# Input: A list of Analysis::Vulnerability objects
+	# 
+	# Output: A string containg an HTML representation of the list of 
+	# vulnerabilities.
 	def vuln_list_to_html(vulns)
 
 		h = ''
@@ -169,7 +199,9 @@ module HTMLReport
 	end
 
 	##
-	# Convert an individual vulnerability to HTML
+	# Input: An Analysis::Vulnerability object
+	#
+	# Output: A string containing an HTML representation of a vulnerability.
 	def vulnerability_to_html(v)
 		vprint_status("Writing #{v.name} (#{v.severity.upcase}) to HTML.")
 		h = ''
@@ -190,6 +222,14 @@ module HTMLReport
 		return h
 	end
 
+	##
+	# Input: A list of Config:AccessList objects and a firewall type
+	#
+	# Output: A string containing an HTML representation of an acl
+	#
+	# Action: SonicWALL firewalls do not store a protocol with the rule so do 
+	# not display the protocol column in the HTML table. Use the type variable 
+	# to determine if this is a SonicWALL. 
 	def access_lists_to_html(acls, type)
 		vprint_status("Writing access control lists to HTML.")
 		h = ''
@@ -198,8 +238,7 @@ module HTMLReport
 			h << "<div id=\"access_lists\">\n"
 			h << "<h3>Access Control Lists</h3>\n"
 
-			# SonicWALLs do not store a protocol with the rule so do not 
-			# display it.
+			# Do not display the protocol column for SonicWALLs
 			if type == 'SonicOS'
 				columns = ['ID', 'Enabled', 'Source', 'Destination', 'Action', 'Service']
 			else
@@ -213,7 +252,7 @@ module HTMLReport
 					'Header' => a.name + interface
 				)
 				a.ruleset.each do |r|
-					# Do not display protocol for SonicWALLs
+					# Do not display the protocol column for SonicWALLs
 					if type == 'SonicOS'
 						t.rows << [r.num, r.enabled, r.source, r.dest, r.action, r.service]
 					else
@@ -233,6 +272,12 @@ module HTMLReport
 	#-------------------------------------------------------------------------
 	# Professional Functionality
 	#-------------------------------------------------------------------------
+
+	##
+	# Input: A hash of name/IP pairs
+	#
+	# Output: A string containing an HTML representation of the list of host 
+	# names.
 	def host_names_to_html(host_names)
 		vprint_status("Writing host names to HTML.")
 		h = ''
@@ -256,6 +301,11 @@ module HTMLReport
 		return h
 	end
 
+	##
+	# Input: A list of Config::NetworkName objects
+	#
+	# Output: A string containing an HTML representation of the list of 
+	# network names.
 	def network_names_to_html(network_names)
 		vprint_status("Writing network names to HTML.")
 		h = ''
@@ -283,6 +333,11 @@ module HTMLReport
 		return h
 	end
 
+	##
+	# Input: A list of Config::ServiceName objects
+	#
+	# Output: A string containing an HTML representation of the list of 
+	# service names.
 	def service_names_to_html(service_names)
 		vprint_status("Writing service names to HTML.")
 		h = ''

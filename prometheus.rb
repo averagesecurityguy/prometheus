@@ -1,8 +1,9 @@
 #!/usr/bin/ruby
 
-# Copyright 2012 Stephen Haywood
+# Copyright 2012 Stephen Haywood aka AverageSecurityGuy
 # All rights reserved see LICENSE file.
 
+# Tell Ruby to look in the lib folder for include files
 base = __FILE__
 while File.symlink?(base)
 	base = File.expand_path(File.readlink(base), File.dirname(base))
@@ -10,6 +11,8 @@ end
 
 $:.unshift(File.join(File.dirname(base), 'lib'))
 
+
+# Setup optparse to handle command line arguments.
 require 'optparse'
 
 options = {}

@@ -31,7 +31,7 @@ def parse_cisco_config(config)
 		# The same code is used to parse both ASA and PIX files but still need 
 		# to know the file type for reporting purposes.
 		if line =~ /ASA Version (.*)$/
-			fw.firmware = $1.rstrip()
+			fw.firmware = $1
 			fw.type = 'ASA'
 		end
 
