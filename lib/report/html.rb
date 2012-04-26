@@ -34,7 +34,7 @@ module HTMLReport
 		html.gsub!(/--management--/, management_to_html(firewall.interfaces))
 
 		# Insert Access Control Lists
-		html.gsub!(/--access_lists--/, access_lists_to_html(firewall.access_lists))
+		html.gsub!(/--access_lists--/, access_lists_to_html(firewall.access_lists, firewall.type))
 
 		# Insert Analysis Results
 		html.gsub!(/--analysis--/, vulnerabilities_to_html(analysis))
@@ -45,7 +45,7 @@ module HTMLReport
 		# Insert Network Names
 		html.gsub!(/--network_names--/, network_names_to_html(firewall.network_names))
 
-		# Insert Analysis Results
+		# Insert Service Names
 		html.gsub!(/--service_names--/, service_names_to_html(firewall.service_names))
 
 	   	return html
@@ -190,21 +190,35 @@ module HTMLReport
 		return h
 	end
 
-	def access_lists_to_html(acls)
+	def access_lists_to_html(acls, type)
 		vprint_status("Writing access control lists to HTML.")
 		h = ''
 
 		if acls
 			h << "<div id=\"access_lists\">\n"
 			h << "<h3>Access Control Lists</h3>\n"
+
+			# SonicWALLs do not store a protocol with the rule so do not 
+			# display it.
+			if type == 'SonicOS'
+				columns = ['ID', 'Enabled', 'Source', 'Destination', 'Action', 'Service']
+			else
+				columns = ['ID', 'Enabled', 'Protocol', 'Source', 'Destination', 'Action', 'Service']
+			end
+
 			acls.each do |a|
 				interface = a.interface ? " (#{a.interface})" : ''
 				t = HTMLTable::Table.new(
-					'Columns' => ['ID', 'Enabled', 'Protocol', 'Source', 'Destination', 'Action', 'Service'],
+					'Columns' => columns,
 					'Header' => a.name + interface
 				)
 				a.ruleset.each do |r|
-					t.rows << [r.num, r.enabled, r.protocol, r.source, r.dest, r.action, r.service]
+					# Do not display protocol for SonicWALLs
+					if type == 'SonicOS'
+						t.rows << [r.num, r.enabled, r.source, r.dest, r.action, r.service]
+					else
+						t.rows << [r.num, r.enabled, r.protocol, r.source, r.dest, r.action, r.service]
+					end
 				end
 
 				h << t.to_html
@@ -216,6 +230,9 @@ module HTMLReport
 		return h
 	end
 
+	#-------------------------------------------------------------------------
+	# Professional Functionality
+	#-------------------------------------------------------------------------
 	def host_names_to_html(host_names)
 		vprint_status("Writing host names to HTML.")
 		h = ''

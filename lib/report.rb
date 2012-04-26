@@ -1,9 +1,8 @@
-require 'report/rextable'
 require 'report/htmltable'
 require 'report/html'
-require 'report/text'
+require 'report/xml'
 
-include Report::TextReport
+include Report::XMLReport
 include Report::HTMLReport
 
 ##
@@ -19,8 +18,8 @@ def report_firewall(firewall, analysis, filename, format, template)
 	templatefile = set_template_name(template, format)
 
 	case format.downcase
-		when "text"
-			report = generate_text_report(firewall, analysis, templatefile)
+		when "xml"
+			report = generate_xml_report(firewall, analysis)
 		when "html"
 			report = generate_html_report(firewall, analysis, templatefile)
 		else

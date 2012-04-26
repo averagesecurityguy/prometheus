@@ -31,6 +31,17 @@ module Config
 		end
 
 		##
+		# The parser is expected to set @type to 'ASA', 'PIX', or 'SonicOS'. 
+		# Anything else raises an error.
+		def type=(input)
+			if ['ASA', 'PIX', 'SonicOS'].include?(input)
+				@type = input
+			else
+				raise ParseError.new("Invalid input for Config::Firewall.type: #{input}")
+			end
+		end
+
+		##
 		# Count the number of rules identified and return the count
 		def rule_count
 			rc = 0
