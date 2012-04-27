@@ -3,9 +3,10 @@ Installing Prometheus
 Prometheus is a Ruby application and will run on any system running a recent 
 version (1.8.7 or higher) of Ruby. To install Prometheus use the following
 steps:
-1. Create a directory called prometheus.
-2. Extract the prometheus files into the directory.
-3. CD into the prometheus directory and run ./prometheus.rb -h
+
+1.  Create a directory called prometheus.
+2.  Extract the prometheus files into the directory.
+3.  CD into the prometheus directory and run ./prometheus.rb -h
 
 How to Use Prometheus
 =====================
