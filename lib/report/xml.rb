@@ -1,35 +1,67 @@
+#-------------------------------------------------------------------------
+# Professional Functionality
+#-------------------------------------------------------------------------
+
 module Report
 module XMLReport
 	require 'date'
 
+	##
+	# Input: Config::Firewall object and an Analysis::Summary object. 
+	#
+	# Output: A string containing an XML representation of the report.
+	#
+	# Action: Create an XML document using the data in the Config::Firewall 
+	# object and the Analysis::Summary object.
 	def generate_xml_report(firewall, analysis)
 		vprint_status("Writing XML report.")
 		xml =  "<Prometheus version=\"1.0\">\n"
+
+		# Add configuration information to XML
 		xml << "<configuration>\n"
 		xml << create_element('name', firewall.name) + "\n"
 		xml << create_element('type', firewall.type) + "\n"
 		xml << create_element('firmware', firewall.firmware) + "\n"
+
+		# Add configuration summary information to XML
+		xml << "<summary>"
+		xml << create_element('rule_count', firewall.rule_count)
+		xml << create_element('acl_count', firewall.acl_count)
+		xml << create_element('interface_count', firewall.int_count)
+		xml << create_element('interface_up_count', firewall.ints_up)
+		xml << "</summary>"
 		
-		# Add Interfaces
+		# Add interfaces to XML
 		xml << interfaces_to_xml(firewall.interfaces)
 
-		# Add Access Control Lists
+		# Add access control lists to XML
 		xml << access_lists_to_xml(firewall.access_lists, firewall.type)
 
-		# Add Host Names
+		# Add host names to xml
 		xml << host_names_to_xml(firewall.host_names)
 
-		# Add Network Names
+		# Add network names to XML
 		xml << network_names_to_xml(firewall.network_names)
 
-		# Insert Service Names
+		# Add service names to XML
 		xml << service_names_to_xml(firewall.service_names)
 
 		xml << "</configuration>\n"
 	
+		# Add Analysis results
 		xml << "<analysis>\n"
+		
+		# Add analysis summary information to XML
+		x = "<summary>"
+		x = create_element('high_count', analysis.high_count)
+		x = create_element('medium_count', analysis.medium_count)
+		x = create_element('low_count', analysis.low_count)
+		x = create_element('high_rule_count', analysis.high_rule_count)
+		x = create_element('medium_rule_count', analysis.medium_rule_count)
+		x = create_element('low_rule_count', analysis.low_rule_count)
+		x = "</summary>"
 
-		# Insert Analysis Results
+		# Add vulnerabilities to XML
 		xml << vulnerabilities_to_xml(analysis)
 
 		xml << "</analysis>\n"
@@ -39,8 +71,10 @@ module XMLReport
 
 	end
 
-	def create_element(name, element)
-		return "<#{name}>#{element}</#{name}>"
+	##
+	# Create an XML element with the name and text.
+	def create_element(name, text)
+		return "<#{name}>#{text}</#{name}>"
 	end
 
 	##
@@ -74,7 +108,8 @@ module XMLReport
 
 	end
 
-
+	##
+	# Convert the access_lists to XML
 	def access_lists_to_xml(acls, type)
 		vprint_status("Writing access control lists to XML.")
 		x = ''
@@ -122,11 +157,13 @@ module XMLReport
 
 
 	##
-	# Convert the vulnerabilities to XML 
+	# Convert the vulnerabilities to XML. Write out each group of 
+	# vunerabilities separately.
 	def vulnerabilities_to_xml(analysis)
 		vprint_status("Writing vulnerabilities to XML.")
 		x = "<vulnerabilities>\n"
 
+		# Add high severity vulnerabilities
 		x << "<high_severity>\n"
 		unless analysis.highs.empty?
 			x << vuln_list_to_xml(analysis.highs)
@@ -135,6 +172,7 @@ module XMLReport
 		end
 		x << "</high_severity>\n"
 
+		# Add medium severity vulnerabilities
 		x << "<medium_severity>\n"
 		unless analysis.mediums.empty?
 			x << vuln_list_to_xml(analysis.mediums)
@@ -143,6 +181,7 @@ module XMLReport
 		end
 		x << "</medium_severity>\n"
 
+		# Add low severity vulnerabilities
 		x << "<low_severity>\n"
 		unless analysis.lows.empty?
 			x << vuln_list_to_xml(analysis.lows)
@@ -155,6 +194,8 @@ module XMLReport
 		return x
 	end
 
+	##
+	# Wrapper method to write a list of vulnerabilities to XML
 	def vuln_list_to_xml(vulns)
 
 		x = ''
@@ -167,7 +208,7 @@ module XMLReport
 	end
 
 	##
-	# Convert an individual vulnerability to HTML
+	# Convert an individual vulnerability to XML
 	def vulnerability_to_xml(v)
 		vprint_status("Writing #{v.name} (#{v.severity.upcase}) to XML.")
 		x = ''
@@ -190,11 +231,6 @@ module XMLReport
 
 		return x
 	end
-
-
-	#-------------------------------------------------------------------------
-	# Professional Functionality
-	#-------------------------------------------------------------------------
 
 	##
 	# Convert host_names to XML

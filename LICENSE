@@ -1,6 +1,3 @@
-With the exception of lib/report/rextable.rb, which is owned by Rapid7 and is 
-distributed under the 3-Clause BSD license (see lib/report/rextable.rb),
-
 Prometheus is Copyright (c) 2012, Stephen Haywood
 All rights reserved.
 

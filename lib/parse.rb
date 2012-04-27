@@ -22,7 +22,7 @@ def parse_firewall(config_file)
 	##
 	# Does the file exist?
 	if not File.exists?(config_file)
-		raise ParseError.new("File #{config_file} does not exist.")
+		raise ParseError.new("Configuration file does not exist.")
 	end
 
 	##

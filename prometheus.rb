@@ -17,6 +17,9 @@ require 'optparse'
 
 options = {}
 optparse = OptionParser.new do|opts|
+	# Usage banner
+	opts.banner = "Usage: ./prometheus.rb -c config_file [options]"
+
 	# Firewall configuration file
 	options[:config] = ""
 	opts.on( '-c', '--config_file FILE', "Firewall configuration to parse." ) do|c|

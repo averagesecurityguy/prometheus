@@ -1,9 +1,17 @@
+#-----------------------------------------------------------------------------
+# This is a generic method for creating HTML tables. It is modeled after the
+# Table module used by REX in the Metasploit program.
+#-----------------------------------------------------------------------------
 module HTMLTable
 
 class Table
 
 	attr_accessor :header, :columns, :rows
 
+	##
+	# Input: A hash containing the options for building the table
+	#
+	# Output: A new HTMLTable::Table object.
 	def initialize(opts={})
 		self.header = opts['Header']
 		self.columns = opts['Columns'] || []
@@ -47,7 +55,7 @@ class Table
 	end
 
 	##
-	# Create an table row. If this is a header row then use the <th> tags else 
+	# Create a table row. If this is a header row then use the <th> tags else 
 	# use the <td> tags.
 	def html_row(vals, head=false)
 		head ? open = '<th>' : open = '<td>'
@@ -65,7 +73,7 @@ class Table
 	end
 
 	##
-	# Create an table cell with the appropriate colspan.
+	# Create a table cell with the appropriate colspan.
 	def html_cell(open, close, data, span)
 		# Create a cell
 		cell = ''
