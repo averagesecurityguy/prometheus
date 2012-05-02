@@ -280,6 +280,8 @@ end
 def parse_rule_protocol(rule_array)
 	str = rule_array.shift
 	case str
+		when nil
+			protocol = ''
 		when "object-group"
 			protocol = rule_array.shift
 		else
