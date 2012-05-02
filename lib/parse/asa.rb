@@ -302,11 +302,15 @@ end
 def parse_rule_host(rule_array)
 	str = rule_array.shift
 	case str
+		when nil
+			host = ''
 		when "any"
 			host = "Any"
 		when "host"
 			host = rule_array.shift + "/32"
 		when "object-group"
+			host = rule_array.shift
+		when "object"
 			host = rule_array.shift
 		else
 			host = str + "/" + rule_array.shift
