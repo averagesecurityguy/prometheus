@@ -14,11 +14,12 @@ module PrometheusUI
 		begin
 			require 'Win32/Console/ANSI'
 		rescue LoadError
-		print_error("You must install the win32console gem to use color on ")
-		print_error("Windows. Proceeding without color support.")
-		$color = false
-	end
- 
+			print_error("You must install the win32console gem to use color on ")
+			print_error("Windows. Proceeding without color support.")
+			$color = false
+		end
+ 	end
+
 	##
 	# Use ANSI encoding to colorize text.
 	def colorize(text, color_code)
