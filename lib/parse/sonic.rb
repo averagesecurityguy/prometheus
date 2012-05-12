@@ -7,7 +7,7 @@
 # the FWConfig::Firewall object
 def parse_sonic_config(config)
 
-	fw = FWFWConfig::FirewallConfig.new
+	fw = FWConfig::FirewallConfig.new
 	fw.type = "SonicOS"
 
 	##

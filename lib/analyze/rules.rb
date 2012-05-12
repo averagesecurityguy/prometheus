@@ -1,9 +1,9 @@
 ##
-# Input: A list of Config::AccessList objects
+# Input: A list of FWConfig::AccessList objects
 #
 # Output: A list of vulnerabilty objects.
 #
-# Action: The rules in each Config::AccessList object is analyzed for excessive  
+# Action: The rules in each FWConfig::AccessList object is analyzed for excessive  
 # permissions. The source, destination, and service are checked for the 'Any'  
 # permission. The more 'Any' permissions, the higher the severity of the 
 # vulnerability.

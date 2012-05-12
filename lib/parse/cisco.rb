@@ -1,13 +1,13 @@
 ##
 # Input: A plain-text Cisco ASA configuration file
 #
-# Output: A FWFWConfig::FirewallConfig object
+# Output: A FWConfig::FirewallConfig object
 #
 # Action: Parse the config line by line and update the appropriate parts of 
 # the FWConfig::Firewall object
 def parse_cisco_config(config)
 
-	fw = FWFWConfig::FirewallConfig.new
+	fw = FWConfig::FirewallConfig.new
 
 	##
 	# Both network objects and service objects can contain group objects, 
@@ -43,7 +43,7 @@ def parse_cisco_config(config)
 		# Build a list of interfaces on the device.
 		if line =~ /^interface (.*)/ then
 			vprint_status("Processing interface #{$1}")
-			fw.interfaces << FWFWConfig::Interface.new($1)
+			fw.interfaces << FWConfig::Interface.new($1)
 		end
 		interface = fw.interfaces.last
 

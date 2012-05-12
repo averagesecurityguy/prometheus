@@ -4,7 +4,7 @@
 # each report should be in a separate ruby file within lib/report folder and
 # should be 'required' below. An appropriate format check and a call to the 
 # associated reporting method should be added to the report_firewall method
-# below. Each report method is expected to take a Config::Firewall object, a 
+# below. Each report method is expected to take a FWConfig::Firewall object, a 
 # Analysis::Summary object, and an optional template and is expected to return
 # a string containing the report. The report is then written to a file using
 # the save_report method.
@@ -17,7 +17,7 @@ include Report::XMLReport
 include Report::HTMLReport
 
 ##
-# Takes a Config::Firewall object a list of Analyze::Vulnerability objects an
+# Takes a FWConfig::Firewall object a list of Analyze::Vulnerability objects an
 # output filename, a report format, and a template file name. Creates a report 
 # in the specified format using the specified template file (for HTML format).
 # Calls save_report to write the report to disk.

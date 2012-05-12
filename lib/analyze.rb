@@ -2,7 +2,7 @@
 # This module is used to call each of the firewall checks. The code for each
 # check should be in a separate ruby file within the lib/analyze folder and
 # should be 'required' below. Each check is expected to take as its input all 
-# or part of a Config::Firewall object and should return a list of 
+# or part of a FWConfig::Firewall object and should return a list of 
 # Analyze::Vulnerability objects, which will be added to the master list and 
 # then separated by severity.
 #-----------------------------------------------------------------------------
@@ -12,7 +12,7 @@ require 'analyze/remote_admin'
 
 
 ##
-# Input: A populated Config::Firewall object.
+# Input: A populated FWConfig::Firewall object.
 #
 # Output: Three lists of Analyze::Vulnerability objects, corresponding to the 
 # severity levels high, medium, and low.
