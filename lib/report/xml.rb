@@ -7,11 +7,11 @@ module XMLReport
 	require 'date'
 
 	##
-	# Input: Config::Firewall object and an Analysis::Summary object. 
+	# Input: FWConfig::Firewall object and an Analysis::Summary object. 
 	#
 	# Output: A string containing an XML representation of the report.
 	#
-	# Action: Create an XML document using the data in the Config::Firewall 
+	# Action: Create an XML document using the data in the FWConfig::Firewall 
 	# object and the Analysis::Summary object.
 	def generate_xml_report(firewall, analysis)
 		vprint_status("Writing XML report.")
