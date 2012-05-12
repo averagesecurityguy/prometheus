@@ -37,7 +37,7 @@ module FWConfig
 			if ['ASA', 'PIX', 'SonicOS'].include?(input)
 				@type = input
 			else
-				raise ParseError.new("Invalid input for Config::Firewall.type: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Firewall.type: #{input}")
 			end
 		end
 
@@ -166,7 +166,7 @@ module FWConfig
 			if is_ip?(input)
 				@ip = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.ip: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.ip: #{input}")
 			end
 		end
 
@@ -177,7 +177,7 @@ module FWConfig
 			if is_mask?(input)
 				@mask = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.mask: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.mask: #{input}")
 			end
 		end
 
@@ -188,7 +188,7 @@ module FWConfig
 			if ((input == 'Up') || (input == 'Down'))
 				@status = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.status: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.status: #{input}")
 			end
 		end
 		
@@ -214,7 +214,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@http = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.http: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.http: #{input}")
 			end
 		end
 
@@ -241,7 +241,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@https = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.https: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.https: #{input}")
 			end
 		end
 
@@ -267,7 +267,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@ssh = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.ssh: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.ssh: #{input}")
 			end
 		end
 
@@ -294,7 +294,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@telnet = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.telnet: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.telnet: #{input}")
 			end
 		end
 
@@ -313,7 +313,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@external = input
 			else
-				raise ParseError.new("Invalid input for Config::Interface.external: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.external: #{input}")
 			end
 		end
 
@@ -370,7 +370,7 @@ module FWConfig
 			if (o1 && o2 && o3 && o4)
 				return o1.to_i, o2.to_i, o3.to_i, o4.to_i
 			else
-				raise ParseError.new("Invalid input for Config::Interface.external: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.external: #{input}")
 			end
 		end
 	
@@ -425,7 +425,7 @@ module FWConfig
 			if (input.is_a?(TrueClass) || input.is_a?(FalseClass))
 				@enabled = input
 			else
-				raise ParseError.new("Invalid input for Config::Rule.enabled: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Rule.enabled: #{input}")
 			end
 		end
 
@@ -446,7 +446,7 @@ module FWConfig
 			if ((input == 'Allow') || (input == 'Deny'))
 				@action = input
 			else
-				raise ParseError.new("Invalid input for Config::Rule.action: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Rule.action: #{input}")
 			end
 		end
 

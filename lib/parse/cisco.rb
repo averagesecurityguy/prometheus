@@ -1,13 +1,13 @@
 ##
 # Input: A plain-text Cisco ASA configuration file
 #
-# Output: A FWConfig::FirewallConfig object
+# Output: A FWFWConfig::FirewallConfig object
 #
 # Action: Parse the config line by line and update the appropriate parts of 
-# the Config::Firewall object
+# the FWConfig::Firewall object
 def parse_cisco_config(config)
 
-	fw = FWConfig::FirewallConfig.new
+	fw = FWFWConfig::FirewallConfig.new
 
 	##
 	# Both network objects and service objects can contain group objects, 
@@ -19,7 +19,7 @@ def parse_cisco_config(config)
 
 	##
 	# Read through each line of the configuration file, use regex to identify 
-	# the relevant parts of the config file, and update the Config::Firewall 
+	# the relevant parts of the config file, and update the FWConfig::Firewall 
 	# object as necessary.
 	config.each_line do |line|
 
@@ -43,7 +43,7 @@ def parse_cisco_config(config)
 		# Build a list of interfaces on the device.
 		if line =~ /^interface (.*)/ then
 			vprint_status("Processing interface #{$1}")
-			fw.interfaces << Config::Interface.new($1)
+			fw.interfaces << FWFWConfig::Interface.new($1)
 		end
 		interface = fw.interfaces.last
 
@@ -78,11 +78,11 @@ def parse_cisco_config(config)
  		if line =~ /access-list (.*) extended (.*)/ then
 			if fw.access_lists.last == nil
 				vprint_status("Processing access list: " + $1)
-				fw.access_lists << Config::AccessList.new($1)
+				fw.access_lists << FWConfig::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			elsif fw.access_lists.last.name != $1
 				vprint_status("Processing access list: " + $1)
-				fw.access_lists << Config::AccessList.new($1)
+				fw.access_lists << FWConfig::AccessList.new($1)
 				fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
 				num = fw.access_lists.last.ruleset.last.num + 1
@@ -137,7 +137,7 @@ def parse_cisco_config(config)
 		# of network-objects and group-objects.
 		if line =~ /object-group network (.*)/
 			vprint_status("Processing network group: " + $1)
-			fw.network_names << Config::NetworkName.new($1)
+			fw.network_names << FWConfig::NetworkName.new($1)
 			process_network = true
 		end
 
@@ -160,7 +160,7 @@ def parse_cisco_config(config)
 		if line =~ /object-group service (.*)/
 			vprint_status("Processing service group: " + $1)
 			name, protocol = parse_service_object($1)
-			fw.service_names << Config::ServiceName.new(name)
+			fw.service_names << FWConfig::ServiceName.new(name)
 			fw.service_names.last.protocol = protocol
 			process_network = false
 		end
@@ -230,7 +230,7 @@ end
 # service. Currently only storing destination services because that is what 
 # I see most often. Need to consider how to handle both.
 def parse_rule(id, string)
-	rule = Config::Rule.new(id)
+	rule = FWConfig::Rule.new(id)
 	print_debug("Rule: #{string}")
 
 	# By default the rule is enabled.

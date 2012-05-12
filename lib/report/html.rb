@@ -3,7 +3,7 @@ module HTMLReport
 	require 'date'
 
 	##
-	# Input: Config::Firewall object, Analysis::Summary object, and a file name 
+	# Input: FWConfig::Firewall object, Analysis::Summary object, and a file name 
 	# containing a template for the HTML report. 
 	#
 	# Output: A string containing an HTML file with the report.
@@ -65,7 +65,7 @@ module HTMLReport
 	end
 
 	##
-	# Input: A Config::Firewall object and an Analysis::Summary object
+	# Input: A FWConfig::Firewall object and an Analysis::Summary object
 	#
 	# Output: A string containing a summary of the configuration and analysis. 
 	def summary_to_html(fw, an)
@@ -91,9 +91,9 @@ module HTMLReport
 	end
 
 	##
-	# Input: A list of Config::Interface objects
+	# Input: A list of FWConfig::Interface objects
 	# 
-	# Output: A string containig the list of Config::Interface objects as HTML. 
+	# Output: A string containig the list of FWConfig::Interface objects as HTML. 
 	# Only includes the name, ip address, subnet mask and status.
 	def interfaces_to_html(interfaces)
 		vprint_status("Writing interfaces to HTML.")
@@ -121,7 +121,7 @@ module HTMLReport
 	end
 
 	##
-	# Input: A list of Config::Interface objects.
+	# Input: A list of FWConfig::Interface objects.
 	# 
 	# Output: A string containg an HTML table of management protocols in use 
 	# on each interface.
@@ -302,7 +302,7 @@ module HTMLReport
 	end
 
 	##
-	# Input: A list of Config::NetworkName objects
+	# Input: A list of FWConfig::NetworkName objects
 	#
 	# Output: A string containing an HTML representation of the list of 
 	# network names.
@@ -334,7 +334,7 @@ module HTMLReport
 	end
 
 	##
-	# Input: A list of Config::ServiceName objects
+	# Input: A list of FWConfig::ServiceName objects
 	#
 	# Output: A string containing an HTML representation of the list of 
 	# service names.

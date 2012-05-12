@@ -1,13 +1,13 @@
 ##
 # Input: A plain-text SonicWALL Technical Support Report (.wri) file
 #
-# Output: A Config::Firewall object
+# Output: A FWConfig::Firewall object
 #
 # Action: Parse the config line by line and update the appropriate parts of 
-# the Config::Firewall object
+# the FWConfig::Firewall object
 def parse_sonic_config(config)
 
-	fw = FWConfig::FirewallConfig.new
+	fw = FWFWConfig::FirewallConfig.new
 	fw.type = "SonicOS"
 
 	##
@@ -27,7 +27,7 @@ def parse_sonic_config(config)
 
 	##
 	# Read through each line of the configuration file, use regex to identify 
-	# the relevant parts of the config file, and update the Config::Firewall 
+	# the relevant parts of the config file, and update the FWConfig::Firewall 
 	# object as necessary.
 	config.each_line do |line|
 
@@ -40,13 +40,13 @@ def parse_sonic_config(config)
 		# Build a list of access control lists.
 		if line =~ /^From ([A-Z]+ To [A-Z]+)/ then
 			vprint_status("Processing access control list #{$1}.")
-			fw.access_lists << Config::AccessList.new($1)
+			fw.access_lists << FWConfig::AccessList.new($1)
 		end
 
-		# Identify a rule and create a new Config::Rule object to store it.
+		# Identify a rule and create a new FWConfig::Rule object to store it.
 		if line =~ /^Rule ([0-9]+) \(([a-zA-z]+)\)/
 			vprint_status("Processing rule #{$1}.")
-			rule = Config::Rule.new($1)
+			rule = FWConfig::Rule.new($1)
 			if $2 == "Enabled" then rule.enabled = true end
 			fw.access_lists.last.ruleset << rule
 		end
@@ -67,11 +67,11 @@ def parse_sonic_config(config)
 			fw.access_lists.last.ruleset.last.service = $2
 		end
 
-		# Identify the interfaces in use and store them in a Config::Interface 
+		# Identify the interfaces in use and store them in a FWConfig::Interface 
 		# object.
 		if line =~ /^Interface Name:\s+([A-Z0-9]+)/ then
 			vprint_status("Processing interface #{$1}.")
-			fw.interfaces << Config::Interface.new($1)
+			fw.interfaces << FWConfig::Interface.new($1)
 		end
 
 		# Add the IP address to the last interface we found. 
@@ -129,7 +129,7 @@ def parse_sonic_config(config)
 			vprint_status("Processing network name #{name}.")
 			address_object = true
 			service_object = false
-			fw.network_names << Config::NetworkName.new(name)
+			fw.network_names << FWConfig::NetworkName.new(name)
 		end
 
 		# Parse Service Object Table
@@ -137,7 +137,7 @@ def parse_sonic_config(config)
 			vprint_status("Processing service name #{$1}.")
 			address_object = false
 			service_object = true
-			fw.service_names << Config::ServiceName.new($1)
+			fw.service_names << FWConfig::ServiceName.new($1)
 		end
 
 		# Parse service object members
@@ -162,7 +162,7 @@ def parse_sonic_config(config)
 		end
 	end
 	
-	# Put the preprocessed host_names into the Config::Firewall object.
+	# Put the preprocessed host_names into the FWConfig::Firewall object.
 	host_names.each do |name, ip|
 		fw.host_names[name] = ip
 	end
