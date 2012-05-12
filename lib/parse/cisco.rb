@@ -1,13 +1,13 @@
 ##
 # Input: A plain-text Cisco ASA configuration file
 #
-# Output: A Config::Firewall object
+# Output: A FWConfig::FirewallConfig object
 #
 # Action: Parse the config line by line and update the appropriate parts of 
 # the Config::Firewall object
 def parse_cisco_config(config)
 
-	fw = Config::FirewallConfig.new
+	fw = FWConfig::FirewallConfig.new
 
 	##
 	# Both network objects and service objects can contain group objects, 

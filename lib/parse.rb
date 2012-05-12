@@ -4,15 +4,15 @@
 # lib/parse folder and should be 'required' below. An appropriate config file 
 # check and a call to the associated parser should be added to the 
 # parse_firewall method below. Each parser is expected to take a configuration 
-# file and return a Config::Firewall object.
+# file and return a FWConfig::FirewallConfig object.
 #-----------------------------------------------------------------------------
 require 'parse/sonic'
-require 'parse/asa'
+require 'parse/cisco'
 
 ##
 # Input: A firewall configuration file
 # 
-# Output: A Config::Firewall object
+# Output: A FWConfig::FirewallConfig object
 #
 # Action: Ensures the configuration file is an existing, non-empty file, 
 # checks the config to determine the firewall type, and then calls the 

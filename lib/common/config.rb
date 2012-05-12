@@ -1,4 +1,4 @@
-module Config
+module FWConfig
 
 	##
 	# Class to hold a firewall configuration.
