@@ -11,7 +11,7 @@ def analyze_remote_administration(interfaces)
 end
 
 ##
-# Input: A list of Config::Interface objects
+# Input: A list of FWConfig::Interface objects
 #
 # Output: A list of Analyze::Vulnerability objects
 #
@@ -41,7 +41,7 @@ def check_cleartext_administration(ints)
 end
 
 ##
-# Input: A list of Config::Interface objects
+# Input: A list of FWConfig::Interface objects
 #
 # Output: A list of Analyze::Vulnerability objects
 #
