@@ -24,9 +24,10 @@ module PrometheusUI
 	# Use ANSI encoding to colorize text.
 	def colorize(text, color_code)
 		if RUBY_PLATFORM =~ /win32/
-			print_debug("Windows color")
+			puts "Windows color"
 			"\e[#{color_code}#{text}\e[0m"
 		else
+			puts "Other color"
 			"\033[#{color_code}#{text}\033[0m"
 		end
 	end
