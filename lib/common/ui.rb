@@ -9,7 +9,7 @@ module PrometheusUI
 	# Windows. If so, try to load the module Win32/Console/ANSI. If it is not 
 	# available ask the user to install the win32console gem. Continue without 
 	# color support.
-	if RUBY_PLATFORM =~ /win32/
+	if RUBY_PLATFORM =~ /win32/ or RUBY_PLATFORM =~ /mingw32/
 
 		begin
 			require 'Win32/Console/ANSI'
