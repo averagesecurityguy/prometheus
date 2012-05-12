@@ -14,8 +14,8 @@ module PrometheusUI
 		begin
 			require 'Win32/Console/ANSI'
 		rescue LoadError
-			print_error("You must install the win32console gem to use color on ")
-			print_error("Windows. Proceeding without color support.")
+			puts "You must install the win32console gem to use color on "
+			puts "Windows. Proceeding without color support."
 			$color = false
 		end
  	end
