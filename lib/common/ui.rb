@@ -9,23 +9,29 @@ module PrometheusUI
 	# Windows. If so, try to load the module Win32/Console/ANSI. If it is not 
 	# available ask the user to install the win32console gem. Continue without 
 	# color support.
-	begin
-		require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32/
-	rescue LoadError
-		puts "[-] You must install the win32console gem to use color on "
-		puts "Windows. Proceeding without color support."
+	if RUBY_PLATFORM =~ /win32/
+
+		begin
+			require 'Win32/Console/ANSI'
+		rescue LoadError
+		print_error("You must install the win32console gem to use color on ")
+		print_error("Windows. Proceeding without color support.")
 		$color = false
 	end
  
 	##
 	# Use ANSI encoding to colorize text.
 	def colorize(text, color_code)
-		"#{color_code}#{text}\033[0m"
+		if RUBY_PLATFORM =~ /win32/
+			"\e[#{color_code}#{text}\e[0m"
+		else
+			"\033[#{color_code}#{text}\033[0m"
+		end
 	end
 
-	def red(text); colorize(text, "\033[31m"); end
-	def green(text); colorize(text, "\033[32m"); end
-	def blue(text); colorize(text, "\033[34m"); end
+	def red(text); colorize(text, "31"); end
+	def green(text); colorize(text, "32"); end
+	def blue(text); colorize(text, "34"); end
 
 	##
 	# Print status messages.
@@ -55,6 +61,12 @@ module PrometheusUI
 		else
 			puts "[+] " + msg
 		end
+	end
+
+	##
+	# Print line
+	def print_line(msg)
+		puts msg
 	end
 
 	##

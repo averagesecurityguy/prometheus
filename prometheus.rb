@@ -11,6 +11,8 @@ end
 
 $:.unshift(File.join(File.dirname(base), 'lib'))
 
+# Set the version number
+version = '2.0.2'
 
 # Setup optparse to handle command line arguments.
 require 'optparse'
@@ -56,6 +58,12 @@ optparse = OptionParser.new do|opts|
 		options[:debug] = true
 	end
 
+	# Display Version
+	options[:version] = false
+	opts.on( '-V', '--version', "Print version number.") do |ver|
+		options[:version] = true
+	end
+
 	# This displays the help screen.
 	opts.on( '-h', '--help', 'Display this screen' ) do
 		puts opts
@@ -77,6 +85,12 @@ include PrometheusUI
 $verbose = options[:verbose]
 $debug = options[:debug]
 
+if options[:version]
+	print_line("Prometheus version #{version}")
+	exit
+end
+
+print_status("Launching Prometheus version #{version}.")
 # Parse the firewall config
 begin
 	firewall = parse_firewall(options[:config])
