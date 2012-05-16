@@ -8,6 +8,7 @@
 #-----------------------------------------------------------------------------
 require 'parse/sonic'
 require 'parse/cisco'
+require 'parse/ec2'
 
 ##
 # Input: A firewall configuration file
@@ -51,6 +52,9 @@ def parse_firewall(config_file)
 	elsif config =~ /Sonic/m
 		print_status("Parsing SonicWALL configuration.")
 		return parse_sonic_config(config)
+	elsif config =~ /GROUP\sId\sOwner\sName\sDescription\sVpcID/
+		print_status("Parsing Amazon EC2 configuration.")
+		return parse_ec2_config(config)
 	else
 		raise ParseError.new("Unknown firewall type.")
 	end
