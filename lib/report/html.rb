@@ -14,12 +14,12 @@ module HTMLReport
 	def generate_html_report(firewall, analysis, template)
 
 		# Does the tempate file exist?
-		if not File.exists?(template)
+		unless File.exists?(template)
 			raise ReportError, "File #{template} does not exist."
 		end
 
 		# Is the file a file and not a directory?
-		if not File.file?(template)
+		unless File.file?(template)
 			raise ReportError, "#{template} is not a file."
 		end
 
@@ -34,7 +34,7 @@ module HTMLReport
 		# Replace id, firmware, and type
 		html.gsub!(/--name--/, firewall.name)
 		html.gsub!(/--type--/, firewall.type)
-		html.gsub!(/--firmware--/, firewall.firmware)
+		html.gsub!(/--firmware--/, firewall.firmware ? firewall.firmware : "None")
 
 		# Insert Summary Statement
 		html.gsub!(/--summary_statement--/, summary_to_html(firewall, analysis))
@@ -99,7 +99,7 @@ module HTMLReport
 		vprint_status("Writing interfaces to HTML.")
 
 		h = ''
-		if interfaces
+		unless interfaces.empty?
 
 			h << "<div id=\"interfaces\">\n"
 			h << "<h3>Interfaces</h3>\n"
@@ -129,7 +129,8 @@ module HTMLReport
 		vprint_status("Writing remote management to HTML.")
 		h = ''
 
-		if interfaces
+		unless interfaces.empty?
+
 			h << "<div id=\"remote_management\">\n"
 			h << "<h3>Remote Management</h3>\n"
 
@@ -234,7 +235,7 @@ module HTMLReport
 		vprint_status("Writing access control lists to HTML.")
 		h = ''
 
-		if acls
+		unless acls.empty?
 			h << "<div id=\"access_lists\">\n"
 			h << "<h3>Access Control Lists</h3>\n"
 

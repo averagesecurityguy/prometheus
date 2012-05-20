@@ -34,7 +34,7 @@ module FWConfig
 		# The parser is expected to set @type to 'ASA', 'PIX', or 'SonicOS'. 
 		# Anything else raises an error.
 		def type=(input)
-			if ['ASA', 'PIX', 'SonicOS'].include?(input)
+			if ['ASA', 'PIX', 'SonicOS', 'EC2'].include?(input)
 				@type = input
 			else
 				raise ParseError.new("Invalid input for FWConfig::Firewall.type: #{input}")

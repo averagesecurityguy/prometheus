@@ -1,0 +1,354 @@
+##
+# Input: A plain-text EC2 Security Group file obtained using ec2-describe-group -H
+#
+# Output: A FWConfig::FirewallConfig object
+#
+# Action: Parse the config line by line and update the appropriate parts of 
+# the FWConfig::Firewall object
+def parse_ec2_config(config)
+
+	fw = FWConfig::FirewallConfig.new
+
+	##
+	# Read through each line of the configuration file, use regex to identify 
+	# the relevant parts of the config file, and update the FWConfig::Firewall 
+	# object as necessary.
+	config.each_line do |line|
+
+		line.chomp!
+
+		# EC2 security group file does not have a host name associated
+		# associated with it.
+		if line =~ /^GROUP\s[a-zA-Z0-9]+\s\(d+)\s.*/
+		fw.name = $1  end
+		fw.type = 'EC2'
+
+		# Build a list of AccessList objects. Cisco gives the name of the 
+		# access-list on each line. If there are no AccessLists in the config 
+		# yet then this is a new AccessList object. If the name doesn't match 
+		# the name of the last AccessList object then this is a new 
+		# access-list. Otherwise we add the access-list information to the 
+		# last AccessList object.
+ 		if line =~ /access-list (.*) extended (.*)/ then
+			if fw.access_lists.last == nil
+				vprint_status("Processing access list: " + $1)
+				fw.access_lists << FWConfig::AccessList.new($1)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
+			elsif fw.access_lists.last.name != $1
+				vprint_status("Processing access list: " + $1)
+				fw.access_lists << FWConfig::AccessList.new($1)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
+			else
+				num = fw.access_lists.last.ruleset.last.num + 1
+				fw.access_lists.last.ruleset << parse_rule(num, $2)
+			end
+		end
+
+		# Use the access-group command to determine which access-lists are 
+		# applied to the interfaces.
+		if line =~ /^access-group (.*)/
+			name, dir, int, int_name = $1.split(" ")
+			vprint_status("Processing access-group: " + name)
+			fw.access_lists.each do |al|
+				if al.name == name then al.interface = int_name end
+			end
+		end
+
+		# Determine which interfaces are running management protocols such as 
+		# http, ssh, and telnet. Have to loop through the interface names to 
+		# determine which interface the management protocol is running on.
+		if line =~ /^http .*\s.*\s(.*)/ then
+			vprint_status line
+			fw.interfaces.each do |int|
+				if int.name == $1 then int.http = true end
+			end
+		end
+
+		if line =~ /^ssh .*\s.*\s(.*)/ then
+			vprint_status line
+			fw.interfaces.each do |int|
+				if int.name == $1 then int.ssh = true end
+			end
+		end
+
+		if line =~ /^telnet .*\s.*\s(.*)/ then
+			vprint_status line
+			fw.interfaces.each do |int|
+				if int.name == $1 then int.telnet = true end
+			end
+		end
+
+	#-------------------------------------------------------------------------
+	#  Prometheus Professional Only
+	#-------------------------------------------------------------------------
+		# Find host names in use
+		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
+			fw.host_names[parse_ip_name($2)] = $1
+		end
+
+		# Build a list of NetworkName objects. Cisco identifies network names
+		# with the object-group network command. Each object-group is made up 
+		# of network-objects and group-objects.
+		if line =~ /object-group network (.*)/
+			vprint_status("Processing network group: " + $1)
+			fw.network_names << FWConfig::NetworkName.new($1)
+			process_network = true
+		end
+
+		# Add the network-object information to the last NetworkName we found. 
+		if line =~ /^ network-object (.*)/
+			vprint_status("Processing network object: " + $1)
+			fw.network_names.last.hosts << $1
+		end
+		
+		# If we find a network object-group and we have a group-object then we 
+		# add it to the last NetworkName we found.
+		if ((line =~ /^ group-object (.*)/) && (process_network))
+			vprint_status("Processing network group-object: " + $1)
+			fw.network_names.last.hosts << 'group ' + $1
+		end
+
+		# Build a list of ServiceName objects. Cisco identifies service names 
+		# with the object-group service command. Each object-group is made up 
+		# of service-objects, group-objects and port-objects.
+		if line =~ /object-group service (.*)/
+			vprint_status("Processing service group: " + $1)
+			name, protocol = parse_service_object($1)
+			fw.service_names << FWConfig::ServiceName.new(name)
+			fw.service_names.last.protocol = protocol
+			process_network = false
+		end
+
+		# Add the service-object information to the last ServiceName we found. 
+		if line =~ /^ service-object (.*) (range|eq) (.*)/
+			vprint_status("Processing service object")
+			protocol = $1
+			ports = $3
+			port = ''
+			
+			if $2 == 'range'
+				port = "#{protocol} range #{ports}"
+			else
+				port = "#{protocol} #{ports}"
+			end
+
+			print_debug("Port: #{port}")
+			fw.service_names.last.ports << port
+		end
+
+		# if we are not processing a network-object the we are processing a 
+		# service-object and need to add the group-object information to the 
+		# last ServiceName we identified.
+		if ((line =~ /^ group-object (.*)/) && (not process_network))
+			vprint_status("Processing service group-object: " + $1)
+			fw.service_names.last.ports << 'group ' + $1
+		end
+
+		# Add the port-object information to the last ServiceName found. The 
+		# protocol for the port-object is determined by the protocol of the 
+		# service object-group.
+		if line =~ /^ port-object (eq|range) (.*)/
+			vprint_status("Processing port-object: ")
+			protocol = fw.service_names.last.protocol
+			port = ''
+
+			if $1 == 'range'
+				port = "#{protocol} range #{$2}"
+			else
+				port = "#{protocol} #{$2}"
+			end
+
+			print_debug("Port: #{port}")
+			fw.service_names.last.ports << port
+		end
+
+			
+	end
+
+	return fw 
+end
+
+
+#-----------------------------------------------------------------------------
+# Additional methods needed for parsing the config file.
+#-----------------------------------------------------------------------------
+
+##
+# Input: A space delimited string representing an access control entry (rule)
+#
+# Output: A Rule object
+#
+# Action: Create a new Rule object and set the properties.
+#
+# Note: Technically a rule can have both a source service and a destination 
+# service. Currently only storing destination services because that is what 
+# I see most often. Need to consider how to handle both.
+def parse_rule(id, string)
+	rule = FWConfig::Rule.new(id)
+	print_debug("Rule: #{string}")
+
+	# By default the rule is enabled.
+	rule.enabled = true
+
+	rule_array = string.split(" ")
+	rule.action = parse_action(rule_array.shift)
+	rule.protocol, rule_array = parse_rule_protocol(rule_array)
+	rule.source, rule_array = parse_rule_host(rule_array)
+
+	# capture the source service but not sure what to do with it yet.
+	source_service, rule_array = parse_rule_service(rule_array)
+	rule.dest, rule_array = parse_rule_host(rule_array)
+	rule.service, rule_array = parse_rule_service(rule_array)
+
+	# If the end of the rule includes the word 'inactive' then the rule is 
+	# disabled.
+	if rule_array.include?('inactive')
+		rule.enabled = false
+	end
+
+	print_debug("Enabled: #{rule.enabled}")
+
+	return rule
+  
+end
+
+##
+# Input: A string
+#
+# Output: A string with either 'Deny' or 'Allow'
+def parse_action(str)
+	action = 'Deny'
+	if str == 'permit' then action = 'Allow' end
+
+	print_debug("Action: #{action}")
+	return action
+end
+
+##
+# Input: An array containing a partial access control entry
+#
+# Output: A string with the protocol and an array with the rest of the rule
+#
+# Action: If the first entry in the array is object-group then the protocol 
+# is a service object, otherwise the first entry is the protocol.
+def parse_rule_protocol(rule_array)
+	str = rule_array.shift
+	case str
+		when nil
+			protocol = ''
+		when "object-group"
+			protocol = rule_array.shift
+		else
+			protocol = str
+	end
+
+	print_debug("Protocol: #{protocol}")
+	return protocol, rule_array
+end
+
+##
+# Input: An array containing a partial access control entry
+#
+# Output: A string with the host and an array with the rest of the rule
+#
+# Action: If the first entry in the array is any then the host is "Any", if it 
+# is host then the host is the next entry in the array and has a mask of /32, 
+# if it is object-group then the host is a network object, otherwise it is the 
+# the host and the next entry in the array is the subnet mask.
+def parse_rule_host(rule_array)
+	str = rule_array.shift
+	case str
+		when nil
+			host = ''
+		when "any"
+			host = "Any"
+		when "host"
+			host = rule_array.shift + "/32"
+		when "object-group"
+			host = rule_array.shift
+		when "object"
+			host = rule_array.shift
+		else
+			host = str + "/" + rule_array.shift
+	end
+
+	print_debug("Host: #{host}")
+	return host, rule_array
+end
+
+##
+# Input: An array containing a partial access control entry
+#
+# Output: A string with the protocol and an array with the rest of the rule
+#
+# Action: If the first entry in the array is nil then we are at the end of the 
+# rule and the service is "Any", if it is lt, gt, eq, neq or range then the
+# next entry in the array is the port but is modified by the operator, if it 
+# is object-group then the service is a service name, otherwise the service is 
+# "Any".
+def parse_rule_service(rule_array)
+	str = rule_array.shift
+	case str
+		when nil
+			service = 'Any'
+		when "lt"
+			service = '1 - ' + rule_array.shift
+		when "gt"
+			service = rule_aray.shift + ' - 65535'
+		when "eq"
+			service = rule_array.shift
+		when "neq"
+			service = 'not ' + rule_array.shift
+		when "range"
+			service = rule_array.shift + " - " + rule_array.shift
+		when "object-group"
+			service = rule_array.shift
+		else
+			rule_array.unshift(str)
+			service = 'Any'
+    end
+
+	print_debug("Service: #{service}")
+	return service, rule_array
+end
+
+##
+# Input: A string
+#
+# Output: A string with an IP address
+#
+# Action: A name entry has an optional description. We filter this out and 
+# return only the IP address associated with the host name. 
+def parse_ip_name(str)
+	ip_name = str
+	if str =~ /(.*) description (.*)/
+		ip_name = $1
+	end
+
+	print_debug("IP Address: #{ip_name}")
+	return ip_name
+end
+
+##
+# Input: A string
+#
+# Output: Two strings, one with the service name the other with the protocol
+#
+# Action: A service object can optionally define the protocol. If the protocol 
+# is defined then we return it, otherwise we set th protocol to 'tcp'
+def parse_service_object(str)
+	name = protocol = ''
+	if str =~ /(.*) (tcp|udp|tcp-udp)$/
+		name = $1
+		protocol = $2
+	else
+		name = str
+		protocol = 'tcp'
+	end
+
+	print_debug("Name: #{name}")
+	print_debug("Protocol: #{protocol}")
+	return name, protocol
+
+end
+
