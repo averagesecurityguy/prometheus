@@ -54,16 +54,18 @@ def check_external_administration(ints)
 	vulns = []
 	external = []
 
-	ints.each do |int|
-		eadmin = false
-		if int.external?
-			vprint_status("External Check: #{int.name}")
-			if int.http? then eadmin = true end
-			if int.https? then eadmin = true end
-			if int.ssh? then eadmin = true end
-			if int.telnet? then eadmin = true end
+	unless ints == nil
+		ints.each do |int|
+			eadmin = false
+			if int.external?
+				vprint_status("External Check: #{int.name}")
+				if int.http? then eadmin = true end
+				if int.https? then eadmin = true end
+				if int.ssh? then eadmin = true end
+				if int.telnet? then eadmin = true end
+			end
+			if eadmin then external << [int.name] end
 		end
-		if eadmin then external << [int.name] end
 	end
 
 	vuln = rm_external_vulnerability(external)
