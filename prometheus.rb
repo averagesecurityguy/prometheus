@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # Copyright 2012 Stephen Haywood aka AverageSecurityGuy
 # All rights reserved see LICENSE file.
