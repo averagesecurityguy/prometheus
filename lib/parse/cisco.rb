@@ -242,7 +242,9 @@ def parse_rule(id, string)
 	rule.source, rule_array = parse_rule_host(rule_array)
 
 	# capture the source service but not sure what to do with it yet.
-	source_service, rule_array = parse_rule_service(rule_array)
+	if rule.protocol != 'icmp'
+		source_service, rule_array = parse_rule_service(rule_array)
+	end
 	rule.dest, rule_array = parse_rule_host(rule_array)
 	rule.service, rule_array = parse_rule_service(rule_array)
 
@@ -349,8 +351,6 @@ def parse_rule_service(rule_array)
 			service = rule_array.shift + " - " + rule_array.shift
 		when "object-group"
 			service = rule_array.shift
-		when "echo-reply"
-			service = "echo-reply"
 		else
 			rule_array.unshift(str)
 			service = 'Any'
