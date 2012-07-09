@@ -349,6 +349,8 @@ def parse_rule_service(rule_array)
 			service = rule_array.shift + " - " + rule_array.shift
 		when "object-group"
 			service = rule_array.shift
+		when "echo-reply"
+			service = "echo-reply"
 		else
 			rule_array.unshift(str)
 			service = 'Any'
