@@ -18,7 +18,7 @@ version = '2.0.4'
 require 'optparse'
 
 options = {}
-optparse = OptionParser.new do|opts|
+optparse = OptionParser.new do |opts|
 	# Usage banner
 	opts.banner = "Usage: ./prometheus.rb -c config_file [options]"
 
@@ -91,9 +91,11 @@ if options[:version]
 end
 
 print_status("Launching Prometheus version #{version}.")
+config = open_config_file(options[:config])
+
 # Parse the firewall config
 begin
-	firewall = parse_firewall(options[:config])
+	firewall = parse_firewall(config)
 rescue ParseError => e
 	print_error(e.message)
 	exit
@@ -101,7 +103,7 @@ end
 
 # Analyze the firewall config
 begin
-	analysis = analyze_firewall(firewall)
+analysis = analyze_firewall(firewall, config)
 rescue AnalysisError => e
 	print_error(e.message)
 	exit
@@ -114,5 +116,3 @@ rescue ReportError => e
 	print_error(e.message)
 	exit
 end
-
-
