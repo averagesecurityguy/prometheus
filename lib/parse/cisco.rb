@@ -75,6 +75,7 @@ def parse_cisco_config(config)
 		# the name of the last AccessList object then this is a new 
 		# access-list. Otherwise we add the access-list information to the 
 		# last AccessList object.
+		if line =~ /access-list .* inactive .*/ then next end
  		if line =~ /access-list (.*) extended (.*)/ then
 			if fw.access_lists.last == nil
 				vprint_status("Processing access list: " + $1)
@@ -242,7 +243,10 @@ def parse_rule(id, string)
 	rule.source, rule_array = parse_rule_host(rule_array)
 
 	# capture the source service but not sure what to do with it yet.
-	source_service, rule_array = parse_rule_service(rule_array)
+	if rule.protocol != 'icmp'
+		source_service, rule_array = parse_rule_service(rule_array)
+	end
+
 	rule.dest, rule_array = parse_rule_host(rule_array)
 	rule.service, rule_array = parse_rule_service(rule_array)
 
@@ -340,7 +344,7 @@ def parse_rule_service(rule_array)
 		when "lt"
 			service = '1 - ' + rule_array.shift
 		when "gt"
-			service = rule_aray.shift + ' - 65535'
+			service = rule_array.shift + ' - 65535'
 		when "eq"
 			service = rule_array.shift
 		when "neq"

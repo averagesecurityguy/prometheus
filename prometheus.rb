@@ -12,7 +12,7 @@ end
 $:.unshift(File.join(File.dirname(base), 'lib'))
 
 # Set the version number
-version = '2.0.3'
+version = '2.0.4'
 
 # Setup optparse to handle command line arguments.
 require 'optparse'
