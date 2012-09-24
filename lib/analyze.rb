@@ -9,10 +9,11 @@
 
 require 'analyze/rules'
 require 'analyze/remote_admin'
-
+require 'analyze/cisco_checks'
+require 'analyze/sonic_checks'
 
 ##
-# Input: A populated FWConfig::Firewall object.
+# Input: A populated FWConfig::Firewall object or a plain-text config file.
 #
 # Output: Three lists of Analyze::Vulnerability objects, corresponding to the 
 # severity levels high, medium, and low.
@@ -21,7 +22,7 @@ require 'analyze/remote_admin'
 # vulnerabilities identified by each check into a master list of 
 # vulnerabilities. The master list is then separated into three lists, which 
 # are used to populate an Analyze::Summary object.
-def analyze_firewall(firewall)
+def analyze_firewall(firewall, config)
 	print_status("Analyzing firewall configuration.")
 
 	vulns = []
@@ -33,6 +34,15 @@ def analyze_firewall(firewall)
 	# Run checks on remote administration
 	print_status("Checking remote administration.")
 	vulns.concat(analyze_remote_administration(firewall.interfaces))
+	
+	# Run firewall specific checks
+	if firewall.type == 'ASA' or firewall.type == 'PIX'
+		vulns.concat(analyze_cisco_firewall(config))
+	end
+	
+	if firewall.type == 'SonicOS'
+		vulns.concat(analyze_sonic_firewall(config))
+	end
 
 	# Analysis is a Hash with vulnerability lists keyed on severity
 	highs, meds, lows = split_by_severity(vulns)
