@@ -20,28 +20,9 @@ require 'parse/ec2'
 # appropriate parsing function.
 def parse_firewall(config_file)
 
-	##
-	# Does the file exist?
-	if not File.exists?(config_file)
-		raise ParseError.new("Configuration file does not exist.")
-	end
-
-	##
-	# Is it a file?
-	if not File.file?(config_file)
-		raise ParseError.new("#{config_file} is not a file.")
-	end
-
-	##
-	# Is it empty?
-	if File.zero?(config_file)
-		raise ParseError.new("The file #{config_file} is empty.")
-	end
-
-	config = File.open(config_file) {|f| f.read}
-
-	##
-	# Check the config file for an indication of the firewall type then call 
+	
+##
+# Check the config file for an indication of the firewall type then call 
 	# the appropriate parser.
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
