@@ -15,15 +15,10 @@ require 'parse/ec2'
 # 
 # Output: A FWConfig::FirewallConfig object
 #
-# Action: Ensures the configuration file is an existing, non-empty file, 
-# checks the config to determine the firewall type, and then calls the 
+# Action: Checks the config to determine the firewall type, and then calls the 
 # appropriate parsing function.
 def parse_firewall(config_file)
 
-	
-##
-# Check the config file for an indication of the firewall type then call 
-	# the appropriate parser.
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
 		return parse_cisco_config(config)
