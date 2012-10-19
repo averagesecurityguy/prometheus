@@ -17,7 +17,7 @@ require 'parse/ec2'
 #
 # Action: Checks the config to determine the firewall type, and then calls the 
 # appropriate parsing function.
-def parse_firewall(config_file)
+def parse_firewall(config)
 
 	if config =~ /ASA Version/m
 		print_status("Parsing ASA configuration file.")
