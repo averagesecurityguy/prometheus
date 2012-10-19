@@ -22,8 +22,9 @@ def check_type7(config)
 	affected = []
 	
 	config.each_line do |line|
-		if line ~= /password 7 (.*)$/ then
+		if line =~ /password 7 (.*)$/ 
 			affected.concat($1)
+		end
 	end
 
 	vulns.append(type7_vulnerability(affected))
