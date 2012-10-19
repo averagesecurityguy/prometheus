@@ -31,8 +31,8 @@ module FWConfig
 		end
 
 		##
-		# The parser is expected to set @type to 'ASA', 'PIX', or 'SonicOS'. 
-		# Anything else raises an error.
+		# The parser is expected to set @type to 'ASA', 'PIX', 'EC2', or
+		# 'SonicOS'. Anything else raises an error.
 		def type=(input)
 			if ['ASA', 'PIX', 'SonicOS', 'EC2'].include?(input)
 				@type = input
@@ -370,7 +370,7 @@ module FWConfig
 			if (o1 && o2 && o3 && o4)
 				return o1.to_i, o2.to_i, o3.to_i, o4.to_i
 			else
-				raise ParseError.new("Invalid input for FWConfig::Interface.external: #{input}")
+				raise ParseError.new("Invalid input for FWConfig::Interface.external: #{str}")
 			end
 		end
 	
