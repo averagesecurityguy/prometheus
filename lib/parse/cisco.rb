@@ -5,18 +5,19 @@
 #
 # Action: Parse the config line by line and update the appropriate parts of 
 # the FWConfig::Firewall object
-def parse_cisco_config(config)
-
+def parse_cisco_config(config)		
+    
 	fw = FWConfig::FirewallConfig.new
 
-	##
-	# Both network objects and service objects can contain group objects, 
-	# which is confusing when parsing line by line because the group object 
-	# may get associated with a network object when it should have been
-	# associated with a service object, or vice versa. This variable is used 
-	# to determine if we are processing a network object or a service object. 
-	process_network = false
+    parse_host_names(fw, config)
+    parse_network_service_objects(fw, config)
+    parse_access_lists(fw, config)
+    parse_settings(fw, config)
 
+	return fw
+end
+
+def parse_settings(fw, config)
 	##
 	# Read through each line of the configuration file, use regex to identify 
 	# the relevant parts of the config file, and update the FWConfig::Firewall 
@@ -55,7 +56,20 @@ def parse_cisco_config(config)
 		# Get the IP address and mask for the interface
 		if line =~ /^ ip address (.*)/
 			ip, mask = $1.split(" ")
-			interface.ip = ip
+			p ip
+			puts ip
+			case ip
+			when /\d+\.\d+.\d+.\d+/
+				print_debug("Processing as ip")
+				interface.ip = ip
+			when 'dhcp'
+				print_debug("Processing as 'debug'")
+				interface.ip = ip
+			else
+				print_debug("Processing as hostname")
+				interface.ip = fw.host_names[ip]
+			end
+			
 			interface.mask = mask
 		end
 
@@ -67,38 +81,6 @@ def parse_cisco_config(config)
 		# Determine if the interface is external based on security level 0.
 		if line =~ /^ security-level (\d+)/
 			if $1 == 0 then interface.external = true end
-		end
-
-		# Build a list of AccessList objects. Cisco gives the name of the 
-		# access-list on each line. If there are no AccessLists in the config 
-		# yet then this is a new AccessList object. If the name doesn't match 
-		# the name of the last AccessList object then this is a new 
-		# access-list. Otherwise we add the access-list information to the 
-		# last AccessList object.
-		if line =~ /access-list .* inactive .*/ then next end
- 		if line =~ /access-list (.*) extended (.*)/ then
-			if fw.access_lists.last == nil
-				vprint_status("Processing access list: " + $1)
-				fw.access_lists << FWConfig::AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(1, $2)
-			elsif fw.access_lists.last.name != $1
-				vprint_status("Processing access list: " + $1)
-				fw.access_lists << FWConfig::AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(1, $2)
-			else
-				num = fw.access_lists.last.ruleset.last.num + 1
-				fw.access_lists.last.ruleset << parse_rule(num, $2)
-			end
-		end
-
-		# Use the access-group command to determine which access-lists are 
-		# applied to the interfaces.
-		if line =~ /^access-group (.*)/
-			name, dir, int, int_name = $1.split(" ")
-			vprint_status("Processing access-group: " + name)
-			fw.access_lists.each do |al|
-				if al.name == name then al.interface = int_name end
-			end
 		end
 
 		# Determine which interfaces are running management protocols such as 
@@ -123,16 +105,69 @@ def parse_cisco_config(config)
 			fw.interfaces.each do |int|
 				if int.name == $1 then int.telnet = true end
 			end
-		end
+		end	
 
-	#-------------------------------------------------------------------------
-	#  Prometheus Professional Only
-	#-------------------------------------------------------------------------
+	end
+	
+end
+
+
+#-----------------------------------------------------------------------------
+# Additional methods needed for parsing the config file.
+#-----------------------------------------------------------------------------
+
+##
+# Input: A FWConfig::FirewallConfig object and a firewall config file
+#
+# Output: A list of host names and IP addresses
+#
+# Action: Create a hash of hostname to IP address mappings
+def parse_host_names(fw, config)
+	config.each_line do |line|
+
+		line.chomp!
+
 		# Find host names in use
 		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
 			fw.host_names[parse_ip_name($2)] = $1
 		end
+	end
+end
+	
+##
+# Input: A FWConfig::FirewallConfig object and a firewall config file
+#
+# Output: A hash of network objects and a hash of service objects.
+#
+# Action: Parse the configuration file
 
+def parse_network_service_objects(fw, config)
+	##
+	# Both network objects and service objects can contain group objects, 
+	# which is confusing when parsing line by line because the group object 
+	# may get associated with a network object when it should have been
+	# associated with a service object, or vice versa. This variable is used 
+	# to determine if we are processing a network object or a service object. 
+	process_network = false
+
+	##
+	# Read through each line of the configuration file, use regex to identify 
+	# the relevant parts of the config file, and update the FWConfig::Firewall 
+	# object as necessary.
+	config.each_line do |line|
+
+		line.chomp!
+		
+		# HOW TO PROCESS THESE
+		#object network CANON_PRINTER
+		#host 192.168.0.26
+		#object network Ventrilo_tcp
+		#host 192.168.0.6
+		#description Ventrilo Server
+		#object network ventrilo_udp
+		#host 192.168.0.6
+		#
+		
 		# Build a list of NetworkName objects. Cisco identifies network names
 		# with the object-group network command. Each object-group is made up 
 		# of network-objects and group-objects.
@@ -208,18 +243,50 @@ def parse_cisco_config(config)
 			print_debug("Port: #{port}")
 			fw.service_names.last.ports << port
 		end
-
-			
 	end
-
-	return fw 
 end
 
 
-#-----------------------------------------------------------------------------
-# Additional methods needed for parsing the config file.
-#-----------------------------------------------------------------------------
+def parse_access_lists(fw, config)
+	config.each_line do |line|
 
+		line.chomp!
+
+		# Build a list of AccessList objects. Cisco gives the name of the 
+		# access-list on each line. If there are no AccessLists in the config 
+		# yet then this is a new AccessList object. If the name doesn't match 
+		# the name of the last AccessList object then this is a new 
+		# access-list. Otherwise we add the access-list information to the 
+		# last AccessList object.
+		if line =~ /access-list .* inactive .*/ then next end
+ 		if line =~ /access-list (.*) extended (.*)/ then
+			if fw.access_lists.last == nil
+				vprint_status("Processing access list: " + $1)
+				fw.access_lists << FWConfig::AccessList.new($1)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
+			elsif fw.access_lists.last.name != $1
+				vprint_status("Processing access list: " + $1)
+				fw.access_lists << FWConfig::AccessList.new($1)
+				fw.access_lists.last.ruleset << parse_rule(1, $2)
+			else
+				num = fw.access_lists.last.ruleset.last.num + 1
+				fw.access_lists.last.ruleset << parse_rule(num, $2)
+			end
+		end
+
+		# Use the access-group command to determine which access-lists are 
+		# applied to the interfaces.
+		if line =~ /^access-group (.*)/
+			name, dir, int, int_name = $1.split(" ")
+			vprint_status("Processing access-group: " + name)
+			fw.access_lists.each do |al|
+				if al.name == name then al.interface = int_name end
+			end
+		end
+	end
+end
+
+	
 ##
 # Input: A space delimited string representing an access control entry (rule)
 #
