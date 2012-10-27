@@ -82,6 +82,6 @@ def set_template_name(template, format)
 	if template then 
 		return template
 	else
-		return "config/template.#{format.downcase}"
+		return $base_dir + "/config/template.#{format.downcase}"
 	end
 end
