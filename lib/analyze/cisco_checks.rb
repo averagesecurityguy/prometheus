@@ -3,7 +3,8 @@
 def analyze_cisco_firewall(config)
 	vulns =  []
 
-	vulns.concat(check_type7(config))
+	vuln = check_type7(config)
+	if vuln then vulns.concat(vuln) end
 
 	return vulns
 end
@@ -17,8 +18,7 @@ end
 def check_type7(config)
 
 	vprint_status("Checking for type 7 passwords.")
-
-	vulns = []
+	
 	affected = []
 	
 	config.each_line do |line|
@@ -27,21 +27,8 @@ def check_type7(config)
 		end
 	end
 
-	vulns.append(type7_vulnerability(affected))
-	return vulns
-
-end
-
-##
-# Input: A list of affected users.
-#
-# Output: An Analyze::Vulnerability object.
-#
-# Action: Create an Analyze::Vulnerability object with the list of usernames.
-def type7_vulnerability(affected)
-	
 	vuln = nil
-
+	
 	if not affected.empty?
 		vuln = Analysis::Vulnerability.new("Cisco Type 7 Passwords")
 		vuln.severity = 'high'
@@ -57,4 +44,5 @@ def type7_vulnerability(affected)
 	end
 
 	return vuln
+
 end
