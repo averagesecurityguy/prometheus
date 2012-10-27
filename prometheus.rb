@@ -10,6 +10,7 @@ while File.symlink?(base)
 end
 
 $:.unshift(File.join(File.dirname(base), 'lib'))
+$base_dir = File.dirname(base)
 
 # Set the version number
 version = '2.0.4'
@@ -87,7 +88,7 @@ $debug = options[:debug]
 
 if options[:version]
 	print_line("Prometheus version #{version}")
-	exit
+	exit(1)
 end
 
 print_status("Launching Prometheus version #{version}.")
@@ -98,7 +99,7 @@ begin
 	firewall = parse_firewall(config)
 rescue ParseError => e
 	print_error(e.message)
-	exit
+	exit(1)
 end
 
 # Analyze the firewall config
@@ -106,7 +107,7 @@ begin
 analysis = analyze_firewall(firewall, config)
 rescue AnalysisError => e
 	print_error(e.message)
-	exit
+	exit(1)
 end
 
 #Create report for firewall config and analysis
@@ -114,5 +115,5 @@ begin
 	report_firewall(firewall, analysis, options[:report], options[:format], options[:template] )
 rescue ReportError => e
 	print_error(e.message)
-	exit
+	exit(1)
 end
