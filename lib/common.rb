@@ -26,13 +26,13 @@ def open_config_file(config_file)
 	##
 	# Is it a file?
 	if not File.file?(config_file)
-		raise ParseError.new("#{config_file} is not a file.")
+		raise ParseError.new("The configuration file is not a valid file.")
 	end
 
 	##
 	# Is it empty?
 	if File.zero?(config_file)
-		raise ParseError.new("The file #{config_file} is empty.")
+		raise ParseError.new("The configuration file is empty.")
 	end
 
 	config = File.open(config_file) {|f| f.read}
