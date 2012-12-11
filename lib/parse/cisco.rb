@@ -178,7 +178,7 @@ def parse_network_service_objects(config)
 			process_network = true
 		end
 		
-		if line =~ /host (.*)/
+		if line =~ /^ host (.*)/
 			vprint_status("Processing network object: " + $1)
 			@fw.network_names.last.hosts << $1
 		end
@@ -191,8 +191,15 @@ def parse_network_service_objects(config)
 
 		# Add the network-object information to the last NetworkName we found. 
 		if line =~ /^ network-object (.*)/
-			vprint_status("Processing network object: " + $1)
-			@fw.network_names.last.hosts << $1
+			print_debug("Network Object: #{line}")
+			network = $1
+			if network =~ /host (.*)/
+				vprint_status("Processing network object: " + $1)
+				@fw.network_names.last.hosts << $1 + "/32"
+			else
+				vprint_status("Processing network object: " + network)
+				@fw.network_names.last.hosts << network
+		    end
 		end
 		
 		# If we find a network object-group and we have a group-object then we 
