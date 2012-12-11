@@ -158,24 +158,24 @@ module HTMLReport
 		vprint_status("Writing vulnerabilities to HTML.")
 		h = "<div id=\"vulnerabilities\">\n"
 
-		h << "<h3>High-severity Vulnerabilities</h3>\n"
 		unless analysis.highs.empty?
 			h << vuln_list_to_html(analysis.highs)
 		else
+			h << "<h3>High-severity Vulnerabilities</h3>\n"
 			h << "<p>No high-severity vulnerabilities to report.</p>\n"
 		end
 
-		h << "<h3>Medium-severity Vulnerabilities</h3>\n"
 		unless analysis.mediums.empty?
 			h << vuln_list_to_html(analysis.mediums)
 		else
+			h << "<h3>Medium-severity Vulnerabilities</h3>\n"
 			h << "<p>No medium-severity vulnerabilities to report.</p>\n"
 		end
 
-		h << "<h3>Low-severity Vulnerabilities</h3>\n"
 		unless analysis.lows.empty?
 			h << vuln_list_to_html(analysis.lows)
 		else
+			h << "<h3>Low-severity Vulnerabilities</h3>\n"
 			h << "<p>No low-severity vulnerabilities to report.</p>\n"
 		end
 
@@ -214,7 +214,7 @@ module HTMLReport
 		end
 
 		h << "<div>\n"
-		h << "<h4>#{v.name} (#{v.severity.upcase})</h4>\n"
+		h << "<h3>#{v.name} (#{v.severity.upcase})</h3>\n"
 		h << "<p><strong>Description:</strong> #{v.desc}</p>\n"
 		h << "<p><strong>Solution:</strong> #{v.solution}</p>\n"
 		h << t.to_html
@@ -292,6 +292,7 @@ module HTMLReport
 			)
 
 			host_names.each do |name, ip|
+				print_debug("Host Name: #{name} - #{ip}")
 				t.rows << [name, ip]
 			end
 
@@ -322,6 +323,7 @@ module HTMLReport
 					'Columns' => ['Hosts']
 				)
 				n.hosts.each do |host|
+					print_debug("Network Name: #{host}")
 					t.rows << [host]
 				end
 				h << t.to_html
