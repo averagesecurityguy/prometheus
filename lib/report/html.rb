@@ -319,8 +319,7 @@ module HTMLReport
 			network_names.each do |n|
 				if n.hosts.empty? then next end
 				t = HTMLTable::Table.new(
-					'Header' => n.name, 
-					'Columns' => ['Hosts']
+					'Columns' => [n.name]
 				)
 				n.hosts.each do |host|
 					print_debug("Network Name: #{host}")
@@ -352,8 +351,7 @@ module HTMLReport
 			service_names.each do |s|
 				if s.ports.empty? then next end
 				t = HTMLTable::Table.new(
-					'Header' => "#{s.name}",
-					'Columns' => ['Ports']
+					'Columns' => [s.name]
 				)
 				print_debug("Service Name: #{s.name}")
 				s.ports.each do |p|
