@@ -7,17 +7,17 @@
 # the FWConfig::Firewall object
 def parse_cisco_config(config)		
     
-	fw = FWConfig::FirewallConfig.new
+	@fw = FWConfig::FirewallConfig.new
 
-    parse_host_names(fw, config)
-    parse_network_service_objects(fw, config)
-    parse_access_lists(fw, config)
-    parse_settings(fw, config)
+    parse_host_names(config)
+    parse_network_service_objects(config)
+    parse_access_lists(config)
+    parse_settings(config)
 
-	return fw
+	return @fw
 end
 
-def parse_settings(fw, config)
+def parse_settings(config)
 	##
 	# Read through each line of the configuration file, use regex to identify 
 	# the relevant parts of the config file, and update the FWConfig::Firewall 
@@ -27,26 +27,26 @@ def parse_settings(fw, config)
 		line.chomp!
 
 		# Identify the host name
-		if line =~ /^hostname (.*)$/ then fw.name = $1  end
+		if line =~ /^hostname (.*)$/ then @fw.name = $1  end
 
 		# The same code is used to parse both ASA and PIX files but still need 
 		# to know the file type for reporting purposes.
 		if line =~ /ASA Version (.*)$/
-			fw.firmware = $1
-			fw.type = 'ASA'
+			@fw.firmware = $1
+			@fw.type = 'ASA'
 		end
 
 		if line =~ /PIX Version (.*)$/
-			fw.firmware = $1
-			fw.type = 'PIX'
+			@fw.firmware = $1
+			@fw.type = 'PIX'
 		end
 
 		# Build a list of interfaces on the device.
 		if line =~ /^interface (.*)/ then
 			vprint_status("Processing interface #{$1}")
-			fw.interfaces << FWConfig::Interface.new($1)
+			@fw.interfaces << FWConfig::Interface.new($1)
 		end
-		interface = fw.interfaces.last
+		interface = @fw.interfaces.last
 
 		# Rename the interface if nameif is defined
 		if line =~ /^ nameif ([a-zA-Z0-9\/]+)/ then
@@ -67,7 +67,7 @@ def parse_settings(fw, config)
 				interface.ip = ip
 			else
 				print_debug("Processing as hostname")
-				interface.ip = fw.host_names[ip]
+				interface.ip = @fw.host_names[ip]
 			end
 			
 			interface.mask = mask
@@ -88,21 +88,21 @@ def parse_settings(fw, config)
 		# determine which interface the management protocol is running on.
 		if line =~ /^http .*\s.*\s(.*)/ then
 			vprint_status line
-			fw.interfaces.each do |int|
+			@fw.interfaces.each do |int|
 				if int.name == $1 then int.http = true end
 			end
 		end
 
 		if line =~ /^ssh .*\s.*\s(.*)/ then
 			vprint_status line
-			fw.interfaces.each do |int|
+			@fw.interfaces.each do |int|
 				if int.name == $1 then int.ssh = true end
 			end
 		end
 
 		if line =~ /^telnet .*\s.*\s(.*)/ then
 			vprint_status line
-			fw.interfaces.each do |int|
+			@fw.interfaces.each do |int|
 				if int.name == $1 then int.telnet = true end
 			end
 		end	
@@ -122,14 +122,14 @@ end
 # Output: A list of host names and IP addresses
 #
 # Action: Create a hash of hostname to IP address mappings
-def parse_host_names(fw, config)
+def parse_host_names(config)
 	config.each_line do |line|
 
 		line.chomp!
 
 		# Find host names in use
 		if line =~ /^name (\d+\.\d+.\d+.\d+) (.*)/
-			fw.host_names[parse_ip_name($2)] = $1
+			@fw.host_names[parse_ip_name($2)] = $1
 		end
 	end
 end
@@ -141,7 +141,7 @@ end
 #
 # Action: Parse the configuration file
 
-def parse_network_service_objects(fw, config)
+def parse_network_service_objects(config)
 	##
 	# Both network objects and service objects can contain group objects, 
 	# which is confusing when parsing line by line because the group object 
@@ -168,26 +168,38 @@ def parse_network_service_objects(fw, config)
 		#host 192.168.0.6
 		#
 		
-		# Build a list of NetworkName objects. Cisco identifies network names
-		# with the object-group network command. Each object-group is made up 
-		# of network-objects and group-objects.
+		# Build a list of NetworkName objects. In ASA versions prior to 7.x
+		# Cisco identifies network names with the object-group network command.
+		# Each object-group is made up of network-objects and group-objects.
+		# In ASA version 8.x Cisco uses the object network <name> command. 
+		if line =~ /object network (.*)/
+			vprint_status("Processing network group: " + $1)
+			@fw.network_names << FWConfig::NetworkName.new($1)
+			process_network = true
+		end
+		
+		if line =~ /host (.*)/
+			vprint_status("Processing network object: " + $1)
+			@fw.network_names.last.hosts << $1
+		end
+		
 		if line =~ /object-group network (.*)/
 			vprint_status("Processing network group: " + $1)
-			fw.network_names << FWConfig::NetworkName.new($1)
+			@fw.network_names << FWConfig::NetworkName.new($1)
 			process_network = true
 		end
 
 		# Add the network-object information to the last NetworkName we found. 
 		if line =~ /^ network-object (.*)/
 			vprint_status("Processing network object: " + $1)
-			fw.network_names.last.hosts << $1
+			@fw.network_names.last.hosts << $1
 		end
 		
 		# If we find a network object-group and we have a group-object then we 
 		# add it to the last NetworkName we found.
 		if ((line =~ /^ group-object (.*)/) && (process_network))
 			vprint_status("Processing network group-object: " + $1)
-			fw.network_names.last.hosts << 'group ' + $1
+			@fw.network_names.last.hosts << 'group ' + $1
 		end
 
 		# Build a list of ServiceName objects. Cisco identifies service names 
@@ -196,8 +208,8 @@ def parse_network_service_objects(fw, config)
 		if line =~ /object-group service (.*)/
 			vprint_status("Processing service group: " + $1)
 			name, protocol = parse_service_object($1)
-			fw.service_names << FWConfig::ServiceName.new(name)
-			fw.service_names.last.protocol = protocol
+			@fw.service_names << FWConfig::ServiceName.new(name)
+			@fw.service_names.last.protocol = protocol
 			process_network = false
 		end
 
@@ -215,7 +227,7 @@ def parse_network_service_objects(fw, config)
 			end
 
 			print_debug("Port: #{port}")
-			fw.service_names.last.ports << port
+			@fw.service_names.last.ports << port
 		end
 
 		# if we are not processing a network-object the we are processing a 
@@ -223,7 +235,7 @@ def parse_network_service_objects(fw, config)
 		# last ServiceName we identified.
 		if ((line =~ /^ group-object (.*)/) && (not process_network))
 			vprint_status("Processing service group-object: " + $1)
-			fw.service_names.last.ports << 'group ' + $1
+			@fw.service_names.last.ports << 'group ' + $1
 		end
 
 		# Add the port-object information to the last ServiceName found. The 
@@ -231,7 +243,7 @@ def parse_network_service_objects(fw, config)
 		# service object-group.
 		if line =~ /^ port-object (eq|range) (.*)/
 			vprint_status("Processing port-object: ")
-			protocol = fw.service_names.last.protocol
+			protocol = @fw.service_names.last.protocol
 			port = ''
 
 			if $1 == 'range'
@@ -241,13 +253,13 @@ def parse_network_service_objects(fw, config)
 			end
 
 			print_debug("Port: #{port}")
-			fw.service_names.last.ports << port
+			@fw.service_names.last.ports << port
 		end
 	end
 end
 
 
-def parse_access_lists(fw, config)
+def parse_access_lists(config)
 	config.each_line do |line|
 
 		line.chomp!
@@ -260,17 +272,17 @@ def parse_access_lists(fw, config)
 		# last AccessList object.
 		if line =~ /access-list .* inactive .*/ then next end
  		if line =~ /access-list (.*) extended (.*)/ then
-			if fw.access_lists.last == nil
+			if @fw.access_lists.last == nil
 				vprint_status("Processing access list: " + $1)
-				fw.access_lists << FWConfig::AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(1, $2)
-			elsif fw.access_lists.last.name != $1
+				@fw.access_lists << FWConfig::AccessList.new($1)
+				@fw.access_lists.last.ruleset << parse_rule(1, $2)
+			elsif @fw.access_lists.last.name != $1
 				vprint_status("Processing access list: " + $1)
-				fw.access_lists << FWConfig::AccessList.new($1)
-				fw.access_lists.last.ruleset << parse_rule(1, $2)
+				@fw.access_lists << FWConfig::AccessList.new($1)
+				@fw.access_lists.last.ruleset << parse_rule(1, $2)
 			else
-				num = fw.access_lists.last.ruleset.last.num + 1
-				fw.access_lists.last.ruleset << parse_rule(num, $2)
+				num = @fw.access_lists.last.ruleset.last.num + 1
+				@fw.access_lists.last.ruleset << parse_rule(num, $2)
 			end
 		end
 
@@ -279,7 +291,7 @@ def parse_access_lists(fw, config)
 		if line =~ /^access-group (.*)/
 			name, dir, int, int_name = $1.split(" ")
 			vprint_status("Processing access-group: " + name)
-			fw.access_lists.each do |al|
+			@fw.access_lists.each do |al|
 				if al.name == name then al.interface = int_name end
 			end
 		end
@@ -374,6 +386,7 @@ end
 # the host and the next entry in the array is the subnet mask.
 def parse_rule_host(rule_array)
 	str = rule_array.shift
+	print_debug("Str: #{str}")
 	case str
 		when nil
 			host = ''
@@ -382,9 +395,19 @@ def parse_rule_host(rule_array)
 		when "host"
 			host = rule_array.shift + "/32"
 		when "object-group"
-			host = rule_array.shift
+			if @fw.network?(rule_array[0])
+				host = rule_array.shift
+			else
+				rule_array.unshift(str)
+				host = 'Any'
+			end
 		when "object"
-			host = rule_array.shift
+			if @fw.network?(rule_array[0])
+				host = rule_array.shift
+			else
+				rule_array.unshift(str)
+				host = 'Any'
+			end
 		else
 			host = str + "/" + rule_array.shift
 	end
@@ -419,7 +442,12 @@ def parse_rule_service(rule_array)
 		when "range"
 			service = rule_array.shift + " - " + rule_array.shift
 		when "object-group"
-			service = rule_array.shift
+			if @fw.service?(rule_array[0])
+				service = rule_array.shift
+			else
+				rule_array.unshift(str)
+				service = 'Any'
+			end
 		else
 			rule_array.unshift(str)
 			service = 'Any'
