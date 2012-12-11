@@ -74,6 +74,24 @@ module FWConfig
 
 			return up
 		end
+		
+		##
+		# Return true if @service_names includes name
+		def service?(sname)
+			@service_names.each do |sn|
+				if sn.name == sname then return true end
+			end
+			return false
+		end
+		
+		##
+		# Return true if @network_names includes name
+		def network?(nname)
+			@network_names.each do |nn|
+				if nn.name == nname then return true end
+			end
+			return false
+		end
 	end
 
 
