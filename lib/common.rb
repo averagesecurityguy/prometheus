@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------------
 # This module is used to import each of the common modules used throughout 
 # the program. Any additional modules that are meant to be used throughout 
-# the program should be added und the lib/common directory. The current 
+# the program should be added under the lib/common directory. The current 
 # modules in use are:
 #
 # PrometheusErrors - defines ParseErrors, Report Errors and Analysis Errors
