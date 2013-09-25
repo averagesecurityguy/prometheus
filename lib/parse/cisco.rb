@@ -399,6 +399,10 @@ def parse_rule_host(rule_array)
 			host = ''
 		when "any"
 			host = "Any"
+		when "any4"
+			host = "Any4"
+		when "any6"
+			host = "Any6"
 		when "host"
 			host = rule_array.shift + "/32"
 		when "object-group"
