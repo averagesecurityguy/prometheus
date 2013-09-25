@@ -419,7 +419,7 @@ def parse_rule_host(rule_array)
 				rule_array.unshift(str)
 				host = 'Any'
 			end
-		when /[0-9a-fA-F:]+\/[d]+/
+		when /[0-9a-fA-F:]+\/[0-9]+/
 			host = str
 		else
 			host = str + "/" + rule_array.shift
