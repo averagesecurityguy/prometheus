@@ -1,0 +1,108 @@
+show run
+: Saved
+:
+ASA Version 7.0(5) 
+!
+hostname ciscoasa
+enable password cisco
+names
+dns-guard
+!
+interface GigabitEthernet0/0
+ nameif outside
+ security-level 0
+ ip address 192.168.1.1 255.255.255.0 
+ ospf message-digest-key 1 md5 <removed>
+ ospf authentication message-digest
+!
+interface GigabitEthernet0/1
+ nameif inside
+ security-level 100
+ ip address 192.168.2.1 255.255.255.0 
+ ospf message-digest-key 1 md5 <removed>
+ ospf authentication message-digest
+!
+interface GigabitEthernet0/2
+ shutdown
+no nameif
+ no security-level
+ no ip address
+!
+interface GigabitEthernet0/3
+ shutdown
+ no nameif
+ no security-level
+ no ip address
+!
+interface Management0/0
+ nameif management
+ security-level 100
+ no ip address
+ management-only
+!
+passwd cisco
+ftp mode passive
+pager lines 24
+logging asdm informational
+mtu management 1500
+mtu outside 1500
+mtu inside 1500
+no failover
+              icmp permit any outside
+icmp permit any inside
+no asdm history enable
+arp timeout 14400
+static (inside,outside) 192.168.2.2 192.168.2.2 netmask 255.255.255.255 
+!
+router ospf 1
+ network 192.168.1.0 255.255.255.0 area 0
+ area 0 authentication message-digest
+ log-adj-changes
+ redistribute ospf 2 metric 11 subnets
+!
+router ospf 2
+ network 192.168.2.0 255.255.255.0 area 0
+ area 0 authentication message-digest
+ log-adj-changes
+ redistribute ospf 1 metric 9 subnets
+!
+timeout xlate 3:00:00
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00
+timeout mgcp-pat 0:05:00 sip 0:30:00 sip_media 0:02:00
+timeout uauth 0:05:00 absolute
+http server enable
+              http 192.168.1.0 255.255.255.0 management
+no snmp-server location
+no snmp-server contact
+snmp-server enable traps snmp authentication linkup linkdown coldstart
+telnet timeout 5
+ssh timeout 5
+console timeout 0
+dhcpd lease 3600
+dhcpd ping_timeout 50
+Cryptochecksum:61e142f817190da00d365f2ef63ff97c
+: end
+ciscoasa(config)# 
+ciscoasa(config)# 
+ciscoasa(config)# show route
+
+O IA 172.16.2.254 255.255.255.255 [110/11] via 192.168.2.2, 3:21:21, inside
+O IA 172.16.3.254 255.255.255.255 [110/11] via 192.168.2.2, 3:21:21, inside
+O IA 172.16.1.254 255.255.255.255 [110/11] via 192.168.2.2, 3:21:21, inside
+O IA 172.16.4.254 255.255.255.255 [110/11] via 192.168.2.2, 3:21:21, inside
+O IA 10.0.4.254 255.255.255.255 [110/11] via 192.168.1.2, 3:21:21, outside
+O IA 10.0.1.254 255.255.255.255 [110/11] via 192.168.1.2, 3:21:21, outside
+O IA 10.0.2.254 255.255.255.255 [110/11] via 192.168.1.2, 3:21:21, outside
+O IA 10.0.3.254 255.255.255.255 [110/11] via 192.168.1.2, 3:21:21, outside
+C    192.168.1.0 255.255.255.0 is directly connected, outside
+C    192.168.2.0 255.255.255.0 is directly connected, inside
+ciscoasa(config)# 
+ciscoasa(config)# 
+ciscoasa(config)# show i ospf nei
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.1.2       1   FULL/DR         0:00:38     192.168.1.2     outside
+192.168.2.2       1   FULL/DR         0:00:32     192.168.2.2     inside
+ciscoasa(config)# 

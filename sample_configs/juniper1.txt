@@ -1,0 +1,4855 @@
+Device Cli:
+  Total Config size 119974:
+
+  unset key **** enable
+
+  set clock ntp
+
+  set clock timezone 1
+
+  set clock dst recurring start-weekday 2 0 3 02:00 end-weekday 1 0 11 02:00
+
+  set vrouter trust-vr sharable
+
+  set vrouter "untrust-vr"
+
+  set protocol ospf
+
+  set enable
+
+  exit
+
+  set preference auto-exported 25
+
+  set preference imported 25
+
+  set preference ospf 25
+
+  exit
+
+  set vrouter "trust-vr"
+
+  unset auto-route-export
+
+  set protocol ospf
+
+  set enable
+
+  set advertise-def-route metric 1 metric-type 1
+
+  set area 0.0.0.4 
+
+  set area 0.0.0.4 range 192.168.0.0 255.255.0.0 advertise
+
+  exit
+
+  set preference imported 34
+
+  exit
+
+  set vrouter name "rsites-VR" id 1025 sharable
+
+  set vrouter "rsites-VR"
+
+  unset auto-route-export
+
+  set protocol ospf
+
+  set enable
+
+  set area 0.0.0.0 range 192.168.0.0 255.255.0.0 advertise
+
+  exit
+
+  exit
+
+  set service "fTP-data" protocol tcp src-port 0-65535 dst-port 20-20 
+
+  set service "TCP_2598" protocol tcp src-port 0-65535 dst-port 2598-2598 
+
+  set service "TCP_1494" protocol tcp src-port 0-65535 dst-port 1494-1494 
+
+  set service "TCP_3101" protocol tcp src-port 0-65535 dst-port 3101-3101 
+
+  set service "TCP_515" protocol tcp src-port 0-65535 dst-port 515-515 
+
+  set service "TCP_9100" protocol tcp src-port 0-65535 dst-port 9100-9100 
+
+  set service "TCP_20003" protocol tcp src-port 0-65535 dst-port 20003-20003 
+
+  set service "TCP_8998" protocol tcp src-port 0-65535 dst-port 8998-8998 
+
+  set service "TCP_7116" protocol tcp src-port 0-65535 dst-port 7116-7116 
+
+  set service "TCP_4343" protocol tcp src-port 0-65535 dst-port 4343-4343 
+
+  set service "TCP_1460" protocol tcp src-port 1-65535 dst-port 1460-1460 
+
+  set service "remote_desktop" protocol tcp src-port 0-65535 dst-port 3389-3389 
+
+  set service "TCP_1461" protocol tcp src-port 0-65535 dst-port 1461-1461 
+
+  set service "ICMP-PING" protocol icmp type 8 code 0 
+
+  set service "TCP_8890" protocol tcp src-port 0-65535 dst-port 8890-8890 
+
+  set service "snmp-udp" protocol udp src-port 1-65535 dst-port 161-161 
+
+  set service "TCP_1414" protocol tcp src-port 0-65535 dst-port 1414-1414 
+
+  set service "TCP_1416" protocol tcp src-port 1-65535 dst-port 1416-1416 
+
+  set service "TCP_5555" protocol tcp src-port 1-65535 dst-port 5555-5555 
+
+  set service "TCP_5060" protocol tcp src-port 0-65535 dst-port 5060-5060 
+
+  set service "TCP_9443" protocol tcp src-port 0-65535 dst-port 9443-9443 
+
+  set service "TCP_5061" protocol tcp src-port 0-65535 dst-port 5061-5061 
+
+  set service "TCP_90134. protocol tcp src-port 0-65535 dst-port 90134.90134.
+
+  set service "TCP_18190" protocol tcp src-port 1-65535 dst-port 18190-18190 
+
+  set service "Looseweb" protocol tcp src-port 0-65535 dst-port 11000-11002 
+
+  set service "DHCP_relaying_gab" protocol udp src-port 1-65535 dst-port 67-68 
+
+  set service "TCP_1417" protocol tcp src-port 0-65535 dst-port 1417-1417 
+
+  set service "TCP_4000-4024" protocol tcp src-port 1-65535 dst-port 4000-4025 
+
+  set service "TCP_81" protocol tcp src-port 1-65535 dst-port 81-81 
+
+  set service "UDP_14251" protocol udp src-port 1-65535 dst-port 14251-14251 
+
+  set service "UDP_623-624" protocol udp src-port 1-65535 dst-port 623-624 
+
+  set service "TCP_14252-14277" protocol tcp src-port 1-65535 dst-port 14252-14277 
+
+  set service "TCP_20134. protocol tcp src-port 1-65535 dst-port 20134.20134.
+
+  set service "snmptrap-udp" protocol udp src-port 1-65535 dst-port 162-162 
+
+  set service "TCP_70134. protocol tcp src-port 1-65535 dst-port 0-0 
+
+  set service "TCP_5989" protocol tcp src-port 1-65535 dst-port 5989-5989 
+
+  set service "TCP_5988" protocol tcp src-port 1-65535 dst-port 5988-5988 
+
+  set service "TCP_50134. protocol tcp src-port 1-65535 dst-port 50134.50134.
+
+  set service "UDP_14252-14277" protocol udp src-port 1-65535 dst-port 14252-14277 
+
+  set service "TCP_2044" protocol tcp src-port 1-65535 dst-port 2044-2044 
+
+  set service "UDP_427" protocol udp src-port 1-65535 dst-port 427-427 
+
+  set service "TCP_6090" protocol tcp src-port 1-65535 dst-port 6090-6090 
+
+  set service "UDP_13991" protocol udp src-port 1-65535 dst-port 13991-13991 
+
+  set service "TCP_20000" protocol tcp src-port 1-65535 dst-port 20000-20000 
+
+  set service "TCP_4066" protocol tcp src-port 1-65535 dst-port 4066-4066 
+
+  set service "TCP_134.0" protocol tcp src-port 1-65535 dst-port 134.0-134.0 
+
+  set service "TCP_6989" protocol tcp src-port 1-65535 dst-port 6989-6989 
+
+  set service "TCP_6988" protocol tcp src-port 1-65535 dst-port 6988-6988 
+
+  set service "TCP_9510" protocol tcp src-port 1-65535 dst-port 9510-9510 
+
+  set service "TCP_8421-8422" protocol tcp src-port 1-65535 dst-port 8421-8422 
+
+  set service "TCP_10134. protocol tcp src-port 1-65535 dst-port 10134.10134.
+
+  set service "TCP_2033" protocol tcp src-port 1-65535 dst-port 2033-2033 
+
+  set service "TCP_9250" protocol tcp src-port 1-65535 dst-port 9250-9250 
+
+  set service "TCP_60134. protocol tcp src-port 1-65535 dst-port 60134.60134.
+
+  set service "TCP_9511-9513" protocol tcp src-port 1-65535 dst-port 9511-9513 
+
+  set service "TCP_49153" protocol tcp src-port 1-65535 dst-port 49153-49153 
+
+  set service "TCP_427" protocol tcp src-port 1-65535 dst-port 427-427 
+
+  set service "TCP_5901" protocol tcp src-port 1-65535 dst-port 5901-5901 
+
+  set service "TCP_1418" protocol tcp src-port 1-65535 dst-port 1418-1418 
+
+  set service "UDP_example" protocol udp src-port 0-65535 dst-port 48129-48137 
+
+  set service "TCP_example" protocol udp src-port 0-65535 dst-port 48129-48137 
+
+  set service "TCP_example" + tcp src-port 0-65535 dst-port 8194-8198 
+
+  set service "TCP_example" + tcp src-port 0-65535 dst-port 136.0-136.4 
+
+  set service "TCP_example" + tcp src-port 0-65535 dst-port 136.9-136.0 
+
+  set service "TCP_1420-21" protocol tcp src-port 1-65535 dst-port 1420-1421 
+
+  set service "TCP_1419" protocol tcp src-port 1-65535 dst-port 1419-1419 
+
+  unset alg sccp enable
+
+  unset alg sip enable
+
+  unset alg mgcp enable
+
+  unset alg sunrpc enable
+
+  unset alg msrpc enable
+
+  unset alg xing enable
+
+  unset alg tftp enable
+
+  unset alg talk enable
+
+  unset alg sql enable
+
+  unset alg rtsp enable
+
+  unset alg rsh enable
+
+  unset alg real enable
+
+  unset alg appleichat enable
+
+  unset alg appleichat re-assembly enable
+
+  unset alg dns enable
+
+  unset alg http enable
+
+  unset alg h323 enable
+
+  unset alg sctp enable
+
+  set auth-server "Local" id 0
+
+  set auth-server "Local" server-name "Local"
+
+  set auth default auth server "Local"
+
+  set auth radius accounting port 1646
+
+  set admin name "netscreen"
+
+  set admin password **** 
+
+  set admin manager-ip 217.145.5.18
+
+  set admin manager-ip 192.168.123.0 255.255.255.0
+
+  set admin manager-ip 172.31.255.0 255.255.255.0
+
+  set admin manager-ip 134.71.48.210
+
+  set admin manager-ip 192.168.100.0 255.255.255.0
+
+  set admin manager-ip 195.158.110.33
+
+  set admin mail alert
+
+  set admin mail server-name "192.168.123.12"
+
+  set admin mail mail-addr1 "ipnetworks@example.com"
+
+  set admin auth web timeout 10
+
+  set admin auth server "Local"
+
+  set admin format dos
+
+  set zone "Trust" vrouter "trust-vr"
+
+  set zone "Untrust" vrouter "trust-vr"
+
+  set zone "DMZ" vrouter "trust-vr"
+
+  set zone "VLAN" vrouter "trust-vr"
+
+  set zone id 100 "dmz_slow"
+
+  set zone id 101 "cctv"
+
+  set zone id 102 "dmz_web"
+
+  set zone id 103 "private"
+
+  set zone id 104 "internet"
+
+  set zone "internet" vrouter "untrust-vr"
+
+  set zone id 105 "exch_replication"
+
+  set zone id 106 "rsites"
+
+  set zone "rsites" vrouter "rsites-VR"
+
+  set zone id 107 "dmz_ie"
+
+  set zone "Untrust-Tun" vrouter "trust-vr"
+
+  set zone "Trust" tcp-rst 
+
+  set zone "Untrust" block 
+
+  unset zone "Untrust" tcp-rst 
+
+  set zone "MGT" block 
+
+  unset zone "V1-Trust" tcp-rst 
+
+  unset zone "V1-Untrust" tcp-rst 
+
+  set zone "DMZ" tcp-rst 
+
+  unset zone "V1-DMZ" tcp-rst 
+
+  unset zone "VLAN" tcp-rst 
+
+  set zone "dmz_slow" tcp-rst 
+
+  set zone "cctv" tcp-rst 
+
+  set zone "dmz_web" tcp-rst 
+
+  set zone "private" tcp-rst 
+
+  set zone "internet" tcp-rst 
+
+  set zone "exch_replication" tcp-rst 
+
+  set zone "rsites" tcp-rst 
+
+  set zone "dmz_ie" tcp-rst 
+
+  set zone "Untrust" screen tear-drop
+
+  set zone "Untrust" screen syn-flood
+
+  set zone "Untrust" screen ping-death
+
+  set zone "Untrust" screen ip-filter-src
+
+  set zone "Untrust" screen land
+
+  set zone "V1-Untrust" screen tear-drop
+
+  set zone "V1-Untrust" screen syn-flood
+
+  set zone "V1-Untrust" screen ping-death
+
+  set zone "V1-Untrust" screen ip-filter-src
+
+  set zone "V1-Untrust" screen land
+
+  set zone "dmz_slow" screen syn-flood queue-size 1024
+
+  set zone "dmz_slow" screen syn-flood source-threshold 1024
+
+  set zone "dmz_slow" screen syn-flood destination-threshold 2148
+
+  set zone "cctv" screen syn-flood queue-size 1024
+
+  set zone "cctv" screen syn-flood source-threshold 1024
+
+  set zone "cctv" screen syn-flood destination-threshold 2148
+
+  set zone "dmz_web" screen syn-flood queue-size 1024
+
+  set zone "dmz_web" screen syn-flood source-threshold 1024
+
+  set zone "dmz_web" screen syn-flood destination-threshold 2148
+
+  set zone "private" screen syn-flood queue-size 1024
+
+  set zone "private" screen syn-flood source-threshold 1024
+
+  set zone "private" screen syn-flood destination-threshold 2148
+
+  set zone "internet" screen syn-flood queue-size 1024
+
+  set zone "internet" screen syn-flood source-threshold 1024
+
+  set zone "internet" screen syn-flood destination-threshold 2148
+
+  set zone "exch_replication" screen syn-flood queue-size 1024
+
+  set zone "exch_replication" screen syn-flood source-threshold 1024
+
+  set zone "exch_replication" screen syn-flood destination-threshold 2148
+
+  set zone "rsites" screen syn-flood queue-size 1024
+
+  set zone "rsites" screen syn-flood source-threshold 1024
+
+  set zone "rsites" screen syn-flood destination-threshold 2148
+
+  set zone "dmz_ie" screen syn-flood queue-size 1024
+
+  set zone "dmz_ie" screen syn-flood source-threshold 1024
+
+  set zone "dmz_ie" screen syn-flood destination-threshold 2148
+
+  set interface "ethernet0/0" zone "internet"
+
+  set interface "ethernet0/1" zone "DMZ"
+
+  set interface "ethernet0/2" zone "Trust"
+
+  set interface "ethernet0/3" zone "dmz_slow"
+
+  set interface "ethernet1/0" zone "cctv"
+
+  set interface "ethernet1/1" zone "dmz_web"
+
+  set interface "ethernet1/2.9" tag 9 zone "private"
+
+  set interface "ethernet1/3.1" tag 125 zone "exch_replication"
+
+  set interface "ethernet1/3.2" tag 11 zone "rsites"
+
+  set interface "ethernet1/3.3" tag 151 zone "dmz_ie"
+
+  set interface "ethernet1/6" zone "HA"
+
+  set interface "ethernet1/7" zone "HA"
+
+  set interface "tunnel.1" zone "internet"
+
+  set interface "tunnel.2" zone "rsites"
+
+  set interface "tunnel.3" zone "rsites"
+
+  set interface "tunnel.4" zone "rsites"
+
+  set interface "tunnel.5" zone "rsites"
+
+  set interface "tunnel.6" zone "private"
+
+  set interface "tunnel.7" zone "internet"
+
+  set interface "tunnel.8" zone "private"
+
+  set interface "tunnel.9" zone "private"
+
+  set interface "tunnel.10" zone "private"
+
+  set interface "tunnel.11" zone "private"
+
+  set interface "tunnel.12" zone "internet"
+
+  set interface "tunnel.15" zone "private"
+
+  set interface "tunnel.16" zone "private"
+
+  set interface "tunnel.17" zone "internet"
+
+  set interface "tunnel.18" zone "internet"
+
+  set interface "tunnel.19" zone "internet"
+
+  set interface "tunnel.20" zone "private"
+
+  set interface "tunnel.21" zone "rsites"
+
+  set interface ethernet0/0 ip 192.168.2.254/24
+
+  set interface ethernet0/0 route
+
+  unset interface vlan1 ip
+
+  set interface ethernet0/1 ip 192.168.120.1/24
+
+  set interface ethernet0/1 route
+
+  set interface ethernet0/2 ip 192.168.1.1/24
+
+  set interface ethernet0/2 route
+
+  set interface ethernet0/3 ip 192.168.199.1/24
+
+  set interface ethernet0/3 route
+
+  set interface ethernet1/0 ip 192.168.197.1/24
+
+  set interface ethernet1/0 route
+
+  set interface ethernet1/1 ip 192.168.4.1/25
+
+  set interface ethernet1/1 route
+
+  set interface ethernet1/2.9 ip 172.31.255.1/24
+
+  set interface ethernet1/2.9 route
+
+  set interface ethernet1/3.1 ip 192.168.124.1/24
+
+  set interface ethernet1/3.1 route
+
+  set interface ethernet1/3.2 ip 134.85.102.112/27
+
+  set interface ethernet1/3.2 route
+
+  set interface ethernet1/3.3 ip 192.168.6.33/28
+
+  set interface ethernet1/3.3 route
+
+  set interface tunnel.1 ip 192.168.121.40/32
+
+  set interface tunnel.2 ip unnumbered interface ethernet1/3.2
+
+  set interface tunnel.3 ip unnumbered interface ethernet1/3.2
+
+  set interface tunnel.4 ip unnumbered interface ethernet1/3.2
+
+  set interface tunnel.5 ip unnumbered interface ethernet1/3.2
+
+  set interface tunnel.6 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.7 ip unnumbered interface ethernet0/0
+
+  set interface tunnel.8 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.9 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.10 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.11 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.12 ip unnumbered interface ethernet0/0
+
+  set interface tunnel.15 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.16 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.17 ip unnumbered interface ethernet0/0
+
+  set interface tunnel.18 ip unnumbered interface ethernet0/0
+
+  set interface tunnel.19 ip unnumbered interface ethernet0/0
+
+  set interface tunnel.20 ip unnumbered interface ethernet1/2.9
+
+  set interface tunnel.21 ip unnumbered interface ethernet1/3.2
+
+  set interface ethernet1/3.2 mtu 1500
+
+  set interface tunnel.2 mtu 1420
+
+  set interface tunnel.3 mtu 1420
+
+  set interface tunnel.4 mtu 1420
+
+  set interface tunnel.5 mtu 1420
+
+  set interface tunnel.6 mtu 1420
+
+  set interface tunnel.7 mtu 1400
+
+  set interface tunnel.8 mtu 1420
+
+  set interface tunnel.9 mtu 1420
+
+  set interface tunnel.10 mtu 1420
+
+  set interface tunnel.11 mtu 1420
+
+  set interface tunnel.15 mtu 1420
+
+  set interface tunnel.16 mtu 1420
+
+  set interface tunnel.20 mtu 1420
+
+  set interface tunnel.21 mtu 1420
+
+  unset interface vlan1 bypass-others-ipsec
+
+  unset interface vlan1 bypass-non-ip
+
+  set interface ethernet0/2 manage-ip 192.168.1.2
+
+  set interface ethernet0/0 ip manageable
+
+  unset interface ethernet0/1 ip manageable
+
+  set interface ethernet0/2 ip manageable
+
+  set interface ethernet0/3 ip manageable
+
+  set interface ethernet1/0 ip manageable
+
+  set interface ethernet1/1 ip manageable
+
+  set interface ethernet1/2.9 ip manageable
+
+  set interface ethernet1/3.1 ip manageable
+
+  set interface ethernet1/3.2 ip manageable
+
+  set interface ethernet1/3.3 ip manageable
+
+  set interface ethernet0/0 manage ping
+
+  set interface ethernet0/0 manage ssh
+
+  unset interface ethernet0/0 manage telnet
+
+  unset interface ethernet0/0 manage snmp
+
+  set interface ethernet0/0 manage ssl
+
+  unset interface ethernet0/0 manage web
+
+  unset interface ethernet0/0 manage ident-reset
+
+  set interface ethernet0/0 manage mtrace
+
+  set interface ethernet0/0 g-arp
+
+  set interface ethernet0/1 manage ping
+
+  unset interface ethernet0/1 manage ssh
+
+  unset interface ethernet0/1 manage telnet
+
+  unset interface ethernet0/1 manage snmp
+
+  unset interface ethernet0/1 manage ssl
+
+  unset interface ethernet0/1 manage web
+
+  unset interface ethernet0/1 manage ident-reset
+
+  set interface ethernet0/1 g-arp
+
+  set interface ethernet0/2 manage ping
+
+  set interface ethernet0/2 manage ssh
+
+  unset interface ethernet0/2 manage telnet
+
+  set interface ethernet0/2 manage snmp
+
+  set interface ethernet0/2 manage ssl
+
+  unset interface ethernet0/2 manage web
+
+  unset interface ethernet0/2 manage ident-reset
+
+  set interface ethernet0/2 manage mtrace
+
+  set interface ethernet0/2 g-arp
+
+  set interface ethernet0/3 manage ping
+
+  unset interface ethernet0/3 manage ssh
+
+  unset interface ethernet0/3 manage telnet
+
+  unset interface ethernet0/3 manage snmp
+
+  unset interface ethernet0/3 manage ssl
+
+  unset interface ethernet0/3 manage web
+
+  unset interface ethernet0/3 manage ident-reset
+
+  unset interface ethernet0/3 g-arp
+
+  unset interface ethernet1/0 manage ping
+
+  unset interface ethernet1/0 manage ssh
+
+  unset interface ethernet1/0 manage telnet
+
+  unset interface ethernet1/0 manage snmp
+
+  unset interface ethernet1/0 manage ssl
+
+  unset interface ethernet1/0 manage web
+
+  unset interface ethernet1/0 manage ident-reset
+
+  set interface ethernet1/0 g-arp
+
+  set interface ethernet1/1 manage ping
+
+  unset interface ethernet1/1 manage ssh
+
+  unset interface ethernet1/1 manage telnet
+
+  unset interface ethernet1/1 manage snmp
+
+  unset interface ethernet1/1 manage ssl
+
+  unset interface ethernet1/1 manage web
+
+  unset interface ethernet1/1 manage ident-reset
+
+  set interface ethernet1/1 g-arp
+
+  set interface ethernet1/2.9 manage ping
+
+  set interface ethernet1/2.9 manage ssh
+
+  unset interface ethernet1/2.9 manage telnet
+
+  unset interface ethernet1/2.9 manage snmp
+
+  set interface ethernet1/2.9 manage ssl
+
+  unset interface ethernet1/2.9 manage web
+
+  unset interface ethernet1/2.9 manage ident-reset
+
+  set interface ethernet1/2.9 g-arp
+
+  unset interface ethernet1/3.1 manage ping
+
+  unset interface ethernet1/3.1 manage ssh
+
+  unset interface ethernet1/3.1 manage telnet
+
+  unset interface ethernet1/3.1 manage snmp
+
+  unset interface ethernet1/3.1 manage ssl
+
+  unset interface ethernet1/3.1 manage web
+
+  unset interface ethernet1/3.1 manage ident-reset
+
+  set interface ethernet1/3.1 g-arp
+
+  unset interface ethernet1/3.2 manage ping
+
+  unset interface ethernet1/3.2 manage ssh
+
+  unset interface ethernet1/3.2 manage telnet
+
+  unset interface ethernet1/3.2 manage snmp
+
+  unset interface ethernet1/3.2 manage ssl
+
+  unset interface ethernet1/3.2 manage web
+
+  unset interface ethernet1/3.2 manage ident-reset
+
+  set interface ethernet1/3.2 g-arp
+
+  set interface ethernet1/3.3 manage ping
+
+  unset interface ethernet1/3.3 manage ssh
+
+  unset interface ethernet1/3.3 manage telnet
+
+  unset interface ethernet1/3.3 manage snmp
+
+  unset interface ethernet1/3.3 manage ssl
+
+  unset interface ethernet1/3.3 manage web
+
+  unset interface ethernet1/3.3 manage ident-reset
+
+  set interface ethernet1/3.3 g-arp
+
+  set interface vlan1 manage ping
+
+  set interface vlan1 manage ssh
+
+  set interface vlan1 manage telnet
+
+  set interface vlan1 manage snmp
+
+  set interface vlan1 manage ssl
+
+  set interface vlan1 manage web
+
+  unset interface vlan1 manage ident-reset
+
+  unset interface vlan1 g-arp
+
+  set zone V1-Trust manage ping
+
+  set zone V1-Trust manage ssh
+
+  set zone V1-Trust manage telnet
+
+  set zone V1-Trust manage snmp
+
+  set zone V1-Trust manage ssl
+
+  set zone V1-Trust manage web
+
+  unset zone V1-Trust manage ident-reset
+
+  set zone V1-Trust g-arp
+
+  unset zone V1-Untrust manage ping
+
+  unset zone V1-Untrust manage ssh
+
+  unset zone V1-Untrust manage telnet
+
+  unset zone V1-Untrust manage snmp
+
+  unset zone V1-Untrust manage ssl
+
+  unset zone V1-Untrust manage web
+
+  unset zone V1-Untrust manage ident-reset
+
+  set zone V1-Untrust g-arp
+
+  set zone V1-DMZ manage ping
+
+  unset zone V1-DMZ manage ssh
+
+  unset zone V1-DMZ manage telnet
+
+  unset zone V1-DMZ manage snmp
+
+  unset zone V1-DMZ manage ssl
+
+  unset zone V1-DMZ manage web
+
+  unset zone V1-DMZ manage ident-reset
+
+  set zone V1-DMZ g-arp
+
+  unset zone V1-Null manage ping
+
+  unset zone V1-Null manage ssh
+
+  unset zone V1-Null manage telnet
+
+  unset zone V1-Null manage snmp
+
+  unset zone V1-Null manage ssl
+
+  unset zone V1-Null manage web
+
+  unset zone V1-Null manage ident-reset
+
+  set zone V1-Null g-arp
+
+  set interface "ethernet0/2" mip 192.168.121.44 host 192.168.123.13 netmask 255.255.255.255 vr "trust-vr"
+
+  set interface "ethernet1/2.9" mip 172.31.255.10 host 192.168.123.45 netmask 255.255.255.255 vr "trust-vr"
+
+  set flow path-mtu
+
+  unset flow no-tcp-seq-check
+
+  set flow tcp-syn-check
+
+  unset flow tcp-syn-bit-check
+
+  set flow reverse-route clear-text prefer
+
+  set flow reverse-route tunnel always
+
+  set domain example.com
+
+  set hostname Example_ssg320
+
+  set pki authority default scep mode "auto"
+
+  set pki x509 default cert-path partial
+
+  set nsrp cluster id 7
+
+  set nsrp rto-mirror sync
+
+  set nsrp rto-mirror route
+
+  set nsrp rto-mirror session off
+
+  set nsrp vsd-group id 0 priority 100
+
+  set nsrp vsd-group id 0 preempt
+
+  set nsrp vsd-group id 0 monitor interface ethernet0/1
+
+  set nsrp vsd-group id 0 monitor interface ethernet0/2
+
+  set nsrp vsd-group id 0 monitor interface ethernet0/0
+
+  set dns host dns1 192.168.123.10 src-interface ethernet0/2
+
+  set dns host schedule 06:28 interval 8
+
+  set address "Trust" "Host_smsgt1-lv" 192.168.131.99 255.255.255.255
+
+  set address "Trust" "IP_CCTV_station" 192.168.200.86 255.255.255.255
+
+  set address "Trust" "IP_CCTV_station2" 192.168.200.136.255.255.255.255
+
+  set address "Trust" "IP_CCTV_station3" 192.168.200.111 255.255.255.255
+
+  set address "Trust" "IT-PC-12" IT-PC-12.Example.local  "MST-PC-2 (IT department)"
+
+  set address "Trust" "itchy" 192.168.123.73 255.255.255.255
+
+  set address "Trust" "Net_speculation" 192.168.131.0 255.255.255.0
+
+  set address "Trust" "NET_Rome_servers" 192.168.123.0 255.255.255.0
+
+  set address "Trust" "Net_vl200_clients" 192.168.200.0 255.255.255.0
+
+  set address "Trust" "Net_VLT_mgmt" 192.168.100.0 255.255.255.0
+
+  set address "Trust" "Net_XenDesktops" 192.168.121.0 255.255.255.0
+
+  set address "Trust" "network_Brussels" 172.16.144.0 255.255.240.0
+
+  set address "Trust" "network_Charts" 172.16.64.0 255.255.240.0
+
+  set address "Trust" "network_Floriana" 172.16.32.0 255.255.240.0
+
+  set address "Trust" "network_Prometheus" 172.16.0.0 255.255.240.0
+
+  set address "Trust" "network_Prometheus_TMP" 172.16.176.0 255.255.240.0
+
+  set address "Trust" "network_Claudia" 172.16.112.0 255.255.240.0
+
+  set address "Trust" "network_Rome" 172.16.134.0 255.255.240.0
+
+  set address "Trust" "network_Boston" 172.16.48.0 255.255.240.0
+
+  set address "Trust" "network_BostonDR" 10.1.32.0 255.255.224.0
+
+  set address "Trust" "network_Toronto" 172.16.160.0 255.255.240.0
+
+  set address "Trust" "network_Estonia" 172.16.16.0 255.255.240.0
+
+  set address "Trust" "network_Hospital" 172.16.128.0 255.255.240.0
+
+  set address "Trust" "network_Rome" 192.168.0.0 255.255.0.0
+
+  set address "Trust" "network_JumpStreet" 172.16.96.0 255.255.240.0
+
+  set address "Trust" "PABX_Rome" 192.168.140.0 255.255.255.0
+
+  set address "Trust" "Patty" 192.168.123.10 255.255.255.255 "Active Directory server"
+
+  set address "Trust" "pmb011" 192.168.200.211 255.255.255.255
+
+  set address "Trust" "pmb046" 192.168.121.46 255.255.255.255
+
+  set address "Trust" "pmb047" 192.168.121.47 255.255.255.255
+
+  set address "Trust" "pmb048" 192.168.121.48 255.255.255.255
+
+  set address "Trust" "pmb049" 192.168.121.49 255.255.255.255
+
+  set address "Trust" "pmb050" 192.168.121.50 255.255.255.255
+
+  set address "Trust" "scratchy" 192.168.123.72 255.255.255.255
+
+  set address "Trust" "SRV_backup1" 192.168.123.46 255.255.255.255
+
+  set address "Trust" "SRV_backup2" 192.168.123.47 255.255.255.255
+
+  set address "Trust" "SRV_speculation33" 192.168.131.33 255.255.255.255
+
+  set address "Trust" "SRV_speculation34" 192.168.131.34 255.255.255.255
+
+  set address "Trust" "SRV_speculation40" 192.168.131.40 255.255.255.255
+
+  set address "Trust" "SRV_blackBerry" 192.168.123.14 255.255.255.255
+
+  set address "Trust" "SRV_BR_licensing" 192.168.123.74 255.255.255.255
+
+  set address "Trust" "SRV_DC1" 192.168.123.10 255.255.255.255
+
+  set address "Trust" "SRV_DC2" 192.168.123.11 255.255.255.255
+
+  set address "Trust" "SRV_DNS" 192.168.123.16 255.255.255.255
+
+  set address "Trust" "SRV_Edna" 192.168.123.67 255.255.255.255
+
+  set address "Trust" "SRV_exch_apu" 192.168.123.12 255.255.255.255
+
+  set address "Trust" "SRV_exch_mexch1-lv" 192.168.123.40 255.255.255.255
+
+  set address "Trust" "SRV_ftp_ext" 192.168.121.44 255.255.255.255
+
+  set address "Trust" "SRV_IdentiKey" 192.168.123.19 255.255.255.255
+
+  set address "Trust" "SRV_IE_devel_speculation" 192.168.131.132.255.255.255.255
+
+  set address "Trust" "SRV_IE_MQ_PROD" 192.168.131.134.255.255.255.252
+
+  set address "Trust" "SRV_IE_MQ_test" 192.168.131.79 255.255.255.255
+
+  set address "Trust" "SRV_Lisa" 192.168.123.30 255.255.255.255
+
+  set address "Trust" "SRV_mgmt1" 192.168.123.20 255.255.255.255
+
+  set address "Trust" "SRV_mgmt2" 192.168.100.50 255.255.255.255
+
+  set address "Trust" "SRV_mgmt3" 192.168.100.38 255.255.255.255
+
+  set address "Trust" "SRV_moe" 192.168.123.65 255.255.255.255
+
+  set address "Trust" "SRV_NSM" 192.168.123.45 255.255.255.255
+
+  set address "Trust" "SRV_officescan" 192.168.123.15 255.255.255.255
+
+  set address "Trust" "SRV_PRTG1" 192.168.100.53 255.255.255.255
+
+  set address "Trust" "SRV_sFTP" 192.168.123.88 255.255.255.255
+
+  set address "Trust" "SRV_slow_printer" 192.168.200.120 255.255.255.255
+
+  set address "Trust" "SRV_TFTP_srever" 192.168.100.32 255.255.255.255
+
+  set address "Trust" "SRV_xendesktop" 192.168.123.31 255.255.255.255
+
+  set address "Trust" "SRV_xendesktop2" 192.168.123.32 255.255.255.255
+
+  set address "Trust" "SRV_nagios1-lv" 192.168.100.33 255.255.255.255 "nagios monitoring tool"
+
+  set address "Trust" "SRV_Zeacom" 192.168.140.23 255.255.255.255
+
+  set address "Trust" "Vulnerability Scanner" 192.168.100.99 255.255.255.255 "IT Security Officer"
+
+  set address "Untrust" "bbp_printserver_dr" 192.168.170.46 255.255.255.255
+
+  set address "Untrust" "bbp_printserver_prd1" 192.168.170.43 255.255.255.255
+
+  set address "Untrust" "bbp_printserver_prd2" 192.168.170.44 255.255.255.255
+
+  set address "Untrust" "bbp_printserver_tst" 192.168.170.45 255.255.255.255
+
+  set address "Untrust" "BOSS_1" 192.168.170.47 255.255.255.255
+
+  set address "Untrust" "BOSS_2" 192.168.170.48 255.255.255.255
+
+  set address "Untrust" "mbmlgnctxprd003" 192.168.170.12 255.255.255.255
+
+  set address "Untrust" "mbmlgnctxprd009" 192.168.170.19 255.255.255.255
+
+  set address "Untrust" "mbmlgnctxprd010" 192.168.170.23 255.255.255.255
+
+  set address "Untrust" "mbmlgnctxprd017" 192.168.170.31 255.255.255.255
+
+  set address "Untrust" "mbmlgnctxprd018" 192.168.170.32 255.255.255.255
+
+  set address "Untrust" "mbmlgndomprd02" 192.168.170.11 255.255.255.255
+
+  set address "Untrust" "mbmlgnexcprd005" 192.168.170.14 255.255.255.255
+
+  set address "Untrust" "mbmlgnwebprd016" 192.168.170.26 255.255.255.255
+
+  set address "Untrust" "Net_BSource" 192.168.170.0 255.255.255.0
+
+  set address "Untrust" "prvs" 192.168.170.41 255.255.255.255
+
+  set address "Untrust" "vgspreappprd02" 192.168.170.42 255.255.255.255
+
+  set address "Global" "SRV_NSM_priv" 172.31.255.10 255.255.255.255
+
+  set address "DMZ" "SRV_citrix2" 192.168.120.12 255.255.255.255
+
+  set address "DMZ" "SRV_citrix_webpage" 192.168.120.11 255.255.255.255
+
+  set address "DMZ" "SRV_email" 192.168.120.11 255.255.255.255
+
+  set address "DMZ" "SRV_isa" 192.168.120.10 255.255.255.255
+
+  set address "DMZ" "SRV_MSForeFront" 192.168.120.14 255.255.255.255
+
+  set address "dmz_slow" "NAT_slow" 192.168.199.253 255.255.255.255
+
+  set address "dmz_web" "Net_webservers" 192.168.4.128 255.255.255.128
+
+  set address "dmz_web" "SRV_speculation_web1" 192.168.4.130 255.255.255.255
+
+  set address "dmz_web" "SRV_speculation_web2" 192.168.4.131 255.255.255.255
+
+  set address "dmz_web" "SRV_speculation_web_VIP" 192.168.4.13 255.255.255.255
+
+  set address "private" "cctv_Brussels" 172.16.147.0 255.255.255.0
+
+  set address "private" "cctv_Floriana" 172.16.35.0 255.255.255.0
+
+  set address "private" "cctv_Prometheus" 172.16.3.0 255.255.255.0
+
+  set address "private" "cctv_Rome" 172.16.132.0 255.255.255.0
+
+  set address "private" "cctv_Boston" 172.16.51.1 255.255.255.0
+
+  set address "private" "cctv_Toronto" 172.16.163.0 255.255.255.0
+
+  set address "private" "cctv_Estonia" 172.16.19.1 255.255.255.0
+
+  set address "private" "cctv_Hospital" 172.16.129.11 255.255.255.0
+
+  set address "private" "cctv_Rome" 192.168.197.0 255.255.255.0
+
+  set address "private" "cctv_VSstreet" 172.16.99.1 255.255.255.0
+
+  set address "private" "Checkpoint_GW1" 192.168.2.1 255.255.255.255
+
+  set address "private" "Checkpoint_PLA_int" 10.1.63.17 255.255.255.255
+
+  set address "private" "FW_Brussels" 90.152.74.190 255.255.255.255
+
+  set address "private" "FW_Charts" 134.85.102.136.255.255.255.255
+
+  set address "private" "FW_Floriana" 134.85.102.86 255.255.255.255
+
+  set address "private" "FW_Prometheus" 132.167.168.146 255.255.255.255
+
+  set address "private" "FW_Prometheus_TMP" 195.217.35.196 255.255.255.255
+
+  set address "private" "FW_Claudia" 195.158.105.144 255.255.255.255
+
+  set address "private" "FW_Rome" 134.85.102.66 255.255.255.255
+
+  set address "private" "FW_Boston" 134.85.102.74 255.255.255.255
+
+  set address "private" "FW_Toronto" 172.31.255.11 255.255.255.255
+
+  set address "private" "FW_Estonia" 134.85.102.90 255.255.255.255
+
+  set address "private" "FW_Hospital" 134.85.102.58 255.255.255.255
+
+  set address "private" "FW_JumpStreet" 134.85.102.62 255.255.255.255
+
+  set address "private" "IP_CCTV_station" 192.168.200.86 255.255.255.255
+
+  set address "private" "IP_CCTV_station2" 192.168.200.136.255.255.255.255
+
+  set address "private" "IP_CCTV_station3" 192.168.200.111 255.255.255.255
+
+  set address "private" "IP_floriana_prt1" 172.16.33.5 255.255.255.255
+
+  set address "private" "Net_priv_voda" 172.31.255.0 255.255.255.0
+
+  set address "private" "network_Brussels" 172.16.144.0 255.255.240.0
+
+  set address "private" "network_Charts" 172.16.64.0 255.255.240.0
+
+  set address "private" "network_Floriana" 172.16.32.0 255.255.240.0
+
+  set address "private" "network_Prometheus" 172.16.0.0 255.255.240.0
+
+  set address "private" "network_Prometheus_TMP" 172.16.176.0 255.255.240.0
+
+  set address "private" "network_Claudia" 172.16.112.0 255.255.240.0
+
+  set address "private" "network_Rome" 172.16.134.0 255.255.240.0
+
+  set address "private" "network_Boston" 172.16.48.0 255.255.240.0
+
+  set address "private" "network_BostonDR" 10.1.32.0 255.255.224.0
+
+  set address "private" "network_Toronto" 172.16.160.0 255.255.240.0
+
+  set address "private" "network_Estonia" 172.16.16.0 255.255.240.0
+
+  set address "private" "network_Hospital" 172.16.128.0 255.255.240.0
+
+  set address "private" "network_Rome" 192.168.0.0 255.255.0.0
+
+  set address "private" "network_JumpStreet" 172.16.96.0 255.255.240.0
+
+  set address "private" "PABX_brussels" 172.16.146.0 255.255.255.0
+
+  set address "private" "PABX_Charts" 172.16.66.0 255.255.255.0
+
+  set address "private" "PABX_Floriana" 172.16.34.0 255.255.255.0
+
+  set address "private" "PABX_Prometheus" 172.16.2.0 255.255.255.0
+
+  set address "private" "PABX_Prometheus_TMP" 172.16.178.0 255.255.255.0
+
+  set address "private" "PABX_Claudia" 172.16.114.0 255.255.255.0
+
+  set address "private" "PABX_Rome" 172.16.136.0 255.255.255.0
+
+  set address "private" "PABX_Boston" 172.16.50.0 255.255.255.0
+
+  set address "private" "PABX_Toronto" 172.16.162.0 255.255.255.0
+
+  set address "private" "PABX_Estonia" 172.16.18.0 255.255.255.0
+
+  set address "private" "PABX_SHospital" 172.16.130.0 255.255.255.0
+
+  set address "private" "PABX_Rome" 192.168.140.0 255.255.255.0
+
+  set address "private" "PABX_JumpStreet" 172.16.98.0 255.255.255.0
+
+  set address "private" "SRV_DC1" 192.168.123.10 255.255.255.255
+
+  set address "private" "SRV_DC2" 192.168.123.11 255.255.255.255
+
+  set address "private" "SRV_mgmt1" 192.168.123.20 255.255.255.255
+
+  set address "private" "SRV_mgmt2" 192.168.100.50 255.255.255.255
+
+  set address "private" "SRV_mgmt3" 192.168.100.38 255.255.255.255
+
+  set address "private" "SRV_Rome_BR" 172.16.95.9 255.255.255.255
+
+  set address "private" "SRV_Rome_BR_vm" 172.16.95.10 255.255.255.255
+
+  set address "private" "SRV_Boston_BR" 172.16.63.10 255.255.255.255
+
+  set address "private" "SRV_Boston_BR_vm" 172.16.63.9 255.255.255.255
+
+  set address "private" "SRV_PRTG1" 192.168.100.53 255.255.255.255
+
+  set address "private" "SRV_Snowball" 172.16.64.10 255.255.255.255
+
+  set address "private" "SRV_slow_printer2" 172.16.81.9 255.255.255.255
+
+  set address "private" "SRV_TFTP_srever" 192.168.100.32 255.255.255.255
+
+  set address "private" "SRV_nagios1-lv" 192.168.100.33 255.255.255.255 "nagios monitoring tool"
+
+  set address "internet" "api1.example.net" api1.example.net 
+
+  set address "internet" "api2.example.net" api2.example.net 
+
+  set address "internet" "bfmrr.example.com" bfmrr.example.com  "example FTP server"
+
+  set address "internet" "cctv_Brussels" 172.16.147.0 255.255.255.0
+
+  set address "internet" "cctv_Floriana" 172.16.35.0 255.255.255.0
+
+  set address "internet" "cctv_Prometheus" 172.16.3.0 255.255.255.0
+
+  set address "internet" "cctv_Rome" 172.16.132.0 255.255.255.0
+
+  set address "internet" "cctv_Boston" 172.16.51.1 255.255.255.0
+
+  set address "internet" "cctv_Toronto" 172.16.163.0 255.255.255.0
+
+  set address "internet" "cctv_Estonia" 172.16.19.1 255.255.255.0
+
+  set address "internet" "cctv_Hospital" 172.16.129.11 255.255.255.0
+
+  set address "internet" "cctv_Rome" 192.168.197.0 255.255.255.0
+
+  set address "internet" "cctv_VSstreet" 172.16.99.1 255.255.255.0
+
+  set address "internet" "Checkpoint_GW1" 192.168.2.1 255.255.255.255
+
+  set address "internet" "Checkpoint_GW2" 192.168.2.2 255.255.255.255
+
+  set address "internet" "Checkpoint_mgmt" 192.168.5.17 255.255.255.255
+
+  set address "internet" "FW_Brussels" 90.152.74.190 255.255.255.255
+
+  set address "internet" "FW_Charts" 134.85.102.136.255.255.255.255
+
+  set address "internet" "FW_Floriana" 134.85.102.86 255.255.255.255
+
+  set address "internet" "FW_Prometheus" 132.167.168.146 255.255.255.255
+
+  set address "internet" "FW_Prometheus_TMP" 195.217.35.196 255.255.255.255
+
+  set address "internet" "FW_Claudia" 195.158.105.144 255.255.255.255
+
+  set address "internet" "FW_Rome" 134.85.102.66 255.255.255.255
+
+  set address "internet" "FW_Boston" 134.85.102.74 255.255.255.255
+
+  set address "internet" "FW_Toronto" 172.31.255.11 255.255.255.255
+
+  set address "internet" "FW_Estonia" 134.85.102.90 255.255.255.255
+
+  set address "internet" "FW_Hospital" 134.85.102.58 255.255.255.255
+
+  set address "internet" "FW_JumpStreet" 134.85.102.62 255.255.255.255
+
+  set address "internet" "infosec.lv" 174.136.108.74 255.255.255.255 "Infosec.lv (Artis' SSH server)"
+
+  set address "internet" "IP_5i_range1" 213.246.171.232 255.255.255.248
+
+  set address "internet" "IP_5i_range2" 136.163.101.160 255.255.255.224
+
+  set address "internet" "IP_AGonzi" 195.158.105.186 255.255.255.255
+
+  set address "internet" "IP_CCTV_station" 192.168.200.86 255.255.255.255
+
+  set address "internet" "IP_CCTV_station2" 192.168.200.136.255.255.255.255
+
+  set address "internet" "IP_CCTV_station3" 192.168.200.111 255.255.255.255
+
+  set address "internet" "IP_computime1" 217.145.5.18 255.255.255.255
+
+  set address "internet" "IP_computime2" 134.71.48.210 255.255.255.255
+
+  set address "internet" "IP_computime3" 195.158.110.33 255.255.255.255
+
+  set address "internet" "IP_JJones" 213.165.186.198 255.255.255.255
+
+  set address "internet" "IP_sFTP_clients1" 193.29.76.114 255.255.255.255
+
+  set address "internet" "IP_sFTP_clients2" 193.29.76.115 255.255.255.255
+
+  set address "internet" "LinkProof1" 192.168.5.1 255.255.255.255
+
+  set address "internet" "LinkProof2" 192.168.5.2 255.255.255.255
+
+  set address "internet" "Prometheus_WAN_monitoring" 132.167.165.20 255.255.255.255
+
+  set address "internet" "Net_example4" 208.22.56.0 255.255.255.0
+
+  set address "internet" "Net_example5" 208.22.57.0 255.255.255.0
+
+  set address "internet" "Net_example6" 69.191.192.0 255.255.192.0
+
+  set address "internet" "Net_example1" 160.43.250.0 255.255.255.0
+
+  set address "internet" "Net_example2" 206.156.53.0 255.255.255.0
+
+  set address "internet" "Net_example3" 205.216.112.0 255.255.255.0
+
+  set address "internet" "Net_Exchange_replication_DR" 10.1.63.96 255.255.255.240 "Exchange replication in Boston"
+
+  set address "internet" "Net_Exchange_replication_Lon" 172.16.4.0 255.255.255.0 "Exchange replication in Prometheus"
+
+  set address "internet" "Net_Exchange_replication_VLT" 192.168.124.0 255.255.255.0 "Exchange replication in Vallett"
+
+  set address "internet" "network_Brussels" 172.16.144.0 255.255.240.0
+
+  set address "internet" "Network_CallIT" 192.168.191.0 255.255.255.0
+
+  set address "internet" "network_Charts" 172.16.64.0 255.255.240.0
+
+  set address "internet" "Network_CSL" 192.168.130.4 255.255.255.255
+
+  set address "internet" "network_Floriana" 172.16.32.0 255.255.240.0
+
+  set address "internet" "network_PO-devel" 192.168.171.0 255.255.255.0
+
+  set address "internet" "network_PO-Prometheus1" 10.150.36.0 255.255.255.0
+
+  set address "internet" "network_PO-Prometheus2" 10.150.5.0 255.255.255.224
+
+  set address "internet" "network_PO-Hearing1" 10.151.36.0 255.255.255.0
+
+  set address "internet" "network_PO-Hearing2" 10.151.66.0 255.255.255.0
+
+  set address "internet" "network_PO-Hearing3" 10.151.5.20 255.255.255.255
+
+  set address "internet" "network_Prometheus" 172.16.0.0 255.255.240.0
+
+  set address "internet" "network_Prometheus_TMP" 172.16.176.0 255.255.240.0
+
+  set address "internet" "network_Claudia" 172.16.112.0 255.255.240.0
+
+  set address "internet" "Network_ZPR" 172.27.0.0 255.255.248.0
+
+  set address "internet" "network_Rome" 172.16.134.0 255.255.240.0
+
+  set address "internet" "network_Boston" 172.16.48.0 255.255.240.0
+
+  set address "internet" "network_BostonDR" 10.1.32.0 255.255.224.0
+
+  set address "internet" "network_Toronto" 172.16.160.0 255.255.240.0
+
+  set address "internet" "network_Estonia" 172.16.16.0 255.255.240.0
+
+  set address "internet" "network_Hospital" 172.16.128.0 255.255.240.0
+
+  set address "internet" "network_slow1" 172.30.224.0 255.255.255.0
+
+  set address "internet" "network_slow2" 172.25.224.0 255.255.255.0
+
+  set address "internet" "network_Rome" 192.168.0.0 255.255.0.0
+
+  set address "internet" "Network_vpn_users" 192.168.3.0 255.255.255.0
+
+  set address "internet" "network_JumpStreet" 172.16.96.0 255.255.240.0
+
+  set address "internet" "PABX_brussels" 172.16.146.0 255.255.255.0
+
+  set address "internet" "PABX_Charts" 172.16.66.0 255.255.255.0
+
+  set address "internet" "PABX_Floriana" 172.16.34.0 255.255.255.0
+
+  set address "internet" "PABX_Prometheus" 172.16.2.0 255.255.255.0
+
+  set address "internet" "PABX_Prometheus_TMP" 172.16.178.0 255.255.255.0
+
+  set address "internet" "PABX_Claudia" 172.16.114.0 255.255.255.0
+
+  set address "internet" "PABX_Rome" 172.16.136.0 255.255.255.0
+
+  set address "internet" "PABX_Boston" 172.16.50.0 255.255.255.0
+
+  set address "internet" "PABX_Toronto" 172.16.162.0 255.255.255.0
+
+  set address "internet" "PABX_Estonia" 172.16.18.0 255.255.255.0
+
+  set address "internet" "PABX_SHospital" 172.16.130.0 255.255.255.0
+
+  set address "internet" "PABX_Rome" 192.168.140.0 255.255.255.0
+
+  set address "internet" "PABX_JumpStreet" 172.16.98.0 255.255.255.0
+
+  set address "internet" "pdir.example.net" pdir.example.net 
+
+  set address "internet" "sdir.example.net" sdir.example.net 
+
+  set address "internet" "SRV_CP_mgmt" 192.168.5.17 255.255.255.255
+
+  set address "internet" "SRV_CP_mgmt2" 10.1.63.17 255.255.255.255
+
+  set address "internet" "SRV_DC1" 192.168.123.10 255.255.255.255
+
+  set address "internet" "SRV_DC2" 192.168.123.11 255.255.255.255
+
+  set address "internet" "SRV_mgmt1" 192.168.123.20 255.255.255.255
+
+  set address "internet" "SRV_mgmt2" 192.168.100.50 255.255.255.255
+
+  set address "internet" "SRV_mgmt3" 192.168.100.38 255.255.255.255
+
+  set address "internet" "SRV_PRTG1" 192.168.100.53 255.255.255.255
+
+  set address "internet" "SRV_TFTP_srever" 192.168.100.32 255.255.255.255
+
+  set address "internet" "SRV_nagios1-lv" 192.168.100.33 255.255.255.255 "nagios monitoring tool"
+
+  set address "internet" "Looseweb1" 193.108.18.194 255.255.255.255
+
+  set address "internet" "Looseweb2" 62.189.50.194 255.255.255.255
+
+  set address "internet" "Looseweb3" 62.189.50.239 255.255.255.255
+
+  set address "exch_replication" "Net_Exchange_replication_VLT" 192.168.124.0 255.255.255.0 "Exchange replication in Vallett"
+
+  set address "rsites" "cctv_Brussels" 172.16.147.0 255.255.255.0
+
+  set address "rsites" "cctv_Floriana" 172.16.35.0 255.255.255.0
+
+  set address "rsites" "cctv_Prometheus" 172.16.3.0 255.255.255.0
+
+  set address "rsites" "cctv_Rome" 172.16.132.0 255.255.255.0
+
+  set address "rsites" "cctv_Boston" 172.16.51.1 255.255.255.0
+
+  set address "rsites" "cctv_Toronto" 172.16.163.0 255.255.255.0
+
+  set address "rsites" "cctv_Estonia" 172.16.19.1 255.255.255.0
+
+  set address "rsites" "cctv_Hospital" 172.16.129.11 255.255.255.0
+
+  set address "rsites" "cctv_Rome" 192.168.197.0 255.255.255.0
+
+  set address "rsites" "cctv_VSstreet" 172.16.99.1 255.255.255.0
+
+  set address "rsites" "Checkpoint_GW1" 192.168.2.1 255.255.255.255
+
+  set address "rsites" "FW_Brussels" 90.152.74.190 255.255.255.255
+
+  set address "rsites" "FW_Charts" 134.85.102.136.255.255.255.255
+
+  set address "rsites" "FW_Floriana" 134.85.102.86 255.255.255.255
+
+  set address "rsites" "FW_Prometheus" 132.167.168.146 255.255.255.255
+
+  set address "rsites" "FW_Prometheus_TMP" 195.217.35.196 255.255.255.255
+
+  set address "rsites" "FW_Claudia" 195.158.105.144 255.255.255.255
+
+  set address "rsites" "FW_Rome" 134.85.102.66 255.255.255.255
+
+  set address "rsites" "FW_Boston" 134.85.102.74 255.255.255.255
+
+  set address "rsites" "FW_Toronto" 172.31.255.11 255.255.255.255
+
+  set address "rsites" "FW_Estonia" 134.85.102.90 255.255.255.255
+
+  set address "rsites" "FW_Hospital" 134.85.102.58 255.255.255.255
+
+  set address "rsites" "FW_JumpStreet" 134.85.102.62 255.255.255.255
+
+  set address "rsites" "IP_CCTV_station" 192.168.200.86 255.255.255.255
+
+  set address "rsites" "IP_CCTV_station2" 192.168.200.136.255.255.255.255
+
+  set address "rsites" "IP_CCTV_station3" 192.168.200.111 255.255.255.255
+
+  set address "rsites" "Net_Exchange_replication_DR" 10.1.63.96 255.255.255.240 "Exchange replication in Boston"
+
+  set address "rsites" "Net_Exchange_replication_Lon" 172.16.4.0 255.255.255.0 "Exchange replication in Prometheus"
+
+  set address "rsites" "Net_Exchange_replication_VLT" 192.168.124.0 255.255.255.0 "Exchange replication in Vallett"
+
+  set address "rsites" "network_Brussels" 172.16.144.0 255.255.240.0
+
+  set address "rsites" "network_Charts" 172.16.64.0 255.255.240.0
+
+  set address "rsites" "network_Floriana" 172.16.32.0 255.255.240.0
+
+  set address "rsites" "network_Prometheus" 172.16.0.0 255.255.240.0
+
+  set address "rsites" "network_Prometheus_TMP" 172.16.176.0 255.255.240.0
+
+  set address "rsites" "network_Claudia" 172.16.112.0 255.255.240.0
+
+  set address "rsites" "network_Rome" 172.16.134.0 255.255.240.0
+
+  set address "rsites" "network_Boston" 172.16.48.0 255.255.240.0
+
+  set address "rsites" "network_BostonDR" 10.1.32.0 255.255.224.0
+
+  set address "rsites" "network_Toronto" 172.16.160.0 255.255.240.0
+
+  set address "rsites" "network_Estonia" 172.16.16.0 255.255.240.0
+
+  set address "rsites" "network_Hospital" 172.16.128.0 255.255.240.0
+
+  set address "rsites" "network_Rome" 192.168.0.0 255.255.0.0
+
+  set address "rsites" "network_JumpStreet" 172.16.96.0 255.255.240.0
+
+  set address "rsites" "PABX_brussels" 172.16.146.0 255.255.255.0
+
+  set address "rsites" "PABX_Charts" 172.16.66.0 255.255.255.0
+
+  set address "rsites" "PABX_Floriana" 172.16.34.0 255.255.255.0
+
+  set address "rsites" "PABX_Prometheus" 172.16.2.0 255.255.255.0
+
+  set address "rsites" "PABX_Prometheus_TMP" 172.16.178.0 255.255.255.0
+
+  set address "rsites" "PABX_Claudia" 172.16.114.0 255.255.255.0
+
+  set address "rsites" "PABX_Rome" 172.16.136.0 255.255.255.0
+
+  set address "rsites" "PABX_Boston" 172.16.50.0 255.255.255.0
+
+  set address "rsites" "PABX_Toronto" 172.16.162.0 255.255.255.0
+
+  set address "rsites" "PABX_Estonia" 172.16.18.0 255.255.255.0
+
+  set address "rsites" "PABX_SHospital" 172.16.130.0 255.255.255.0
+
+  set address "rsites" "PABX_Rome" 192.168.140.0 255.255.255.0
+
+  set address "rsites" "PABX_JumpStreet" 172.16.98.0 255.255.255.0
+
+  set address "rsites" "SRV_DC1" 192.168.123.10 255.255.255.255
+
+  set address "rsites" "SRV_DC2" 192.168.123.11 255.255.255.255
+
+  set address "rsites" "SRV_mgmt1" 192.168.123.20 255.255.255.255
+
+  set address "rsites" "SRV_mgmt2" 192.168.100.50 255.255.255.255
+
+  set address "rsites" "SRV_mgmt3" 192.168.100.38 255.255.255.255
+
+  set address "rsites" "SRV_PRTG1" 192.168.100.53 255.255.255.255
+
+  set address "rsites" "SRV_TFTP_srever" 192.168.100.32 255.255.255.255
+
+  set address "rsites" "SRV_nagios1-lv" 192.168.100.33 255.255.255.255 "nagios monitoring tool"
+
+  set address "dmz_ie" "network_PO-Prometheus1" 10.150.36.0 255.255.255.0
+
+  set address "dmz_ie" "network_PO-Prometheus2" 10.150.5.0 255.255.255.224
+
+  set address "dmz_ie" "network_PO-Hearing1" 10.151.36.0 255.255.255.0
+
+  set address "dmz_ie" "network_PO-Hearing2" 10.151.66.0 255.255.255.0
+
+  set address "dmz_ie" "network_PO-Hearing3" 10.151.5.20 255.255.255.255
+
+  set group address "Trust" "GRP_Backups"
+
+  set group address "Trust" "GRP_Backups" add "SRV_backup1"
+
+  set group address "Trust" "GRP_Backups" add "SRV_backup2"
+
+  set group address "Trust" "GRP_infoprint"
+
+  set group address "Trust" "GRP_infoprint" add "pmb046"
+
+  set group address "Trust" "GRP_infoprint" add "pmb047"
+
+  set group address "Trust" "GRP_infoprint" add "pmb048"
+
+  set group address "Trust" "GRP_infoprint" add "pmb049"
+
+  set group address "Trust" "GRP_infoprint" add "pmb050"
+
+  set group address "Trust" "GRP_srv_mgmt"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_mgmt1"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_mgmt2"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_mgmt3"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_PRTG1"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_TFTP_srever"
+
+  set group address "Trust" "GRP_srv_mgmt" add "SRV_nagios1-lv"
+
+  set group address "Trust" "Networks_private"
+
+  set group address "Trust" "Networks_private" add "network_Brussels"
+
+  set group address "Trust" "Networks_private" add "network_Charts"
+
+  set group address "Trust" "Networks_private" add "network_Floriana"
+
+  set group address "Trust" "Networks_private" add "network_Prometheus"
+
+  set group address "Trust" "Networks_private" add "network_Prometheus_TMP"
+
+  set group address "Trust" "Networks_private" add "network_Claudia"
+
+  set group address "Trust" "Networks_private" add "network_Rome"
+
+  set group address "Trust" "Networks_private" add "network_Boston"
+
+  set group address "Trust" "Networks_private" add "network_BostonDR"
+
+  set group address "Trust" "Networks_private" add "network_Toronto"
+
+  set group address "Trust" "Networks_private" add "network_Estonia"
+
+  set group address "Trust" "Networks_private" add "network_Hospital"
+
+  set group address "Trust" "Networks_private" add "network_Rome"
+
+  set group address "Trust" "Networks_private" add "network_JumpStreet"
+
+  set group address "Untrust" "GRP_citrix_farm"
+
+  set group address "Untrust" "GRP_citrix_farm" add "mbmlgnctxprd003"
+
+  set group address "Untrust" "GRP_citrix_farm" add "mbmlgnctxprd009"
+
+  set group address "Untrust" "GRP_citrix_farm" add "mbmlgnctxprd010"
+
+  set group address "Untrust" "GRP_citrix_farm" add "mbmlgnctxprd017"
+
+  set group address "Untrust" "GRP_citrix_farm" add "mbmlgnctxprd018"
+
+  set group address "dmz_web" "GRP_speculation_web"
+
+  set group address "dmz_web" "GRP_speculation_web" add "SRV_speculation_web_VIP"
+
+  set group address "private" "FW_remote_sites"
+
+  set group address "private" "FW_remote_sites" add "FW_Brussels"
+
+  set group address "private" "FW_remote_sites" add "FW_Charts"
+
+  set group address "private" "FW_remote_sites" add "FW_Floriana"
+
+  set group address "private" "FW_remote_sites" add "FW_Prometheus"
+
+  set group address "private" "FW_remote_sites" add "FW_Prometheus_TMP"
+
+  set group address "private" "FW_remote_sites" add "FW_Claudia"
+
+  set group address "private" "FW_remote_sites" add "FW_Rome"
+
+  set group address "private" "FW_remote_sites" add "FW_Boston"
+
+  set group address "private" "FW_remote_sites" add "FW_Toronto"
+
+  set group address "private" "FW_remote_sites" add "FW_Estonia"
+
+  set group address "private" "FW_remote_sites" add "FW_Hospital"
+
+  set group address "private" "FW_remote_sites" add "FW_JumpStreet"
+
+  set group address "private" "GRP_BR"
+
+  set group address "private" "GRP_BR" add "SRV_Rome_BR"
+
+  set group address "private" "GRP_BR" add "SRV_Rome_BR_vm"
+
+  set group address "private" "GRP_BR" add "SRV_Boston_BR"
+
+  set group address "private" "GRP_BR" add "SRV_Boston_BR_vm"
+
+  set group address "private" "GRP_srv_mgmt"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_mgmt1"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_mgmt2"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_mgmt3"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_PRTG1"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_TFTP_srever"
+
+  set group address "private" "GRP_srv_mgmt" add "SRV_nagios1-lv"
+
+  set group address "private" "networks_CCTV"
+
+  set group address "private" "networks_CCTV" add "cctv_Brussels"
+
+  set group address "private" "networks_CCTV" add "cctv_Floriana"
+
+  set group address "private" "networks_CCTV" add "cctv_Prometheus"
+
+  set group address "private" "networks_CCTV" add "cctv_Rome"
+
+  set group address "private" "networks_CCTV" add "cctv_Boston"
+
+  set group address "private" "networks_CCTV" add "cctv_Toronto"
+
+  set group address "private" "networks_CCTV" add "cctv_Estonia"
+
+  set group address "private" "networks_CCTV" add "cctv_Hospital"
+
+  set group address "private" "networks_CCTV" add "cctv_Rome"
+
+  set group address "private" "networks_CCTV" add "cctv_VSstreet"
+
+  set group address "private" "networks_CCTV" add "Checkpoint_GW1"
+
+  set group address "private" "networks_CCTV" add "IP_CCTV_station"
+
+  set group address "private" "networks_CCTV" add "IP_CCTV_station2"
+
+  set group address "private" "networks_CCTV" add "IP_CCTV_station3"
+
+  set group address "private" "networks_CCTV" add "GRP_srv_mgmt"
+
+  set group address "private" "Networks_private"
+
+  set group address "private" "Networks_private" add "network_Brussels"
+
+  set group address "private" "Networks_private" add "network_Charts"
+
+  set group address "private" "Networks_private" add "network_Floriana"
+
+  set group address "private" "Networks_private" add "network_Prometheus"
+
+  set group address "private" "Networks_private" add "network_Prometheus_TMP"
+
+  set group address "private" "Networks_private" add "network_Claudia"
+
+  set group address "private" "Networks_private" add "network_Rome"
+
+  set group address "private" "Networks_private" add "network_Boston"
+
+  set group address "private" "Networks_private" add "network_BostonDR"
+
+  set group address "private" "Networks_private" add "network_Toronto"
+
+  set group address "private" "Networks_private" add "network_Estonia"
+
+  set group address "private" "Networks_private" add "network_Hospital"
+
+  set group address "private" "Networks_private" add "network_Rome"
+
+  set group address "private" "Networks_private" add "network_JumpStreet"
+
+  set group address "private" "Networks_voice"
+
+  set group address "private" "Networks_voice" add "PABX_brussels"
+
+  set group address "private" "Networks_voice" add "PABX_Charts"
+
+  set group address "private" "Networks_voice" add "PABX_Floriana"
+
+  set group address "private" "Networks_voice" add "PABX_Prometheus"
+
+  set group address "private" "Networks_voice" add "PABX_Prometheus_TMP"
+
+  set group address "private" "Networks_voice" add "PABX_Claudia"
+
+  set group address "private" "Networks_voice" add "PABX_Rome"
+
+  set group address "private" "Networks_voice" add "PABX_Boston"
+
+  set group address "private" "Networks_voice" add "PABX_Toronto"
+
+  set group address "private" "Networks_voice" add "PABX_Estonia"
+
+  set group address "private" "Networks_voice" add "PABX_SHospital"
+
+  set group address "private" "Networks_voice" add "PABX_Rome"
+
+  set group address "private" "Networks_voice" add "PABX_JumpStreet"
+
+  set group address "private" "Networks_voice" add "SRV_DC1"
+
+  set group address "private" "Networks_voice" add "SRV_DC2"
+
+  set group address "internet" "FW_remote_sites"
+
+  set group address "internet" "FW_remote_sites" add "FW_Brussels"
+
+  set group address "internet" "FW_remote_sites" add "FW_Charts"
+
+  set group address "internet" "FW_remote_sites" add "FW_Floriana"
+
+  set group address "internet" "FW_remote_sites" add "FW_Prometheus"
+
+  set group address "internet" "FW_remote_sites" add "FW_Prometheus_TMP"
+
+  set group address "internet" "FW_remote_sites" add "FW_Claudia"
+
+  set group address "internet" "FW_remote_sites" add "FW_Rome"
+
+  set group address "internet" "FW_remote_sites" add "FW_Boston"
+
+  set group address "internet" "FW_remote_sites" add "FW_Toronto"
+
+  set group address "internet" "FW_remote_sites" add "FW_Estonia"
+
+  set group address "internet" "FW_remote_sites" add "FW_Hospital"
+
+  set group address "internet" "FW_remote_sites" add "FW_JumpStreet"
+
+  set group address "internet" "GRP_5i"
+
+  set group address "internet" "GRP_5i" add "IP_5i_range1"
+
+  set group address "internet" "GRP_5i" add "IP_5i_range2"
+
+  set group address "internet" "GRP_computime"
+
+  set group address "internet" "GRP_computime" add "IP_computime1"
+
+  set group address "internet" "GRP_computime" add "IP_computime2"
+
+  set group address "internet" "GRP_computime" add "IP_computime3"
+
+  set group address "internet" "GRP_exchange_replication_Nets"
+
+  set group address "internet" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_DR"
+
+  set group address "internet" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_Lon"
+
+  set group address "internet" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_VLT"
+
+  set group address "internet" "GRP_PO-Prometheus"
+
+  set group address "internet" "GRP_PO-Prometheus" add "network_PO-Prometheus1"
+
+  set group address "internet" "GRP_PO-Prometheus" add "network_PO-Prometheus2"
+
+  set group address "internet" "GRP_PO-Hearing"
+
+  set group address "internet" "GRP_PO-Hearing" add "network_PO-Hearing1"
+
+  set group address "internet" "GRP_PO-Hearing" add "network_PO-Hearing2"
+
+  set group address "internet" "GRP_PO-Hearing" add "network_PO-Hearing3"
+
+  set group address "internet" "GRP_linkfails"
+
+  set group address "internet" "GRP_linkfails" add "LinkProof1"
+
+  set group address "internet" "GRP_linkfails" add "LinkProof2"
+
+  set group address "internet" "GRP_srv_mgmt"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_mgmt1"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_mgmt2"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_mgmt3"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_PRTG1"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_TFTP_srever"
+
+  set group address "internet" "GRP_srv_mgmt" add "SRV_nagios1-lv"
+
+  set group address "internet" "GRP_slow_networks"
+
+  set group address "internet" "GRP_slow_networks" add "network_slow1"
+
+  set group address "internet" "GRP_slow_networks" add "network_slow2"
+
+  set group address "internet" "networks_CCTV"
+
+  set group address "internet" "networks_CCTV" add "cctv_Brussels"
+
+  set group address "internet" "networks_CCTV" add "cctv_Floriana"
+
+  set group address "internet" "networks_CCTV" add "cctv_Prometheus"
+
+  set group address "internet" "networks_CCTV" add "cctv_Rome"
+
+  set group address "internet" "networks_CCTV" add "cctv_Boston"
+
+  set group address "internet" "networks_CCTV" add "cctv_Toronto"
+
+  set group address "internet" "networks_CCTV" add "cctv_Estonia"
+
+  set group address "internet" "networks_CCTV" add "cctv_Hospital"
+
+  set group address "internet" "networks_CCTV" add "cctv_Rome"
+
+  set group address "internet" "networks_CCTV" add "cctv_VSstreet"
+
+  set group address "internet" "networks_CCTV" add "Checkpoint_GW1"
+
+  set group address "internet" "networks_CCTV" add "IP_CCTV_station"
+
+  set group address "internet" "networks_CCTV" add "IP_CCTV_station2"
+
+  set group address "internet" "networks_CCTV" add "IP_CCTV_station3"
+
+  set group address "internet" "networks_CCTV" add "GRP_srv_mgmt"
+
+  set group address "internet" "Networks_private"
+
+  set group address "internet" "Networks_private" add "network_Brussels"
+
+  set group address "internet" "Networks_private" add "network_Charts"
+
+  set group address "internet" "Networks_private" add "network_Floriana"
+
+  set group address "internet" "Networks_private" add "network_Prometheus"
+
+  set group address "internet" "Networks_private" add "network_Prometheus_TMP"
+
+  set group address "internet" "Networks_private" add "network_Claudia"
+
+  set group address "internet" "Networks_private" add "network_Rome"
+
+  set group address "internet" "Networks_private" add "network_Boston"
+
+  set group address "internet" "Networks_private" add "network_BostonDR"
+
+  set group address "internet" "Networks_private" add "network_Toronto"
+
+  set group address "internet" "Networks_private" add "network_Estonia"
+
+  set group address "internet" "Networks_private" add "network_Hospital"
+
+  set group address "internet" "Networks_private" add "network_Rome"
+
+  set group address "internet" "Networks_private" add "network_JumpStreet"
+
+  set group address "internet" "Networks_voice"
+
+  set group address "internet" "Networks_voice" add "PABX_brussels"
+
+  set group address "internet" "Networks_voice" add "PABX_Charts"
+
+  set group address "internet" "Networks_voice" add "PABX_Floriana"
+
+  set group address "internet" "Networks_voice" add "PABX_Prometheus"
+
+  set group address "internet" "Networks_voice" add "PABX_Prometheus_TMP"
+
+  set group address "internet" "Networks_voice" add "PABX_Claudia"
+
+  set group address "internet" "Networks_voice" add "PABX_Rome"
+
+  set group address "internet" "Networks_voice" add "PABX_Boston"
+
+  set group address "internet" "Networks_voice" add "PABX_Toronto"
+
+  set group address "internet" "Networks_voice" add "PABX_Estonia"
+
+  set group address "internet" "Networks_voice" add "PABX_SHospital"
+
+  set group address "internet" "Networks_voice" add "PABX_Rome"
+
+  set group address "internet" "Networks_voice" add "PABX_JumpStreet"
+
+  set group address "internet" "Networks_voice" add "SRV_DC1"
+
+  set group address "internet" "Networks_voice" add "SRV_DC2"
+
+  set group address "internet" "Looseweb"
+
+  set group address "internet" "Looseweb" add "Looseweb1"
+
+  set group address "internet" "Looseweb" add "Looseweb2"
+
+  set group address "internet" "Looseweb" add "Looseweb3"
+
+  set group address "rsites" "FW_remote_sites"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Brussels"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Charts"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Floriana"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Prometheus"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Prometheus_TMP"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Claudia"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Rome"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Boston"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Toronto"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Estonia"
+
+  set group address "rsites" "FW_remote_sites" add "FW_Hospital"
+
+  set group address "rsites" "FW_remote_sites" add "FW_JumpStreet"
+
+  set group address "rsites" "GRP_exchange_replication_Nets"
+
+  set group address "rsites" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_DR"
+
+  set group address "rsites" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_Lon"
+
+  set group address "rsites" "GRP_exchange_replication_Nets" add "Net_Exchange_replication_VLT"
+
+  set group address "rsites" "GRP_srv_mgmt"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_mgmt1"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_mgmt2"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_mgmt3"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_PRTG1"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_TFTP_srever"
+
+  set group address "rsites" "GRP_srv_mgmt" add "SRV_nagios1-lv"
+
+  set group address "rsites" "networks_CCTV"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Brussels"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Floriana"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Prometheus"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Rome"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Boston"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Toronto"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Estonia"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Hospital"
+
+  set group address "rsites" "networks_CCTV" add "cctv_Rome"
+
+  set group address "rsites" "networks_CCTV" add "cctv_VSstreet"
+
+  set group address "rsites" "networks_CCTV" add "Checkpoint_GW1"
+
+  set group address "rsites" "networks_CCTV" add "IP_CCTV_station"
+
+  set group address "rsites" "networks_CCTV" add "IP_CCTV_station2"
+
+  set group address "rsites" "networks_CCTV" add "IP_CCTV_station3"
+
+  set group address "rsites" "networks_CCTV" add "GRP_srv_mgmt"
+
+  set group address "rsites" "Networks_private"
+
+  set group address "rsites" "Networks_private" add "network_Brussels"
+
+  set group address "rsites" "Networks_private" add "network_Charts"
+
+  set group address "rsites" "Networks_private" add "network_Floriana"
+
+  set group address "rsites" "Networks_private" add "network_Prometheus"
+
+  set group address "rsites" "Networks_private" add "network_Prometheus_TMP"
+
+  set group address "rsites" "Networks_private" add "network_Claudia"
+
+  set group address "rsites" "Networks_private" add "network_Rome"
+
+  set group address "rsites" "Networks_private" add "network_Boston"
+
+  set group address "rsites" "Networks_private" add "network_BostonDR"
+
+  set group address "rsites" "Networks_private" add "network_Toronto"
+
+  set group address "rsites" "Networks_private" add "network_Estonia"
+
+  set group address "rsites" "Networks_private" add "network_Hospital"
+
+  set group address "rsites" "Networks_private" add "network_Rome"
+
+  set group address "rsites" "Networks_private" add "network_JumpStreet"
+
+  set group address "rsites" "Networks_voice"
+
+  set group address "rsites" "Networks_voice" add "PABX_brussels"
+
+  set group address "rsites" "Networks_voice" add "PABX_Charts"
+
+  set group address "rsites" "Networks_voice" add "PABX_Floriana"
+
+  set group address "rsites" "Networks_voice" add "PABX_Prometheus"
+
+  set group address "rsites" "Networks_voice" add "PABX_Prometheus_TMP"
+
+  set group address "rsites" "Networks_voice" add "PABX_Claudia"
+
+  set group address "rsites" "Networks_voice" add "PABX_Rome"
+
+  set group address "rsites" "Networks_voice" add "PABX_Boston"
+
+  set group address "rsites" "Networks_voice" add "PABX_Toronto"
+
+  set group address "rsites" "Networks_voice" add "PABX_Estonia"
+
+  set group address "rsites" "Networks_voice" add "PABX_SHospital"
+
+  set group address "rsites" "Networks_voice" add "PABX_Rome"
+
+  set group address "rsites" "Networks_voice" add "PABX_JumpStreet"
+
+  set group address "rsites" "Networks_voice" add "SRV_DC1"
+
+  set group address "rsites" "Networks_voice" add "SRV_DC2"
+
+  set group address "dmz_ie" "GRP_PO-Prometheus"
+
+  set group address "dmz_ie" "GRP_PO-Prometheus" add "network_PO-Prometheus1"
+
+  set group address "dmz_ie" "GRP_PO-Prometheus" add "network_PO-Prometheus2"
+
+  set group address "dmz_ie" "GRP_PO-Hearing"
+
+  set group address "dmz_ie" "GRP_PO-Hearing" add "network_PO-Hearing1"
+
+  set group address "dmz_ie" "GRP_PO-Hearing" add "network_PO-Hearing2"
+
+  set group address "dmz_ie" "GRP_PO-Hearing" add "network_PO-Hearing3"
+
+  set group service "ICMP-ALL"
+
+  set group service "ICMP-ALL" add "ICMP-INFO"
+
+  set ippool "Vpn_client_pool" 192.168.3.10 192.168.3.100
+
+  set user "Robert" uid 9
+
+  set user "Robert" type xauth
+
+  set user "Robert" remote ippool "Vpn_client_pool"
+
+  set user "Robert" remote dns1 "192.168.123.10"
+
+  set user "Robert" remote dns2 "192.168.123.11"
+
+  set user "Robert" password **** 
+
+  unset user "Robert" type auth
+
+  set user "Robert" "enable"
+
+  set user "Sandy" uid 8
+
+  set user "Sandy" type xauth
+
+  set user "Sandy" remote ippool "Vpn_client_pool"
+
+  set user "Sandy" remote dns1 "192.168.123.10"
+
+  set user "Sandy" remote dns2 "192.168.123.11"
+
+  set user "Sandy" password **** 
+
+  unset user "Sandy" type auth
+
+  set user "Sandy" "enable"
+
+  set user "Laura" uid 7
+
+  set user "Laura" type xauth
+
+  set user "Laura" remote ippool "Vpn_client_pool"
+
+  set user "Laura" remote dns1 "192.168.123.10"
+
+  set user "Laura" remote dns2 "192.168.123.11"
+
+  set user "Laura" password **** 
+
+  unset user "Laura" type auth
+
+  set user "Laura" "enable"
+
+  set user "VPN_phase1" uid 6
+
+  set user "VPN_phase1" ike-id fqdn "client.Example.com" share-limit 2
+
+  set user "VPN_phase1" type ike
+
+  set user "VPN_phase1" "enable"
+
+  set user "Guru" uid 13
+
+  set user "Guru" type xauth
+
+  set user "Guru" remote ippool "Vpn_client_pool"
+
+  set user "Guru" remote dns1 "192.168.123.10"
+
+  set user "Guru" remote dns2 "192.168.123.11"
+
+  set user "Guru" password **** 
+
+  unset user "Guru" type auth
+
+  set user "Guru" "enable"
+
+  set user "Henry" uid 12
+
+  set user "Henry" type xauth
+
+  set user "Henry" remote ippool "Vpn_client_pool"
+
+  set user "Henry" remote dns1 "192.168.123.10"
+
+  set user "Henry" remote dns2 "192.168.123.11"
+
+  set user "Henry" password **** 
+
+  unset user "Henry" type auth
+
+  set user "Henry" "enable"
+
+  set user "Kenneth" uid 15
+
+  set user "Kenneth" type xauth
+
+  set user "Kenneth" remote ippool "Vpn_client_pool"
+
+  set user "Kenneth" remote dns1 "192.168.123.10"
+
+  set user "Kenneth" remote dns2 "192.168.123.11"
+
+  set user "Kenneth" password **** 
+
+  unset user "Kenneth" type auth
+
+  set user "Kenneth" "enable"
+
+  set user "Dick" uid 18
+
+  set user "Dick" type xauth
+
+  set user "Dick" remote ippool "Vpn_client_pool"
+
+  set user "Dick" remote dns1 "192.168.123.10"
+
+  set user "Dick" remote dns2 "192.168.123.11"
+
+  set user "Dick" password **** 
+
+  unset user "Dick" type auth
+
+  set user "Dick" "enable"
+
+  set user-group "VPN_client_group" id 3
+
+  set user-group "VPN_client_group" user "VPN_phase1"
+
+  set crypto-policy
+
+  exit
+
+  set ike p1-proposal "P1-W_source" preshare group5 esp aes256 sha-1 second 3600
+
+  set ike p1-proposal "P1-IE" preshare group5 esp aes256 sha-1 second 86400
+
+  set ike p2-proposal "P2-W_source" no-pfs esp aes256 sha-1 second 3600
+
+  set ike p2-proposal "P2-IE" no-pfs esp aes256 sha-1 second 3600
+
+  set ike gateway "vpn-65@Utopia - Utopia mesh" address 172.31.255.8 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-51@Utopia - Utopia mesh" address 172.31.255.9 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-67@Utopia - Utopia mesh" address 172.31.255.3 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-69@Utopia - Utopia mesh" address 172.31.255.5 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-71@Utopia - Utopia mesh" address 172.31.255.7 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-73@Utopia - Utopia mesh" address 172.31.255.4 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-75@Utopia - Utopia mesh" address 172.31.255.6 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "VPN_client_GW" dialup "VPN_client_group" Aggr local-id "fw.Example.com" outgoing-interface "ethernet0/0" preshare **** sec-level standard
+
+  set ike gateway "VPN_client_GW" dpd-liveness interval 30
+
+  unset ike gateway "VPN_client_GW" nat-traversal udp-checksum
+
+  set ike gateway "VPN_client_GW" nat-traversal keepalive-frequency 20
+
+  set ike gateway "VPN_client_GW" xauth server "Local"
+
+  unset ike gateway "VPN_client_GW" xauth do-edipi-auth
+
+  set ike gateway "W_source" address 217.26.32.51 Main local-id "134.85.102.107" outgoing-interface "ethernet0/0" preshare **** proposal "P1-W_source" 
+
+  set ike gateway "W_source" nat-traversal
+
+  unset ike gateway "W_source" nat-traversal udp-checksum
+
+  set ike gateway "W_source" nat-traversal keepalive-frequency 5
+
+  set ike gateway "ZPR" address 195.35.125.242 id "195.35.125.242" Main local-id "134.85.102.107" outgoing-interface "ethernet0/0" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "We-Call" address 94.107.226.212 id "94.107.226.212" Main local-id "134.85.102.107" outgoing-interface "ethernet0/0" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "PO-devel" address 194.200.242.250 id "194.200.242.250" Main local-id "134.85.102.107" outgoing-interface "ethernet0/0" preshare **** proposal "P1-IE" 
+
+  set ike gateway "PO-devel" nat-traversal
+
+  unset ike gateway "PO-devel" nat-traversal udp-checksum
+
+  set ike gateway "PO-devel" nat-traversal keepalive-frequency 5
+
+  set ike gateway "CSL" address 91.220.139.19 id "91.220.139.19" Main local-id "134.85.102.107" outgoing-interface "ethernet0/0" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-12@Utopia - Domestic Mesh" address 132.167.168.146 Main outgoing-interface "ethernet1/3.2" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-49@Utopia - Domestic Mesh" address 90.152.74.190 Main outgoing-interface "ethernet1/3.2" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-43@Utopia - Domestic Mesh" address 0.0.0.0 id "SSG_Claudia.global" Aggr outgoing-interface "ethernet1/3.2" preshare **** proposal "pre-g2-aes128-sha" 
+
+  unset ike gateway "vpn-43@Utopia - Domestic Mesh" nat-traversal
+
+  set ike gateway "vpn-47@Utopia - Hospital" address 134.85.102.58 Main outgoing-interface "ethernet1/3.2" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-77@Utopia - Utopia mesh" address 172.31.255.11 Main outgoing-interface "ethernet1/2.9" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike gateway "vpn-81@Prometheus TEMP" address 195.217.35.196 Main outgoing-interface "ethernet1/3.2" preshare **** proposal "pre-g2-aes128-sha" 
+
+  set ike respond-bad-spi 1
+
+  set ike soft-lifetime-buffer 10
+
+  set ike ikev2 ike-sa-soft-lifetime 60
+
+  unset ike ikeid-enumeration
+
+  unset ike dos-protection
+
+  unset ipsec access-session enable
+
+  set ipsec access-session maximum 5000
+
+  set ipsec access-session upper-threshold 0
+
+  set ipsec access-session lower-threshold 0
+
+  set ipsec access-session dead-p2-sa-timeout 0
+
+  unset ipsec access-session log-error
+
+  unset ipsec access-session info-exch-connected
+
+  unset ipsec access-session use-error-log
+
+  set xauth default ippool "Vpn_client_pool"
+
+  set vpn "vpn-65@Utopia - Utopia mesh" gateway "vpn-65@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-65@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-65@Utopia - Utopia mesh" id 0x6b bind interface tunnel.8
+
+  set vpn "vpn-51@Utopia - Utopia mesh" gateway "vpn-51@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-51@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-51@Utopia - Utopia mesh" id 0x6c bind interface tunnel.6
+
+  set vpn "vpn-67@Utopia - Utopia mesh" gateway "vpn-67@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-67@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-67@Utopia - Utopia mesh" id 0x6e bind interface tunnel.9
+
+  set vpn "vpn-69@Utopia - Utopia mesh" gateway "vpn-69@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-69@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-69@Utopia - Utopia mesh" id 0x6f bind interface tunnel.10
+
+  set vpn "vpn-71@Utopia - Utopia mesh" gateway "vpn-71@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-71@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-71@Utopia - Utopia mesh" id 0x70 bind interface tunnel.11
+
+  set vpn "vpn-73@Utopia - Utopia mesh" gateway "vpn-73@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-73@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-73@Utopia - Utopia mesh" id 0x71 bind interface tunnel.15
+
+  set vpn "vpn-75@Utopia - Utopia mesh" gateway "vpn-75@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-75@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-75@Utopia - Utopia mesh" id 0x72 bind interface tunnel.16
+
+  set vpn "vpnclient_tunnel" gateway "VPN_client_GW" replay tunnel idletime 0 sec-level standard
+
+  set vpn "vpnclient_tunnel" id 0x78 bind interface tunnel.7
+
+  set vpn "vpn-W_source" gateway "W_source" replay tunnel idletime 0 proposal "P2-W_source" 
+
+  set vpn "vpn-W_source" id 0x79 bind interface tunnel.1
+
+  set vpn "VPN-ZPR" gateway "ZPR" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "VPN-ZPR" id 0x7e bind interface tunnel.18
+
+  set vpn "VPN-Call_IT" gateway "We-Call" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "VPN-Call_IT" id 0x85 bind interface tunnel.19
+
+  set vpn "VPN-IE_devel" gateway "PO-devel" replay tunnel idletime 0 proposal "P2-IE" 
+
+  set vpn "VPN-IE_devel" id 0x86 bind interface tunnel.12
+
+  set vpn "VPN-CSL" gateway "CSL" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "VPN-CSL" id 0x87 bind interface tunnel.17
+
+  set vpn "vpn-12@Utopia - Domestic Mesh" gateway "vpn-12@Utopia - Domestic Mesh" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "vpn-12@Utopia - Domestic Mesh" monitor optimized rekey
+
+  set vpn "vpn-12@Utopia - Domestic Mesh" id 0x91 bind interface tunnel.2
+
+  set vpn "vpn-49@Utopia - Domestic Mesh" gateway "vpn-49@Utopia - Domestic Mesh" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "vpn-49@Utopia - Domestic Mesh" monitor optimized rekey
+
+  set vpn "vpn-49@Utopia - Domestic Mesh" id 0x92 bind interface tunnel.3
+
+  set vpn "vpn-43@Utopia - Domestic Mesh" gateway "vpn-43@Utopia - Domestic Mesh" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "vpn-43@Utopia - Domestic Mesh" monitor optimized rekey
+
+  set vpn "vpn-43@Utopia - Domestic Mesh" id 0x93 bind interface tunnel.4
+
+  set vpn "vpn-47@Utopia - Hospital" gateway "vpn-47@Utopia - Hospital" no-replay tunnel idletime 0 proposal "g2-esp-aes128-sha" 
+
+  set vpn "vpn-47@Utopia - Hospital" monitor optimized rekey
+
+  set vpn "vpn-47@Utopia - Hospital" id 0x94 bind interface tunnel.5
+
+  set vpn "vpn-77@Utopia - Utopia mesh" gateway "vpn-77@Utopia - Utopia mesh" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-77@Utopia - Utopia mesh" monitor optimized rekey
+
+  set vpn "vpn-77@Utopia - Utopia mesh" id 0x95 bind interface tunnel.20
+
+  set vpn "vpn-81@Prometheus TEMP" gateway "vpn-81@Prometheus TEMP" no-replay tunnel idletime 0 proposal "nopfs-esp-aes128-sha" 
+
+  set vpn "vpn-81@Prometheus TEMP" monitor optimized rekey
+
+  set vpn "vpn-81@Prometheus TEMP" id 0x96 bind interface tunnel.21
+
+  set vrouter "untrust-vr"
+
+  exit
+
+  set vrouter "trust-vr"
+
+  exit
+
+  set vrouter "rsites-VR"
+
+  exit
+
+  set url protocol spamsense
+
+  exit
+
+  set vpn "vpn-65@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.8/32 "ANY" 
+
+  set vpn "vpn-51@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.9/32 "ANY" 
+
+  set vpn "vpn-67@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.3/32 "ANY" 
+
+  set vpn "vpn-69@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.5/32 "ANY" 
+
+  set vpn "vpn-71@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.7/32 "ANY" 
+
+  set vpn "vpn-73@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.4/32 "ANY" 
+
+  set vpn "vpn-75@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.6/32 "ANY" 
+
+  set vpn "vpn-W_source" proxy-id local-ip 192.168.121.0/24 remote-ip 192.168.170.0/24 "ANY" 
+
+  set vpn "VPN-ZPR" proxy-id local-ip 192.168.131.0/24 remote-ip 172.27.0.0/21 "ANY" 
+
+  set vpn "VPN-Call_IT" proxy-id local-ip 192.168.123.0/24 remote-ip 192.168.191.0/24 "ANY" 
+
+  set vpn "VPN-IE_devel" proxy-id local-ip 192.168.131.0/24 remote-ip 192.168.171.1/32 "ANY" 
+
+  set vpn "VPN-CSL" proxy-id local-ip 192.168.131.0/24 remote-ip 192.168.130.0/24 "ANY" 
+
+  set vpn "vpn-12@Utopia - Domestic Mesh" proxy-id local-ip 134.85.102.112/32 remote-ip 132.167.168.146/32 "ANY" 
+
+  set vpn "vpn-49@Utopia - Domestic Mesh" proxy-id local-ip 134.85.102.112/32 remote-ip 90.152.74.190/32 "ANY" 
+
+  set vpn "vpn-43@Utopia - Domestic Mesh" proxy-id local-ip 134.85.102.112/32 remote-ip 0.0.0.0/32 "ANY" 
+
+  set vpn "vpn-47@Utopia - Hospital" proxy-id local-ip 134.85.102.112/32 remote-ip 134.85.102.58/32 "ANY" 
+
+  set vpn "vpn-77@Utopia - Utopia mesh" proxy-id local-ip 172.31.255.1/32 remote-ip 172.31.255.11/32 "ANY" 
+
+  set vpn "vpn-81@Prometheus TEMP" proxy-id local-ip 134.85.102.112/32 remote-ip 195.217.35.196/32 "ANY" 
+
+  set policy id 54 from "internet" to "Trust"  "Network_CSL" "Net_speculation" "HTTP" permit 
+
+  set policy id 54
+
+  set service "HTTPS"
+
+  set service "ICMP-ANY"
+
+  set service "SSH"
+
+  set service "TCP_10134.
+
+  set service "TCP_2044"
+
+  set service "TCP_20134.
+
+  set service "TCP_427"
+
+  set service "TCP_49153"
+
+  set service "TCP_50134.
+
+  set service "TCP_5901"
+
+  set service "TCP_5988"
+
+  set service "TCP_5989"
+
+  set service "TCP_60134.
+
+  set service "TCP_6090"
+
+  set service "TCP_6988"
+
+  set service "TCP_70134.
+
+  set service "TCP_134.0"
+
+  set service "TCP_81"
+
+  set service "TCP_9510"
+
+  set service "TCP_9511-9513"
+
+  set log session-init
+
+  exit
+
+  set policy id 98 name "allow_example" from "Trust" to "internet"  "Net_vl200_clients" "api1.example.net" "TCP_example" nat src permit 
+
+  set policy id 98
+
+  set dst-address "api2.example.net"
+
+  set dst-address "Net_example4"
+
+  set dst-address "Net_example5"
+
+  set dst-address "Net_example6"
+
+  set dst-address "Net_example1"
+
+  set dst-address "Net_example2"
+
+  set dst-address "Net_example3"
+
+  set dst-address "pdir.example.net"
+
+  set dst-address "sdir.example.net"
+
+  set service "UDP_example"
+
+  exit
+
+  set policy id 63 from "internet" to "Trust"  "Network_CSL" "Net_speculation" "SNMP" permit 
+
+  set policy id 63
+
+  set service "UDP_14252-14277"
+
+  set service "UDP_427"
+
+  set service "UDP_623-624"
+
+  set log session-init
+
+  exit
+
+  set policy id 55 from "internet" to "Trust"  "Network_CSL" "Any" "ANY" deny 
+
+  set policy id 55
+
+  set log session-init
+
+  exit
+
+  set policy id 113 name "allow_We-Call" from "internet" to "Trust"  "Network_CallIT" "SRV_BR_licensing" "HTTP" permit 
+
+  set policy id 113
+
+  set service "HTTPS"
+
+  set service "ICMP-ANY"
+
+  set log session-init
+
+  exit
+
+  set policy id 22 from "internet" to "Trust"  "Checkpoint_GW1" "SRV_DC2" "DNS" permit 
+
+  set policy id 22
+
+  set src-address "Checkpoint_GW2"
+
+  set dst-address "SRV_DNS"
+
+  set log session-init
+
+  exit
+
+  set policy id 139 from "internet" to "Trust"  "SRV_CP_mgmt" "SRV_TFTP_srever" "FTP" permit 
+
+  set policy id 139
+
+  set src-address "SRV_CP_mgmt2"
+
+  set service "fTP-data"
+
+  set log session-init
+
+  exit
+
+  set policy id 166 name "allow_ISA" from "DMZ" to "internet"  "SRV_isa" "Any" "DNS" permit 
+
+  set policy id 166
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  exit
+
+  set policy id 4 name "allow_MGMT" from "Trust" to "DMZ"  "Net_vl200_clients" "SRV_citrix2" "remote_desktop" permit 
+
+  set policy id 4
+
+  set dst-address "SRV_isa"
+
+  set dst-address "SRV_MSForeFront"
+
+  exit
+
+  set policy id 6 name "allow_ISA_to_exch" from "DMZ" to "Trust"  "SRV_isa" "SRV_exch_apu" "HTTPS" permit 
+
+  set policy id 6
+
+  set service "remote_desktop"
+
+  exit
+
+  set policy id 7 name "allow_exch-o_ISA" from "Trust" to "DMZ"  "SRV_exch_apu" "SRV_isa" "HTTPS" permit 
+
+  set policy id 7
+
+  exit
+
+  set policy id 146 name "allow_vpn_users_traffic" from "internet" to "Trust"  "Network_vpn_users" "network_Rome" "ANY" permit 
+
+  set policy id 146
+
+  set log session-init
+
+  exit
+
+  set policy id 147 name "allow_voice" from "internet" to "Trust"  "Networks_voice" "PABX_Rome" "ANY" permit log traffic gbw 1024 mbw 2048
+
+  set policy id 147
+
+  set log session-init
+
+  exit
+
+  set policy id 148 name "voice_access_to_backup" from "internet" to "Trust"  "Networks_voice" "GRP_Backups" "ANY" permit 
+
+  set policy id 148
+
+  set log session-init
+
+  exit
+
+  set policy id 149 name "voice_access_to_backup2" from "private" to "Trust"  "Networks_voice" "GRP_Backups" "ANY" permit 
+
+  set policy id 149
+
+  set log session-init
+
+  exit
+
+  set policy id 150 name "allow_5i" from "internet" to "Trust"  "GRP_5i" "SRV_Zeacom" "remote_desktop" permit 
+
+  set policy id 150
+
+  set log session-init
+
+  exit
+
+  set policy id 151 name "allow_CT_mgmt" from "internet" to "Trust"  "IP_AGonzi" "SRV_mgmt3" "remote_desktop" permit 
+
+  set policy id 151
+
+  set src-address "IP_JJones"
+
+  set log session-init
+
+  exit
+
+  set policy id 110 name "allow_CT_mgmt" from "internet" to "Trust"  "GRP_computime" "SRV_mgmt3" "remote_desktop" permit 
+
+  set policy id 110 disable
+
+  set policy id 110
+
+  set log session-init
+
+  exit
+
+  set policy id 152 name "allow_sFTP_access" from "internet" to "Trust"  "IP_sFTP_clients1" "SRV_sFTP" "SSH" permit log 
+
+  set policy id 152
+
+  set src-address "IP_sFTP_clients2"
+
+  set log session-init
+
+  exit
+
+  set policy id 153 name "allow_NSM_communication" from "internet" to "Trust"  "FW_remote_sites" "SRV_NSM" "ANY" permit log 
+
+  set policy id 153
+
+  exit
+
+  set policy id 114 name "allow_NSM_communication" from "private" to "Global"  "Any" "SRV_NSM_priv" "ANY" permit 
+
+  set policy id 114
+
+  set log session-init
+
+  exit
+
+  set policy id 177 name "allow_smtp" from "internet" to "DMZ"  "Any" "SRV_email" "SMTP" permit 
+
+  set policy id 177
+
+  set log session-init
+
+  exit
+
+  set policy id 185 name "allow_citrix_login" from "internet" to "DMZ"  "Any" "SRV_citrix_webpage" "HTTP" permit 
+
+  set policy id 185
+
+  set service "HTTPS"
+
+  set log session-init
+
+  exit
+
+  set policy id 178 name "allow_CT_mgmt" from "internet" to "DMZ"  "GRP_computime" "SRV_citrix2" "remote_desktop" permit 
+
+  set policy id 178 disable
+
+  set policy id 178
+
+  set dst-address "SRV_email"
+
+  set dst-address "SRV_isa"
+
+  exit
+
+  set policy id 64 name "AV_update" from "DMZ" to "Trust"  "SRV_citrix_webpage" "SRV_officescan" "TCP_4343" permit 
+
+  set policy id 64
+
+  set src-address "SRV_email"
+
+  exit
+
+  set policy id 12 name "allow_smtp" from "DMZ" to "Trust"  "SRV_email" "SRV_exch_apu" "SMTP" permit 
+
+  set policy id 12
+
+  set dst-address "SRV_exch_mexch1-lv"
+
+  exit
+
+  set policy id 13 name "allow_outgoing_SMTP" from "Trust" to "DMZ"  "SRV_exch_apu" "SRV_email" "SMTP" permit 
+
+  set policy id 13
+
+  set src-address "SRV_exch_mexch1-lv"
+
+  exit
+
+  set policy id 65 name "allow_av" from "Trust" to "DMZ"  "SRV_officescan" "SRV_citrix2" "ANY" permit 
+
+  set policy id 65
+
+  set dst-address "SRV_email"
+
+  exit
+
+  set policy id 167 name "allow_outgoing" from "DMZ" to "internet"  "SRV_email" "Any" "DNS" permit log 
+
+  set policy id 167
+
+  set service "SMTP"
+
+  set log session-init
+
+  exit
+
+  set policy id 186 name "allow_outgoing" from "DMZ" to "internet"  "SRV_citrix_webpage" "Any" "DNS" permit log 
+
+  set policy id 186
+
+  set log session-init
+
+  exit
+
+  set policy id 168 name "allow_browsing" from "DMZ" to "internet"  "SRV_citrix_webpage" "Any" "FTP" permit 
+
+  set policy id 168
+
+  set src-address "SRV_email"
+
+  set service "fTP-data"
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  exit
+
+  set policy id 16 name "allow_ldap_query" from "DMZ" to "Trust"  "SRV_citrix_webpage" "SRV_DC1" "LDAP" permit 
+
+  set policy id 16
+
+  set src-address "SRV_email"
+
+  set dst-address "SRV_DC2"
+
+  exit
+
+  set policy id 78 name "allow_voice" from "Trust" to "rsites"  "PABX_Rome" "Networks_private" "ANY" permit log traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 78
+
+  set log session-init
+
+  exit
+
+  set policy id 123 name "allow_voice" from "Trust" to "private"  "PABX_Rome" "Networks_private" "ANY" permit log traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 123
+
+  set log session-init
+
+  exit
+
+  set policy id 102 from "Trust" to "internet"  "Net_vl200_clients" "Networks_voice" "ANY" permit traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 102
+
+  set log session-init
+
+  exit
+
+  set policy id 100 from "Trust" to "internet"  "PABX_Rome" "Network_vpn_users" "ANY" permit traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 100
+
+  set dst-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 125 from "Trust" to "internet"  "PABX_Rome" "Any" "ANY" permit log 
+
+  set policy id 125
+
+  set log session-init
+
+  exit
+
+  set policy id 79 name "allow_softphones_talk_voip" from "Trust" to "rsites"  "Net_vl200_clients" "Networks_voice" "ANY" permit traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 79
+
+  exit
+
+  set policy id 126 name "allow_softphones_talk_voip" from "Trust" to "private"  "Net_vl200_clients" "Networks_voice" "ANY" permit traffic gbw 1024 priority 0 mbw 2048
+
+  set policy id 126
+
+  exit
+
+  set policy id 70 from "Trust" to "private"  "Any" "Networks_voice" "HTTP" permit 
+
+  set policy id 70
+
+  exit
+
+  set policy id 127 name "allow_SNMP_mgmt" from "Trust" to "internet"  "SRV_mgmt1" "LinkProof1" "SNMP" permit 
+
+  set policy id 127
+
+  set dst-address "LinkProof2"
+
+  set service "SSH"
+
+  set log session-init
+
+  exit
+
+  set policy id 188 from "Trust" to "internet"  "IT-PC-12" "Checkpoint_GW1" "SSH" permit 
+
+  set policy id 188
+
+  set src-address "GRP_srv_mgmt"
+
+  set dst-address "Checkpoint_GW2"
+
+  set dst-address "Checkpoint_mgmt"
+
+  set log session-init
+
+  exit
+
+  set policy id 189 from "Trust" to "internet"  "IT-PC-12" "Checkpoint_mgmt" "TCP_18190" permit 
+
+  set policy id 189
+
+  set src-address "GRP_srv_mgmt"
+
+  set log session-init
+
+  exit
+
+  set policy id 119 name "NAT_to_FW_private_if" from "Trust" to "private"  "GRP_srv_mgmt" "Net_priv_voda" "ANY" nat src permit 
+
+  set policy id 119
+
+  set log session-init
+
+  exit
+
+  set policy id 128 name "allow_any_mgmt" from "Trust" to "internet"  "Net_VLT_mgmt" "Any" "ANY" permit log 
+
+  set policy id 128
+
+  set src-address "SRV_NSM"
+
+  set src-address "GRP_srv_mgmt"
+
+  exit
+
+  set policy id 130 name "allow_any_mgmt" from "Trust" to "private"  "Net_VLT_mgmt" "Any" "ANY" permit log 
+
+  set policy id 130
+
+  set src-address "SRV_NSM"
+
+  set src-address "GRP_srv_mgmt"
+
+  exit
+
+  set policy id 18 name "allow_Citrix" from "DMZ" to "Trust"  "SRV_citrix_webpage" "SRV_exch_mexch1-lv" "HTTP" permit 
+
+  set policy id 18
+
+  set dst-address "SRV_Lisa"
+
+  set service "HTTPS"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  exit
+
+  set policy id 19 name "allow_Citrix" from "DMZ" to "Trust"  "SRV_citrix_webpage" "Net_XenDesktops" "TCP_1494" permit 
+
+  set policy id 19
+
+  set service "TCP_2598"
+
+  exit
+
+  set policy id 40 name "allow_citrix" from "DMZ" to "Trust"  "SRV_citrix_webpage" "SRV_Edna" "HTTP" permit 
+
+  set policy id 40
+
+  set dst-address "SRV_moe"
+
+  set dst-address "SRV_xendesktop"
+
+  set dst-address "SRV_xendesktop2"
+
+  exit
+
+  set policy id 41 name "allow_citrix" from "DMZ" to "Trust"  "SRV_citrix_webpage" "SRV_IdentiKey" "TCP_20003" permit 
+
+  set policy id 41
+
+  exit
+
+  set policy id 20 name "allow_citrix" from "Trust" to "DMZ"  "Any" "SRV_citrix2" "HTTP" permit 
+
+  set policy id 20
+
+  set dst-address "SRV_email"
+
+  set service "remote_desktop"
+
+  exit
+
+  set policy id 131 name "allow_backBerry" from "Trust" to "internet"  "SRV_blackBerry" "Any" "TCP_3101" permit 
+
+  set policy id 131
+
+  set log session-init
+
+  exit
+
+  set policy id 47 name "allow_BOSS" from "Trust" to "Untrust"  "Net_XenDesktops" "BOSS_1" "TCP_7116" permit 
+
+  set policy id 47 disable
+
+  set policy id 47
+
+  set dst-address "BOSS_2"
+
+  exit
+
+  set policy id 46 name "allow_BOSS" from "Trust" to "Untrust"  "Net_XenDesktops" "prvs" "HTTP" permit 
+
+  set policy id 46 disable
+
+  set policy id 46
+
+  set service "TCP_8998"
+
+  set service "TELNET"
+
+  exit
+
+  set policy id 27 name "allow_citrix" from "Untrust" to "Trust"  "mbmlgndomprd02" "GRP_infoprint" "TCP_515" permit 
+
+  set policy id 27 disable
+
+  set policy id 27
+
+  set src-address "prvs"
+
+  set src-address "vgspreappprd02"
+
+  set src-address "GRP_citrix_farm"
+
+  set service "TCP_9100"
+
+  exit
+
+  set policy id 37 name "Biveroni Print" from "Untrust" to "Trust"  "bbp_printserver_dr" "pmb050" "TCP_515" permit 
+
+  set policy id 37 disable
+
+  set policy id 37
+
+  set src-address "bbp_printserver_prd1"
+
+  set src-address "bbp_printserver_prd2"
+
+  set src-address "bbp_printserver_tst"
+
+  exit
+
+  set policy id 38 name "allow_FTP" from "Untrust" to "Trust"  "mbmlgnexcprd005" "SRV_ftp_ext" "ANY" permit 
+
+  set policy id 38 disable
+
+  set policy id 38
+
+  set src-address "Net_BSource"
+
+  set src-address "prvs"
+
+  exit
+
+  set policy id 28 name "allow_citrix" from "Trust" to "Untrust"  "Net_XenDesktops" "GRP_citrix_farm" "HTTP" permit 
+
+  set policy id 28 disable
+
+  set policy id 28
+
+  set service "ICMP-ANY"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  exit
+
+  set policy id 31 name "allow_citrix" from "Trust" to "Untrust"  "Net_XenDesktops" "mbmlgnwebprd016" "HTTPS" permit 
+
+  set policy id 31 disable
+
+  set policy id 31
+
+  exit
+
+  set policy id 2 name "allow_Looseweb_access" from "Trust" to "internet"  "itchy" "Looseweb" "HTTPS" permit 
+
+  set policy id 2
+
+  set src-address "scratchy"
+
+  set service "Looseweb"
+
+  set log session-init
+
+  exit
+
+  set policy id 137 name "allow_access_to_Prometheus" from "Trust" to "private"  "NET_Rome_servers" "IP_floriana_prt1" "SNMP" permit 
+
+  set policy id 137
+
+  set src-address "Net_vl200_clients"
+
+  set src-address "Net_XenDesktops"
+
+  set service "TCP_515"
+
+  set service "TCP_9100"
+
+  set log session-init
+
+  exit
+
+  set policy id 62 from "Trust" to "private"  "Net_XenDesktops" "SRV_Snowball" "ANY" permit 
+
+  set policy id 62
+
+  set log session-init
+
+  exit
+
+  set policy id 134.name "allow_servers_to_internal" from "Trust" to "rsites"  "NET_Rome_servers" "Networks_private" "ANY" permit log 
+
+  set policy id 80
+
+  set src-address "Net_vl200_clients"
+
+  set src-address "GRP_srv_mgmt"
+
+  set log session-init
+
+  exit
+
+  set policy id 138 name "allow_servers_to_internal" from "Trust" to "private"  "NET_Rome_servers" "FW_remote_sites" "ANY" permit log 
+
+  set policy id 138
+
+  set src-address "Net_vl200_clients"
+
+  set dst-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 66 from "Trust" to "internet"  "Net_speculation" "Network_CSL" "FTP" permit 
+
+  set policy id 66
+
+  set service "fTP-data"
+
+  set service "ICMP-ANY"
+
+  set service "TCP_14252-14277"
+
+  set service "TCP_20000"
+
+  set service "TCP_2033"
+
+  set service "TCP_2044"
+
+  set service "TCP_4000-4024"
+
+  set service "TCP_4066"
+
+  set service "TCP_427"
+
+  set service "TCP_5901"
+
+  set service "TCP_5988"
+
+  set service "TCP_5989"
+
+  set service "TCP_6988"
+
+  set service "TCP_6989"
+
+  set service "TCP_8421-8422"
+
+  set service "TCP_9250"
+
+  set service "TCP_9510"
+
+  set service "TCP_9511-9513"
+
+  set log session-init
+
+  exit
+
+  set policy id 67 from "Trust" to "internet"  "Net_speculation" "Network_CSL" "snmptrap-udp" permit 
+
+  set policy id 67
+
+  set service "TFTP"
+
+  set service "UDP_13991"
+
+  set service "UDP_14251"
+
+  set service "UDP_14252-14277"
+
+  set service "UDP_427"
+
+  set log session-init
+
+  exit
+
+  set policy id 68 from "Trust" to "internet"  "Net_speculation" "Network_CSL" "ANY" deny 
+
+  set policy id 68
+
+  set log session-init
+
+  exit
+
+  set policy id 71 name "allow_ftp_to_speculation_srv" from "Trust" to "internet"  "SRV_speculation40" "bfmrr.example.com" "FTP" permit 
+
+  set policy id 71
+
+  set service "fTP-data"
+
+  set log session-init
+
+  exit
+
+  set policy id 81 from "Trust" to "rsites"  "Net_speculation" "Networks_private" "ANY" permit 
+
+  set policy id 81
+
+  set log session-init
+
+  exit
+
+  set policy id 77 from "Trust" to "internet"  "Net_speculation" "GRP_PO-Hearing" "HTTP" permit 
+
+  set policy id 77 disable
+
+  set policy id 77
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set log session-init
+
+  exit
+
+  set policy id 75 from "Trust" to "internet"  "Networks_private" "GRP_PO-Hearing" "HTTP" nat src permit 
+
+  set policy id 75 disable
+
+  set policy id 75
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set log session-init
+
+  exit
+
+  set policy id 76 from "private" to "internet"  "Networks_private" "GRP_PO-Hearing" "HTTP" nat src permit 
+
+  set policy id 76
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set log session-init
+
+  exit
+
+  set policy id 179 from "Trust" to "internet"  "Net_vl200_clients" "network_PO-devel" "HTTP" permit 
+
+  set policy id 179
+
+  set src-address "Net_XenDesktops"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "SSH"
+
+  set log session-init
+
+  exit
+
+  set policy id 58 from "Trust" to "internet"  "Net_vl200_clients" "GRP_PO-Prometheus" "HTTP" permit 
+
+  set policy id 58 disable
+
+  set policy id 58
+
+  set src-address "Net_XenDesktops"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "SSH"
+
+  set log session-init
+
+  exit
+
+  set policy id 140 from "Trust" to "private"  "Net_speculation" "Networks_private" "ANY" permit 
+
+  set policy id 140
+
+  set log session-init
+
+  exit
+
+  set policy id 142 from "Trust" to "internet"  "Net_speculation" "Networks_private" "ANY" permit 
+
+  set policy id 142
+
+  set log session-init
+
+  exit
+
+  set policy id 141 name "speculation_to_IE" from "Trust" to "internet"  "Net_speculation" "network_PO-devel" "ICMP-PING" permit 
+
+  set policy id 141 disable
+
+  set policy id 141
+
+  set dst-address "GRP_PO-Prometheus"
+
+  set dst-address "GRP_PO-Hearing"
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 1136.name "private networks_to_IE" from "Trust" to "dmz_ie"  "Networks_private" "GRP_PO-Prometheus" "HTTP" permit 
+
+  set policy id 182
+
+  set dst-address "GRP_PO-Hearing"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 175 name "speculation_to_IE" from "Trust" to "internet"  "Net_speculation" "network_PO-devel" "ICMP-PING" permit 
+
+  set policy id 175
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 144 name "allow_ssh_infosec" from "Trust" to "internet"  "IT-PC-12" "infosec.lv" "SSH" permit 
+
+  set policy id 144
+
+  set src-address "Vulnerability Scanner"
+
+  set log session-init
+
+  exit
+
+  set policy id 59 from "Trust" to "internet"  "Net_vl200_clients" "Prometheus_WAN_monitoring" "TCP_8890" permit 
+
+  set policy id 59
+
+  set log session-init
+
+  exit
+
+  set policy id 95 from "Trust" to "internet"  "NET_Rome_servers" "Any" "DNS" permit 
+
+  set policy id 95
+
+  set service "ICMP-ANY"
+
+  set log session-init
+
+  exit
+
+  set policy id 104 from "Trust" to "internet"  "NET_Rome_servers" "FW_remote_sites" "ANY" permit 
+
+  set policy id 104
+
+  set src-address "Net_vl200_clients"
+
+  set dst-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 30 name "allow_bsource" from "Untrust" to "Trust"  "Net_BSource" "Net_XenDesktops" "ANY" permit 
+
+  set policy id 30 disable
+
+  set policy id 30
+
+  exit
+
+  set policy id 33 name "clean-up_rule" from "DMZ" to "Trust"  "Any" "Any" "ANY" deny 
+
+  set policy id 33
+
+  exit
+
+  set policy id 105 from "Trust" to "internet"  "SRV_speculation40" "Any" "DNS" permit 
+
+  set policy id 105 disable
+
+  set policy id 105
+
+  set log session-init
+
+  exit
+
+  set policy id 96 from "Trust" to "internet"  "Any" "Any" "HTTP" permit 
+
+  set policy id 96
+
+  set service "HTTPS"
+
+  set service "NTP"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 72 name "allow_outgoing_ftp" from "Trust" to "internet"  "Any" "Any" "FTP" permit 
+
+  set policy id 72
+
+  set service "fTP-data"
+
+  set log session-init
+
+  exit
+
+  set policy id 154 from "internet" to "Trust"  "GRP_linkfails" "GRP_srv_mgmt" "SYSLOG" permit 
+
+  set policy id 154
+
+  exit
+
+  set policy id 57 name "allow_snmp_monitoring" from "Trust" to "DMZ"  "SRV_mgmt2" "SRV_citrix2" "ICMP-ANY" permit log 
+
+  set policy id 57
+
+  set dst-address "SRV_email"
+
+  set dst-address "SRV_isa"
+
+  set service "SNMP"
+
+  exit
+
+  set policy id 136.from "Trust" to "dmz_slow"  "Any" "Any" "FTP" permit log 
+
+  set policy id 82
+
+  set service "fTP-data"
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "TCP_1460"
+
+  set service "TCP_1461"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  set service "TCP_9100"
+
+  set log session-init
+
+  exit
+
+  set policy id 155 from "internet" to "Trust"  "networks_CCTV" "SRV_exch_apu" "ANY" permit 
+
+  set policy id 155
+
+  set log session-init
+
+  exit
+
+  set policy id 156 from "private" to "Trust"  "networks_CCTV" "SRV_exch_apu" "ANY" permit 
+
+  set policy id 156
+
+  set log session-init
+
+  exit
+
+  set policy id 157 name "IE_traffic" from "internet" to "Trust"  "network_PO-devel" "SRV_IE_devel_speculation" "TCP_1414" permit 
+
+  set policy id 157
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 74 from "internet" to "Trust"  "network_PO-devel" "SRV_IE_MQ_test" "HTTP" permit 
+
+  set policy id 74
+
+  set service "HTTPS"
+
+  set service "TCP_1414"
+
+  set service "TCP_1416"
+
+  set service "TCP_1417"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 187 name "IE_to_SMSgateway" from "internet" to "Trust"  "network_PO-devel" "Host_smsgt1-lv" "HTTP" permit 
+
+  set policy id 187
+
+  set log session-init
+
+  exit
+
+  set policy id 172 from "internet" to "Trust"  "GRP_PO-Hearing" "SRV_IE_MQ_test" "HTTP" permit 
+
+  set policy id 172 disable
+
+  set policy id 172
+
+  set service "HTTPS"
+
+  set service "TCP_1414"
+
+  set service "TCP_1416"
+
+  set service "TCP_1417"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 122 from "internet" to "Trust"  "network_PO-Prometheus2" "SRV_IE_MQ_PROD" "TCP_1414" permit 
+
+  set policy id 122 disable
+
+  set policy id 122
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 106 from "internet" to "Trust"  "network_PO-Prometheus1" "SRV_IE_devel_speculation" "HTTP" permit 
+
+  set policy id 106 disable
+
+  set policy id 106
+
+  set src-address "network_PO-Hearing1"
+
+  set src-address "network_PO-Hearing2"
+
+  set service "HTTPS"
+
+  set service "ICMP-ANY"
+
+  set service "TCP_1414"
+
+  set service "TCP_1417"
+
+  exit
+
+  set policy id 159 from "internet" to "Trust"  "network_PO-Prometheus2" "SRV_IE_devel_speculation" "TCP_1414" permit 
+
+  set policy id 159 disable
+
+  set policy id 159
+
+  set src-address "network_PO-Hearing3"
+
+  set service "TCP_1416"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 1132.from "dmz_ie" to "Trust"  "GRP_PO-Prometheus" "SRV_IE_devel_speculation" "TCP_1414" permit 
+
+  set policy id 183
+
+  set src-address "GRP_PO-Hearing"
+
+  set dst-address "SRV_IE_MQ_PROD"
+
+  set dst-address "SRV_IE_MQ_test"
+
+  set service "TCP_1416"
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set service "TCP_1419"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 49 from "internet" to "Trust"  "Network_ZPR" "SRV_IE_MQ_PROD" "TCP_1414" permit 
+
+  set policy id 49
+
+  set dst-address "SRV_IE_MQ_test"
+
+  set service "TCP_1419"
+
+  set service "TCP_1420-21"
+
+  set service "ICMP-ALL"
+
+  set log session-init
+
+  exit
+
+  set policy id 116 from "Trust" to "internet"  "SRV_IE_MQ_PROD" "network_PO-Prometheus1" "TCP_1414" permit 
+
+  set policy id 116 disable
+
+  set policy id 116
+
+  set dst-address "network_PO-Prometheus2"
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set log session-init
+
+  exit
+
+  set policy id 121 from "Trust" to "internet"  "SRV_IE_MQ_test" "network_PO-Hearing1" "TCP_1417" permit 
+
+  set policy id 121 disable
+
+  set policy id 121
+
+  set dst-address "network_PO-Hearing2"
+
+  set dst-address "network_PO-Hearing3"
+
+  set service "TCP_1418"
+
+  set log session-init
+
+  exit
+
+  set policy id 174 from "Trust" to "internet"  "SRV_IE_MQ_test" "network_PO-devel" "TCP_1417" permit 
+
+  set policy id 174
+
+  set service "TCP_1418"
+
+  set log session-init
+
+  exit
+
+  set policy id 173 from "Trust" to "internet"  "SRV_IE_MQ_PROD" "Network_ZPR" "TCP_1414" permit 
+
+  set policy id 173
+
+  set service "TCP_1417"
+
+  set service "TCP_1418"
+
+  set log session-init
+
+  exit
+
+  set policy id 145 from "Trust" to "internet"  "SRV_IE_MQ_test" "Network_ZPR" "TCP_1414" permit 
+
+  set policy id 145
+
+  set service "TCP_1419"
+
+  set log session-init
+
+  exit
+
+  set policy id 53 from "internet" to "Trust"  "Any" "SRV_BR_licensing" "HTTP" permit 
+
+  set policy id 53 disable
+
+  set policy id 53
+
+  set service "ICMP-ANY"
+
+  set log session-init
+
+  exit
+
+  set policy id 56 from "internet" to "Trust"  "Any" "Any" "ANY" deny 
+
+  set policy id 56 disable
+
+  set policy id 56
+
+  set log session-init
+
+  exit
+
+  set policy id 97 from "internet" to "Trust"  "FW_remote_sites" "Any" "ANY" permit 
+
+  set policy id 97
+
+  set src-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 103 from "internet" to "Trust"  "Any" "Any" "ANY" deny 
+
+  set policy id 103
+
+  exit
+
+  set policy id 160 name "allow_licensing_srv" from "private" to "Trust"  "GRP_BR" "SRV_BR_licensing" "ANY" permit 
+
+  set policy id 160
+
+  set log session-init
+
+  exit
+
+  set policy id 161 from "private" to "Trust"  "GRP_BR" "SRV_DC1" "NTP" permit 
+
+  set policy id 161
+
+  set dst-address "SRV_DC2"
+
+  set log session-init
+
+  exit
+
+  set policy id 132.name "allow_all_internal_traffic" from "rsites" to "Trust"  "FW_remote_sites" "Any" "ANY" permit log 
+
+  set policy id 83
+
+  set src-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 42 from "private" to "Trust"  "Net_priv_voda" "Patty" "DHCP_relaying_gab" permit 
+
+  set policy id 42
+
+  set log session-init
+
+  exit
+
+  set policy id 163 name "allow_all_internal_traffic" from "private" to "Trust"  "FW_remote_sites" "Any" "ANY" permit log 
+
+  set policy id 163
+
+  set src-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 84 name "allow_internal_traffic" from "rsites" to "private"  "Networks_private" "Networks_private" "ANY" permit 
+
+  set policy id 84
+
+  set log session-init
+
+  exit
+
+  set policy id 136 name "allow_internal_traffic" from "rsites" to "internet"  "Networks_private" "GRP_PO-Prometheus" "ANY" permit 
+
+  set policy id 136
+
+  set dst-address "GRP_PO-Hearing"
+
+  set dst-address "GRP_slow_networks"
+
+  set dst-address "Networks_private"
+
+  set log session-init
+
+  exit
+
+  set policy id 135 name "clean_up" from "rsites" to "Trust"  "Any" "Any" "ANY" deny 
+
+  set policy id 135
+
+  set log session-init
+
+  exit
+
+  set policy id 85 from "rsites" to "dmz_slow"  "Networks_private" "Any" "FTP" permit log 
+
+  set policy id 85
+
+  set service "fTP-data"
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "TCP_1460"
+
+  set service "TCP_1461"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  set service "TCP_9100"
+
+  set log session-init
+
+  exit
+
+  set policy id 21 from "private" to "Trust"  "Any" "Any" "ANY" permit 
+
+  set policy id 21 disable
+
+  set policy id 21
+
+  set log session-init
+
+  exit
+
+  set policy id 1134.from "private" to "dmz_slow"  "Networks_private" "Any" "FTP" permit log 
+
+  set policy id 180
+
+  set service "fTP-data"
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  set service "ICMP-PING"
+
+  set service "TCP_1460"
+
+  set service "TCP_1461"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  set service "TCP_9100"
+
+  set log session-init
+
+  exit
+
+  set policy id 93 from "dmz_slow" to "Trust"  "NAT_slow" "pmb011" "snmp-udp" permit log 
+
+  set policy id 93
+
+  set log session-init
+
+  exit
+
+  set policy id 94 name "allow_swif_to_VLT_printer" from "dmz_slow" to "Trust"  "NAT_slow" "SRV_slow_printer" "TCP_9100" permit log 
+
+  set policy id 94
+
+  set log session-init
+
+  exit
+
+  set policy id 169 name "allow_slow_to_reach_sites" from "dmz_slow" to "private"  "Any" "SRV_slow_printer2" "TCP_9100" permit log 
+
+  set policy id 169
+
+  set log session-init
+
+  exit
+
+  set policy id 120 name "allow_all_to_DR" from "Trust" to "private"  "Any" "network_BostonDR" "ANY" permit 
+
+  set policy id 120
+
+  set log session-init
+
+  exit
+
+  set policy id 73 from "Trust" to "private"  "Networks_private" "Any" "DNS" permit 
+
+  set policy id 73
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  set service "ICMP-ANY"
+
+  set log session-init
+
+  exit
+
+  set policy id 191 name "allow_intra_cctv" from "cctv" to "private"  "Any" "networks_CCTV" "ANY" permit 
+
+  set policy id 191
+
+  set log session-init
+
+  exit
+
+  set policy id 101 name "allow_CCTV_DC_Mail" from "cctv" to "Trust"  "Any" "SRV_DC1" "ANY" permit 
+
+  set policy id 101
+
+  set dst-address "SRV_DC2"
+
+  set dst-address "SRV_exch_apu"
+
+  set log session-init
+
+  exit
+
+  set policy id 176 from "private" to "cctv"  "networks_CCTV" "Any" "ANY" permit 
+
+  set policy id 176
+
+  set log session-init
+
+  exit
+
+  set policy id 99 from "Trust" to "cctv"  "IP_CCTV_station" "Any" "ANY" permit 
+
+  set policy id 99
+
+  set src-address "IP_CCTV_station2"
+
+  set src-address "IP_CCTV_station3"
+
+  set src-address "GRP_srv_mgmt"
+
+  set log session-init
+
+  exit
+
+  set policy id 111 from "dmz_web" to "Trust"  "SRV_speculation_web1" "SRV_speculation33" "HTTP" permit 
+
+  set policy id 111
+
+  set src-address "SRV_speculation_web2"
+
+  set dst-address "SRV_speculation34"
+
+  set service "HTTPS"
+
+  set service "TCP_5060"
+
+  set service "TCP_5061"
+
+  set service "TCP_90134.
+
+  set service "TCP_9443"
+
+  set log session-init
+
+  exit
+
+  set policy id 112 from "Trust" to "dmz_web"  "network_Rome" "GRP_speculation_web" "ANY" permit 
+
+  set policy id 112
+
+  set log session-init
+
+  exit
+
+  set policy id 87 from "rsites" to "dmz_web"  "Networks_private" "GRP_speculation_web" "ANY" permit 
+
+  set policy id 87
+
+  set log session-init
+
+  exit
+
+  set policy id 181 from "private" to "dmz_web"  "Networks_private" "GRP_speculation_web" "ANY" permit 
+
+  set policy id 181
+
+  set log session-init
+
+  exit
+
+  set policy id 115 from "Trust" to "dmz_web"  "Net_VLT_mgmt" "Net_webservers" "ANY" permit 
+
+  set policy id 115
+
+  set log session-init
+
+  exit
+
+  set policy id 117 from "Trust" to "dmz_web"  "SRV_speculation33" "SRV_speculation_web1" "HTTP" permit 
+
+  set policy id 117
+
+  set src-address "SRV_speculation34"
+
+  set dst-address "SRV_speculation_web2"
+
+  set service "HTTPS"
+
+  set log session-init
+
+  exit
+
+  set policy id 171 name "log_any_other_traffic" from "dmz_slow" to "private"  "Any" "Any" "ANY" deny 
+
+  set policy id 171
+
+  set log session-init
+
+  exit
+
+  set policy id 118 from "Trust" to "dmz_web"  "SRV_backup1" "SRV_speculation_web1" "TCP_5555" permit 
+
+  set policy id 118
+
+  set dst-address "SRV_speculation_web2"
+
+  set log session-init
+
+  exit
+
+  set policy id 86 from "dmz_web" to "Trust"  "Any" "Any" "ANY" deny 
+
+  set policy id 86
+
+  set log session-init
+
+  exit
+
+  set policy id 192 from "rsites" to "dmz_web"  "Any" "SRV_speculation_web_VIP" "HTTPS" permit 
+
+  set policy id 192
+
+  set log session-init
+
+  exit
+
+  set policy id 89 from "rsites" to "dmz_web"  "Any" "Any" "ANY" deny 
+
+  set policy id 89
+
+  exit
+
+  set policy id 5 from "internet" to "cctv"  "networks_CCTV" "Any" "ANY" permit 
+
+  set policy id 5
+
+  exit
+
+  set policy id 90 from "rsites" to "cctv"  "networks_CCTV" "Any" "ANY" permit 
+
+  set policy id 90
+
+  exit
+
+  set policy id 8 from "private" to "internet"  "Networks_private" "Any" "ANY" permit 
+
+  set policy id 8
+
+  set log session-init
+
+  exit
+
+  set policy id 61 from "internet" to "private"  "Checkpoint_mgmt" "Checkpoint_PLA_int" "ANY" permit 
+
+  set policy id 61
+
+  set log session-init
+
+  exit
+
+  set policy id 143 from "internet" to "rsites"  "Networks_private" "Networks_private" "ANY" permit 
+
+  set policy id 143
+
+  set log session-init
+
+  exit
+
+  set policy id 91 from "internet" to "rsites"  "FW_remote_sites" "Any" "ANY" permit 
+
+  set policy id 91
+
+  set log session-init
+
+  exit
+
+  set policy id 92 from "rsites" to "internet"  "Any" "FW_remote_sites" "ANY" permit 
+
+  set policy id 92
+
+  set log session-init
+
+  exit
+
+  set policy id 107 from "internet" to "dmz_slow"  "Networks_private" "Any" "FTP" permit 
+
+  set policy id 107
+
+  set service "fTP-data"
+
+  set service "HTTP"
+
+  set service "HTTPS"
+
+  set service "ICMP-ANY"
+
+  set service "TCP_1460"
+
+  set service "TCP_1461"
+
+  set service "TCP_1494"
+
+  set service "TCP_2598"
+
+  set service "TCP_9100"
+
+  set log session-init
+
+  exit
+
+  set policy id 108 from "internet" to "dmz_web"  "Networks_private" "GRP_speculation_web" "ANY" permit 
+
+  set policy id 108
+
+  set log session-init
+
+  exit
+
+  set policy id 109 from "internet" to "dmz_web"  "Any" "SRV_speculation_web_VIP" "HTTPS" permit 
+
+  set policy id 109
+
+  set log session-init
+
+  exit
+
+  set policy id 132 from "exch_replication" to "rsites"  "Net_Exchange_replication_VLT" "GRP_exchange_replication_Nets" "ANY" permit 
+
+  set policy id 132
+
+  set log session-init
+
+  exit
+
+  set policy id 133 from "exch_replication" to "internet"  "Net_Exchange_replication_VLT" "GRP_exchange_replication_Nets" "ANY" permit 
+
+  set policy id 133
+
+  set log session-init
+
+  exit
+
+  set policy id 158 from "rsites" to "exch_replication"  "GRP_exchange_replication_Nets" "Net_Exchange_replication_VLT" "ANY" permit 
+
+  set policy id 158
+
+  set log session-init
+
+  exit
+
+  set policy id 164 from "internet" to "exch_replication"  "GRP_exchange_replication_Nets" "Net_Exchange_replication_VLT" "ANY" permit 
+
+  set policy id 164
+
+  set log session-init
+
+  exit
+
+  set policy id 165 from "Trust" to "dmz_ie"  "Any" "Any" "ANY" permit 
+
+  set policy id 165
+
+  set log session-init
+
+  exit
+
+  set policy id 170 from "dmz_ie" to "Trust"  "Any" "Any" "ANY" permit 
+
+  set policy id 170
+
+  set log session-init
+
+  exit
+
+  set policy id 999000 from "Trust" to "Untrust"  "Any" "Any" "ANY" deny 
+
+  set policy id 999000
+
+  exit
+
+  set syslog config "192.168.100.50"
+
+  set syslog config "192.168.100.50" facilities local1 local1
+
+  set syslog config "192.168.123.89"
+
+  set syslog config "192.168.123.89" facilities local1 local1
+
+  set syslog src-interface ethernet0/2
+
+  set syslog enable
+
+  unset log module system level alert destination email
+
+  unset log module system level notification destination email
+
+  unset log module system level notification destination syslog
+
+  unset log module system level information destination syslog
+
+  unset log module system level debugging destination syslog
+
+  set nsmgmt report alarm traffic enable
+
+  set nsmgmt report alarm attack enable
+
+  set nsmgmt report alarm other enable
+
+  set nsmgmt report alarm di enable
+
+  set nsmgmt report log config enable
+
+  set nsmgmt report log info enable
+
+  set nsmgmt report log self enable
+
+  set nsmgmt report log traffic enable
+
+  set nsmgmt init id xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  set nsmgmt server primary 192.168.123.45 port 7134.
+
+  set nsmgmt bulkcli reboot-timeout 60
+
+  set nsmgmt hb-interval 20
+
+  set nsmgmt hb-threshold 5
+
+  set nsmgmt enable
+
+  set ssh version v2
+
+  set ssh enable
+
+  set config lock timeout 5
+
+  unset license-key auto-update
+
+  set telnet client enable
+
+  set ntp server "192.168.123.10"
+
+  set ntp server src-interface "ethernet0/2"
+
+  set ntp server backup1 "192.168.123.11"
+
+  set ntp server backup1 src-interface "ethernet0/2"
+
+  set ntp max-adjustment 360
+
+  set snmp community "sfasfab" Read-Only Trap-on traffic version v2c  
+
+  set snmp host "asfasfasfe44@k" 192.168.100.53 255.255.255.255 src-interface ethernet0/2 trap v2
+
+  set snmp host "m13wt42tkR0" 192.168.100.50 255.255.255.255 src-interface ethernet0/2 trap v2
+
+  set snmp name "Example_ssg320"
+
+  set snmp port listen 161
+
+  set snmp port trap 162
+
+  set vrouter "untrust-vr"
+
+  set access-list 5
+
+  set access-list 5 permit ip 192.168.0.0/16 5
+
+  set access-list 10
+
+  set access-list 10 permit ip 172.16.0.0/16 5
+
+  set access-list 15
+
+  set access-list 15 permit ip 10.1.32.0/19 5
+
+  set access-list 20
+
+  set access-list 20 permit ip 10.0.0.0/23 5
+
+  set access-list 20 permit ip 172.25.0.0/16 10
+
+  set access-list 20 permit ip 172.27.0.0/16 15
+
+  set access-list 20 permit ip 172.30.0.0/16 20
+
+  set access-list 20 permit ip 10.150.0.0/15 25
+
+  set route-map name "redistribute_inside_net" permit 5
+
+  set match ip 5
+
+  set metric 1
+
+  exit
+
+  set route-map name "export_DRNet_DGW" permit 5
+
+  set match ip 15
+
+  set metric 1
+
+  exit
+
+  set route-map name "export_DRNet_DGW" permit 10
+
+  set match route-type type2-external-ospf
+
+  set metric 123
+
+  set metric-type type-2
+
+  exit
+
+  set route-map name "redistribute_SitesNets_DRNet" permit 5
+
+  set match ip 10
+
+  set metric 1
+
+  exit
+
+  set route-map name "redistribute_SitesNets_DRNet" permit 10
+
+  set match ip 15
+
+  exit
+
+  set route-map name "export_3rd_parties" permit 5
+
+  set match ip 20
+
+  exit
+
+  set export-to vrouter "trust-vr" route-map "export_DRNet_DGW" protocol ospf
+
+  set export-to vrouter "rsites-VR" route-map "export_3rd_parties" protocol static
+
+  set route 192.168.5.0/28 interface ethernet0/0 gateway 192.168.2.3 preference 20
+
+  set route 192.168.5.16/28 interface ethernet0/0 gateway 192.168.2.3 preference 20
+
+  set route 192.168.171.0/24 interface tunnel.12 preference 20
+
+  set route 192.168.170.0/24 interface tunnel.1 preference 20
+
+  set route 172.27.0.0/21 interface tunnel.18 preference 20
+
+  set route 10.0.0.0/23 interface tunnel.19 preference 20
+
+  set route 192.168.136.0/24 interface tunnel.19 preference 20
+
+  set route 192.168.130.0/24 interface tunnel.17 preference 20
+
+  set route 192.168.3.0/24 interface tunnel.7 preference 20
+
+  set route 192.168.191.0/24 interface tunnel.19 preference 20
+
+  set route 192.168.0.0/16 vrouter "trust-vr" preference 20 metric 1
+
+  set route 192.168.5.32/28 vrouter "rsites-VR" preference 20
+
+  set protocol ospf
+
+  set redistribute route-map "redistribute_inside_net" protocol static
+
+  set redistribute route-map "redistribute_SitesNets_DRNet" protocol imported
+
+  exit
+
+  exit
+
+  set vrouter "trust-vr"
+
+  set access-list 20
+
+  set access-list 20 permit ip 172.16.0.0/16 5
+
+  set access-list 25
+
+  set access-list 25 permit ip 192.168.0.0/16 5
+
+  set access-list 30
+
+  set access-list 30 permit ip 10.1.32.0/19 5
+
+  set access-list 50
+
+  set access-list 50 permit ip 172.16.16.0/20 5
+
+  set access-list 50 permit ip 172.16.32.0/20 10
+
+  set access-list 50 permit ip 172.16.48.0/20 15
+
+  set access-list 50 permit ip 172.16.64.0/20 20
+
+  set access-list 50 permit ip 172.16.134.0/20 25
+
+  set access-list 50 permit ip 172.16.96.0/20 30
+
+  set access-list 50 permit ip 172.16.160.0/20 35
+
+  set route-map name "advertise_slow" permit 1
+
+  set match interface ethernet0/3
+
+  exit
+
+  set route-map name "export_VLT_net" permit 5
+
+  set match ip 25
+
+  exit
+
+  set route-map name "export_DRnets_LOCALbranches" permit 10
+
+  set match ip 30
+
+  set metric 28
+
+  exit
+
+  set route-map name "export_DRnets_LOCALbranches" permit 15
+
+  set match ip 50
+
+  exit
+
+  set export-to vrouter "rsites-VR" route-map "export_VLT_net" protocol connected
+
+  set export-to vrouter "rsites-VR" route-map "export_VLT_net" protocol static
+
+  set export-to vrouter "untrust-vr" route-map "export_DRnets_LOCALbranches" protocol ospf
+
+  unset add-default-route
+
+  set route 172.30.224.0/24 interface ethernet0/3 gateway 192.168.199.254 preference 20
+
+  set route 172.25.224.0/24 interface ethernet0/3 gateway 192.168.199.254 preference 20
+
+  set route 192.168.140.0/24 interface ethernet0/2 gateway 192.168.1.254 preference 20
+
+  set route 192.168.131.0/24 interface ethernet0/2 gateway 192.168.1.254 preference 20
+
+  set route 192.168.4.128/25 interface ethernet1/1 gateway 192.168.4.10 preference 20
+
+  set route 192.168.132.0/24 gateway 192.168.1.254
+
+  set route 192.168.131.0/24 gateway 192.168.1.254
+
+  set route 192.168.101.0/24 gateway 192.168.1.254
+
+  set route 192.168.102.0/24 gateway 192.168.1.254
+
+  set route 192.168.103.0/24 gateway 192.168.1.254
+
+  set route 192.168.110.0/24 gateway 192.168.1.254
+
+  set route 192.168.100.0/24 gateway 192.168.1.254
+
+  set route 192.168.121.0/24 gateway 192.168.1.254
+
+  set route 192.168.123.0/24 gateway 192.168.1.254
+
+  set route 192.168.200.0/24 gateway 192.168.1.254
+
+  set route 192.168.140.20/24 gateway 192.168.1.254
+
+  set route 192.168.6.0/28 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.150.5.30/32 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.151.66.0/24 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.151.36.0/24 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.151.5.20/32 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.150.36.0/24 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 10.150.5.20/32 interface ethernet1/3.3 gateway 192.168.6.45 preference 20
+
+  set route 192.168.3.0/24 vrouter "untrust-vr" preference 20
+
+  set route 192.168.170.0/24 vrouter "untrust-vr" preference 20
+
+  set route 192.168.171.0/24 vrouter "untrust-vr" preference 20
+
+  set route 192.168.5.0/28 vrouter "untrust-vr" preference 20
+
+  set route 192.168.5.16/28 vrouter "untrust-vr" preference 20
+
+  set route 172.27.0.0/21 vrouter "untrust-vr" preference 20
+
+  set route 192.168.136.0/24 vrouter "untrust-vr" preference 20
+
+  set route 10.0.0.0/23 vrouter "untrust-vr" preference 20
+
+  set route 192.168.130.0/24 vrouter "untrust-vr" preference 20
+
+  set route 192.168.191.0/24 vrouter "untrust-vr" preference 20
+
+  set protocol ospf
+
+  set redistribute route-map "advertise_slow" protocol static
+
+  set redistribute route-map "export_VLT_net" protocol imported
+
+  exit
+
+  exit
+
+  set vrouter "rsites-VR"
+
+  set access-list 40
+
+  set access-list 40 permit ip 172.16.0.0/20 5
+
+  set access-list 40 permit ip 172.16.112.0/20 10
+
+  set access-list 40 permit ip 172.16.128.0/20 15
+
+  set access-list 40 permit ip 172.16.144.0/20 20
+
+  set access-list 40 permit ip 172.16.176.0/20 25
+
+  set access-list 45
+
+  set access-list 45 permit ip 192.168.0.0/16 5
+
+  set access-list 50
+
+  set access-list 50 permit ip 10.0.0.0/23 5
+
+  set access-list 50 permit ip 172.25.0.0/16 10
+
+  set access-list 50 permit ip 172.27.0.0/16 15
+
+  set access-list 50 permit ip 172.30.0.0/16 20
+
+  set access-list 50 permit ip 10.150.0.0/15 25
+
+  set route-map name "export_rsites_nets" permit 5
+
+  set match ip 40
+
+  exit
+
+  set route-map name "redistribute_3rd_party" permit 5
+
+  set match ip 50
+
+  exit
+
+  set route-map name "redistribute_VLTnets_3rdParty" permit 5
+
+  set match ip 45
+
+  exit
+
+  set route-map name "redistribute_VLTnets_3rdParty" permit 10
+
+  set match ip 50
+
+  exit
+
+  set export-to vrouter "trust-vr" route-map "export_rsites_nets" protocol ospf
+
+  set route 132.167.168.146/32 interface ethernet1/3.2 gateway 134.85.102.97 preference 10 description "Prometheus"
+
+  set route 134.85.102.58/32 interface ethernet1/3.2 gateway 134.85.102.97 preference 10 description "Security Services"
+
+  set route 195.158.105.144/32 interface ethernet1/3.2 gateway 134.85.102.97 preference 10 description "Claudia"
+
+  set route 195.217.35.196/32 interface ethernet1/3.2 gateway 134.85.102.97 preference 20 description "Prometheus TEMP branch"
+
+  set route 172.16.160.0/20 vrouter "trust-vr" preference 20 description "TEMP route to Toronto"
+
+  set protocol ospf
+
+  set redistribute route-map "redistribute_VLTnets_3rdParty" protocol imported
+
+  exit
+
+  exit
+
+  set interface ethernet0/0 protocol ospf area 0.0.0.0
+
+  set interface ethernet0/0 protocol ospf enable
+
+  set interface ethernet0/1 protocol ospf area 0.0.0.4
+
+  set interface ethernet0/1 protocol ospf passive
+
+  set interface ethernet0/1 protocol ospf enable
+
+  set interface ethernet0/2 protocol ospf area 0.0.0.4
+
+  set interface ethernet0/2 protocol ospf passive
+
+  set interface ethernet0/2 protocol ospf enable
+
+  set interface ethernet0/3 protocol ospf area 0.0.0.4
+
+  set interface ethernet0/3 protocol ospf passive
+
+  set interface ethernet0/3 protocol ospf enable
+
+  set interface ethernet1/0 protocol ospf area 0.0.0.4
+
+  set interface ethernet1/0 protocol ospf passive
+
+  set interface ethernet1/0 protocol ospf enable
+
+  set interface ethernet1/1 protocol ospf area 0.0.0.4
+
+  set interface ethernet1/1 protocol ospf passive
+
+  set interface ethernet1/1 protocol ospf enable
+
+  set interface tunnel.10 protocol ospf area 0.0.0.0
+
+  set interface tunnel.10 protocol ospf enable
+
+  set interface tunnel.10 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.11 protocol ospf area 0.0.0.0
+
+  set interface tunnel.11 protocol ospf enable
+
+  set interface tunnel.11 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.15 protocol ospf area 0.0.0.0
+
+  set interface tunnel.15 protocol ospf enable
+
+  set interface tunnel.15 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.16 protocol ospf area 0.0.0.0
+
+  set interface tunnel.16 protocol ospf enable
+
+  set interface tunnel.16 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.20 protocol ospf area 0.0.0.0
+
+  set interface tunnel.20 protocol ospf enable
+
+  set interface tunnel.20 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.6 protocol ospf area 0.0.0.0
+
+  set interface tunnel.6 protocol ospf enable
+
+  set interface tunnel.6 protocol ospf priority 10
+
+  set interface tunnel.6 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.8 protocol ospf area 0.0.0.0
+
+  set interface tunnel.8 protocol ospf enable
+
+  set interface tunnel.8 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.9 protocol ospf area 0.0.0.0
+
+  set interface tunnel.9 protocol ospf enable
+
+  set interface tunnel.9 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.2 protocol ospf area 0.0.0.0
+
+  set interface tunnel.2 protocol ospf enable
+
+  set interface tunnel.2 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.21 protocol ospf area 0.0.0.0
+
+  set interface tunnel.21 protocol ospf enable
+
+  set interface tunnel.21 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.3 protocol ospf area 0.0.0.0
+
+  set interface tunnel.3 protocol ospf enable
+
+  set interface tunnel.3 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.4 protocol ospf area 0.0.0.0
+
+  set interface tunnel.4 protocol ospf enable
+
+  set interface tunnel.4 protocol ospf authentication md5 "x" key-id 0
+
+  set interface tunnel.5 protocol ospf area 0.0.0.0
+
+  set interface tunnel.5 protocol ospf enable
+
+  set interface tunnel.5 protocol ospf authentication md5 "x" key-id 0
+
+  set vrouter "untrust-vr"
+
+  exit
+
+  set vrouter "trust-vr"
+
+  exit
+
+  set vrouter "rsites-VR"
+
+  exit
+

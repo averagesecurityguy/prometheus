@@ -1,0 +1,7 @@
+GROUP	Id	Owner	Name	Description	VpcID
+GROUP	sg-adfb4dc5	715550992868	default	default group	
+PERMISSION	715550992868	default	ALLOWS	tcp	0	65535	FROM	USER	715550992868	NAME default	ID sg-adfb4dc5	ingress
+PERMISSION	715550992868	default	ALLOWS	udp	0	65535	FROM	USER	715550992868	NAME default	ID sg-adfb4dc5	ingress
+PERMISSION	715550992868	default	ALLOWS	icmp	-1	-1	FROM	USER	715550992868	NAME default	ID sg-adfb4dc5	ingress
+GROUP	sg-67f84e0f	715550992868	quick-start-1	quick-start-1	
+PERMISSION	715550992868	quick-start-1	ALLOWS	tcp	3389	3389	FROM	CIDR	0.0.0.0/0	ingress
