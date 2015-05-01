@@ -1,0 +1,93 @@
+!--- A config file with STD and Extended ACLs
+ASA Version 9.1(5)2
+!
+hostname ASA
+domain-name cisco.com
+
+interface GigabitEthernet0/0
+nameif inside
+security-level 100
+ip address 172.16.5.10 255.255.255.0
+!
+interface GigabitEthernet0/1
+nameif outside
+security-level 0
+ip address 203.0.113.2 255.255.255.0
+
+!--- AAA for the SSH configuration
+
+username ciscouser password 3USUcOPFUiMCO4Jk encrypted
+aaa authentication ssh console LOCAL
+
+http server enable
+http 172.16.5.0 255.255.255.0 inside
+no snmp-server location
+no snmp-server contact
+snmp-server enable traps snmp authentication linkup linkdown coldstar
+telnet timeout 5
+
+!--- Enter this command for each address or subnet 
+!--- to identify the IP addresses from which 
+!--- the security appliance accepts connections.
+!--- The security appliance accepts SSH connections from all interfaces.
+
+ssh 172.16.5.20 255.255.255.255 inside
+ssh 198.51.100.70 255.255.255.255 outside
+
+!--- Allows the users on the host 172.16.5.20 on inside
+!--- Allows SSH access to the user on internet 198.51.100.70 on outside
+!--- to access the security appliance
+!--- on the inside interface.
+
+ssh 172.16.5.20 255.255.255.255 inside
+
+!--- Sets the duration from 1 to 60 minutes
+!--- (default 5 minutes) that the SSH session can be idle,
+!--- before the security appliance disconnects the session.
+
+ssh timeout 60
+
+console timeout 0
+!
+class-map inspection_default
+match default-inspection-traffic
+!
+!
+policy-map global_policy
+class inspection_default
+inspect dns maximum-length 512
+inspect ftp
+inspect h323 h225
+inspect h323 ras
+inspect netbios
+inspect rsh
+inspect rtsp
+inspect skinny
+inspect esmtp
+inspect sqlnet
+inspect sunrpc
+inspect tftp
+inspect sip
+inspect xdmcp
+!
+service-policy global_policy global
+
+interface GigabitEthernet0/1
+ip access-group 102 in
+!
+access-list 102 permit tcp any host 192.168.1.100 eq ftp
+access-list 102 permit tcp any host 192.168.1.100 eq ftp-data established
+!
+!--- A basic ACL
+interface GigabitEthernet0/1
+ip access-group 110 in
+!
+access-list 110 permit host 192.168.1.100 eq ftp any established
+access-list 110 permit host 192.168.1.100 eq ftp-data any
+
+!--- An extended ACL
+interface GigabitEthernet0/1 
+ip address 172.16.1.2 255.255.255.0 
+ip access-group 101 in 
+access-list 101 deny icmp any 10.1.1.0 0.0.0.255 echo 
+access-list 101 permit ip any 10.1.1.0 0.0.0.255

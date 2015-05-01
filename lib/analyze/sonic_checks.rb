@@ -3,7 +3,7 @@
 def analyze_sonic_firewall(config)
 	vulns =  []
 
-	vulns.concat()
+	# vulns.concat()
 
 	return vulns
 end
